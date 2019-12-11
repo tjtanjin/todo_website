@@ -35,6 +35,7 @@ function Login(props) {
   }
 
   useEffect(() => {
+    setAuthTokens("undefined");
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
         document.getElementById("submitButton").click()

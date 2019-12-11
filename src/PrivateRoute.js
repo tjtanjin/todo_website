@@ -9,7 +9,7 @@ function PrivateRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={props =>
-        authTokens ? (
+        JSON.parse(localStorage.getItem('tokens')).auth_token !== undefined ? (
           <Component {...props} />
         ) : (
           <Redirect 
