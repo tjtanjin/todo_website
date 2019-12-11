@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { decode } from 'jsonwebtoken'
 import { useAuth } from "../context/auth";
 
-function Admin(props) {
+function Tasks(props) {
+  const [totasks, setToTasks] = useState(false);
   const [tasks, setTasks] = useState([]);
   const { setAuthTokens } = useAuth();
 
@@ -12,14 +13,18 @@ function Admin(props) {
     getTasks();
   }, []);
 
+  function goNewTask() {
+    return <Redirect to="/login/" />
+  }
+
   function logOut() {
     setAuthTokens();
   }
 
   function renderTableHeader() {
-      let header = ["id", "job_name", "job_desc", "category", "tag", "due", "created_at", "updated_at"]
+      let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT"]
       return header.map((key, index) => {
-         return <th key={index}>{key.toUpperCase()}</th>
+         return <th key={index}>{key}</th>
       })
    }
 
@@ -82,9 +87,9 @@ function Admin(props) {
           {renderTableData()}
         </tbody>
       </table>
-      <button className="btn btn-primary btn-block" onClick={logOut}>Log out</button>
+      <button className="btn btn-primary btn-block" onClick={event => window.location.href='/new'}>Create New Task</button>
     </div>
   )
 }
 
-export default Admin
+export default Tasks
