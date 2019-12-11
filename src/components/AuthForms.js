@@ -10,9 +10,13 @@ const Error = styled.div`
   color: red;
 `;
 
+const Success = styled.div`
+  color: green;
+`;
+
 const Logo = styled.img`
   width: 50%;
   margin-bottom: 1rem;
 `;
 
-export { Form, Error, Logo };
+export { Form, Error, Logo, Success };
