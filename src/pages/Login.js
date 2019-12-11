@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
-import logoImg from "../img/logo.jpg";
 import { Form, Error } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
 
