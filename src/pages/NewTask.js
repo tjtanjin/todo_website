@@ -143,6 +143,7 @@ function NewTask() {
         </div>
 
         <button id="submitButton" className="btn btn-primary btn-block" onClick={postNewTask}>Create</button>
+        <button id="submitButton" className="btn btn-primary btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
         { isSuccess &&<Success>Task created!</Success> }
         { isError &&<Error>Please check the format of your information.</Error> }
       </Form>
