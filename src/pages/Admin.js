@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import { decode } from 'jsonwebtoken'
 import { useAuth } from "../context/auth";
 
@@ -58,6 +59,22 @@ function Admin(props) {
 
   return (
     <div className="tasks-inner">
+      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+        <div className="container">
+          <Link className="navbar-brand" to={"/"}>Todo_Manager</Link>
+          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link className="nav-link" to={"/profile"}>My Profile</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to={"/"} onClick={logOut}>Logout</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
       <h3>Tasks</h3>
       <table id='students'>
         <tbody>
