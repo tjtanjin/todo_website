@@ -82,7 +82,15 @@ body, html, .App, #root, .auth-wrapper {
   transition: all .3s;
 }
 
-
+.home-inner {
+  box-sizing: border-box;
+  max-width: 410px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 
 
