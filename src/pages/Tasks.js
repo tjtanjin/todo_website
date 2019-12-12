@@ -17,20 +17,39 @@ function Tasks(props) {
     return <Redirect to="/login/" />
   }
 
+  function deleteTask(data) {
+    const token = JSON.parse(localStorage.getItem('tokens')).auth_token;
+    const user_id = decode(token).user_id;
+    const task_id = data.id;
+    axios.delete("http://localhost:3000/api/v1/users/" + user_id + "/tasks/" + task_id, {
+      headers: { Authorization: token }
+    }).then(result => {
+      if (result.status === 200) {
+        getTasks()
+      } else {
+
+      }
+    }).catch(e => {
+      alert(e)
+    });
+  }
+
   function logOut() {
     setAuthTokens();
   }
 
   function renderTableHeader() {
-      let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT"]
+      let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT", "DELETE"]
       return header.map((key, index) => {
          return <th key={index}>{key}</th>
       })
    }
 
+
   function renderTableData() {
     return tasks.map((task, index) => {
       const { id, job_name, job_desc, category, tag, due, created_at, updated_at } = task
+      const delete_button = <button onClick={e => deleteTask({id})}></button>
         return (
           <tr key={id}>
             <td>{id}</td>
@@ -41,6 +60,7 @@ function Tasks(props) {
             <td>{due}</td>
             <td>{created_at}</td>
             <td>{updated_at}</td>
+            <td>{delete_button}</td>
           </tr>
         )
     })
