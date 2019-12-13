@@ -1,38 +1,28 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Link, Redirect } from "react-router-dom";
+import NewTask from '../components/NewTaskForms'
+import DeleteTask from '../components/DeleteTaskForms'
+import { Modal } from 'react-bootstrap'
+import { Link } from "react-router-dom";
 import { decode } from 'jsonwebtoken'
 import { useAuth } from "../context/auth";
 
 function Tasks(props) {
+  const { setAuthTokens } = useAuth();
   const [totasks, setToTasks] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const { setAuthTokens } = useAuth();
+  const [showNewTask, setNewTaskShow] = useState(false);
+  const [showDeleteTask, setDeleteTaskShow] = useState(false);
+  const [trackedTask, setTrackedTask] = useState({});
+
+  const handleNewTaskClose = () => setNewTaskShow(false);
+  const handleNewTaskShow = () => setNewTaskShow(true);
+  const handleDeleteTaskClose = () => setDeleteTaskShow(false);
+  const handleDeleteTaskShow = () => setDeleteTaskShow(true);
 
   useEffect(() => {
     getTasks();
   }, []);
-
-  function goNewTask() {
-    return <Redirect to="/login/" />
-  }
-
-  function deleteTask(data) {
-    const token = JSON.parse(localStorage.getItem('tokens')).auth_token;
-    const user_id = decode(token).user_id;
-    const task_id = data.id;
-    axios.delete("http://localhost:3000/api/v1/users/" + user_id + "/tasks/" + task_id, {
-      headers: { Authorization: token }
-    }).then(result => {
-      if (result.status === 200) {
-        getTasks()
-      } else {
-
-      }
-    }).catch(e => {
-      alert(e)
-    });
-  }
 
   function logOut() {
     setAuthTokens();
@@ -49,7 +39,7 @@ function Tasks(props) {
   function renderTableData() {
     return tasks.map((task, index) => {
       const { id, job_name, job_desc, category, tag, due, created_at, updated_at } = task
-      const delete_button = <button onClick={e => deleteTask({id})}></button>
+      const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}></button>
         return (
           <tr key={id}>
             <td>{id}</td>
@@ -93,7 +83,7 @@ function Tasks(props) {
                 <Link className="nav-link" to={"/profile"}>My Profile</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={"/"} onClick={logOut}>Logout</Link>
+                <Link className="nav-link" to={"/"} onClick={() => logOut}>Logout</Link>
               </li>
             </ul>
           </div>
@@ -101,13 +91,30 @@ function Tasks(props) {
       </nav>
 
       <h3>Tasks</h3>
-      <table id='students'>
+      <table id="students">
         <tbody>
           <tr>{renderTableHeader()}</tr>
           {renderTableData()}
         </tbody>
       </table>
-      <button className="btn btn-primary btn-block" onClick={event => window.location.href='/new'}>Create New Task</button>
+      <br/>
+      <button type="button" className="btn btn-primary btn-block" variant="primary" onClick={handleNewTaskShow}>
+        Create New Task
+      </button>
+
+      <Modal show={showNewTask} onHide={handleNewTaskClose}>
+        <Modal.Header>
+          <Modal.Title>Create New Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><NewTask></NewTask></Modal.Body>
+      </Modal>
+
+      <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
+        <Modal.Header>
+          <Modal.Title>Delete Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name}></DeleteTask></Modal.Body>
+      </Modal>
     </div>
   )
 }
