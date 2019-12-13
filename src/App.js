@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/font-awesome/css/font-awesome.min.css'; 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 import Home from "./pages/Home";
