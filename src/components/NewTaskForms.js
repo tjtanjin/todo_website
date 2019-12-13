@@ -14,9 +14,6 @@ function NewTask() {
   const [category, setCategory] = useState("");
   const [tag, setTag] = useState("");
   const [due, setDue] = useState("");
-  const [password_confirmation, setPasswordConfirmation] = useState("");
-  const { setAuthTokens } = useAuth();
-  let history = useHistory();
 
   function validateInput() {
     if (job_name !== "" && job_desc !== "" && category !== "") {
