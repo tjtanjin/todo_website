@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import NewTask from '../components/NewTaskForms'
+import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import { Modal } from 'react-bootstrap'
 import { Link } from "react-router-dom";
@@ -12,11 +13,14 @@ function Tasks(props) {
   const [totasks, setToTasks] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [showNewTask, setNewTaskShow] = useState(false);
+  const [showEditTask, setEditTaskShow] = useState(false);
   const [showDeleteTask, setDeleteTaskShow] = useState(false);
   const [trackedTask, setTrackedTask] = useState({});
 
   const handleNewTaskClose = () => setNewTaskShow(false);
   const handleNewTaskShow = () => setNewTaskShow(true);
+  const handleEditTaskClose = () => setEditTaskShow(false);
+  const handleEditTaskShow = () => setEditTaskShow(true);
   const handleDeleteTaskClose = () => setDeleteTaskShow(false);
   const handleDeleteTaskShow = () => setDeleteTaskShow(true);
 
@@ -29,7 +33,7 @@ function Tasks(props) {
   }
 
   function renderTableHeader() {
-      let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT", "DELETE"]
+      let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT", "ACTIONS"]
       return header.map((key, index) => {
          return <th key={index}>{key}</th>
       })
@@ -39,7 +43,8 @@ function Tasks(props) {
   function renderTableData() {
     return tasks.map((task, index) => {
       const { id, job_name, job_desc, category, tag, due, created_at, updated_at } = task
-      const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}></button>
+      const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i class="fa fa-wrench"></i></button>
+      const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i class="fa fa-remove"></i></button>
         return (
           <tr key={id}>
             <td>{id}</td>
@@ -50,7 +55,7 @@ function Tasks(props) {
             <td>{due}</td>
             <td>{created_at}</td>
             <td>{updated_at}</td>
-            <td>{delete_button}</td>
+            <td>{edit_button}{delete_button}</td>
           </tr>
         )
     })
@@ -107,6 +112,13 @@ function Tasks(props) {
           <Modal.Title>Create New Task</Modal.Title>
         </Modal.Header>
         <Modal.Body><NewTask></NewTask></Modal.Body>
+      </Modal>
+
+      <Modal show={showEditTask} onHide={handleEditTaskClose}>
+        <Modal.Header>
+          <Modal.Title>Edit Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><EditTask task={trackedTask}></EditTask></Modal.Body>
       </Modal>
 
       <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
