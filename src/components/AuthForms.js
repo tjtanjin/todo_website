@@ -7,10 +7,12 @@ const Form = styled.div`
 `;
 
 const Error = styled.div`
+  text-align: center;
   color: red;
 `;
 
 const Success = styled.div`
+  text-align: center;
   color: green;
 `;
 
