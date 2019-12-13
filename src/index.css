@@ -94,7 +94,14 @@ body, html, .App, #root, .auth-wrapper {
   align-items: center;
 }
 
+.prompt {
+  text-align: center;
+}
 
+.trackedtask {
+  font-weight: bold;
+  color: red;
+}
 
 
 #title {
