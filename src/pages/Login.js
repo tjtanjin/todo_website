@@ -9,7 +9,6 @@ function Login(props) {
   const [isError, setIsError] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, rememberMe] = useState("");
   const { setAuthTokens } = useAuth();
   let referer = '';
   if (typeof(props.location.state) == 'undefined') {
@@ -54,16 +53,16 @@ function Login(props) {
 
   return (
     <div className="auth-inner">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={"/"}>Todo_Manager</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
+          <Link className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo_Manager</Link>
+          <div className="collapse navbar-collapse">
+            <ul className="navbar-nav text-uppercase ml-auto">
               <li className="nav-item">
-                <Link className="nav-link" to={"/login"}>Login</Link>
+                <Link className="nav-link nav-text" to={"/login"}>Login</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={"/signup"}>Sign up</Link>
+                <Link className="nav-link nav-text" to={"/signup"}>Sign up</Link>
               </li>
             </ul>
           </div>
@@ -105,10 +104,10 @@ function Login(props) {
           </div>
         </div>
 
-        <button id="submitButton" className="btn btn-primary btn-block" onClick={postLogin}>Sign In</button>
-        <Link to="/signup">Do not have an account?</Link>
+        <button type="submit" id="submitButton" className="btn btn-dark btn-block" onClick={postLogin}>Sign In</button>
+        <Link className="link" to="/signup">Do not have an account?</Link>
         <p className="forgot-password text-right">
-          Forgot <a href="#">password?</a>
+          Forgot <a href="#" className="link">password?</a>
         </p>
         { isError &&<Error>The email or password provided were incorrect!</Error> }
       </Form>

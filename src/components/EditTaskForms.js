@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import axios from 'axios';
-import { Form, Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
-import { useAuth } from "../context/auth";
-import { Sleep } from "../components/Utils"
 
 function EditTask(data) {
   data = data.task
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [isError, setIsError] = useState(false);
   const [job_name, setJobName] = useState("");
   const [job_desc, setJobDesc] = useState("");
   const [category, setCategory] = useState("");
@@ -60,7 +54,6 @@ function EditTask(data) {
               setJobName(e.target.value);
             }}
             placeholder=""
-            required
           />
         </div>
 
@@ -74,7 +67,6 @@ function EditTask(data) {
               setJobDesc(e.target.value);
             }}
             placeholder=""
-            required
           />
         </div>
 
@@ -88,7 +80,6 @@ function EditTask(data) {
               setCategory(e.target.value);
             }}
             placeholder=""
-            required
           />
         </div>
 
@@ -118,11 +109,9 @@ function EditTask(data) {
           />
         </div>
 
-        <button id="submitButton" type="submit" className="btn btn-primary btn-block" onClick={validateInput}>Update</button>
-        <button type="button" className="btn btn-primary btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
+        <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={validateInput}>Update</button>
+        <button type="button" className="btn btn-dark btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
         <br/>
-        { isSuccess &&<Success>Task created!</Success> }
-        { isError &&<Error>Please check the format of your information.</Error> }
       </form>
     </div>
   );

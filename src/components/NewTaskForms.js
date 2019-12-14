@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
 import axios from 'axios';
-import { Form, Error, Success } from "../components/AuthForms";
+import { Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
-import { useAuth } from "../context/auth";
 import { Sleep } from "../components/Utils"
 
-function NewTask() {
+function NewTask(data) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [job_name, setJobName] = useState("");
@@ -18,8 +16,9 @@ function NewTask() {
   function validateInput() {
     if (job_name !== "" && job_desc !== "" && category !== "") {
       postNewTask();
+      return setIsError(false)
     } else {
-      return false;
+      return setIsError(true)
     }
   }
 
@@ -120,8 +119,8 @@ function NewTask() {
           />
         </div>
 
-        <button id="submitButton" type="submit" className="btn btn-primary btn-block" onClick={validateInput}>Create</button>
-        <button type="button" className="btn btn-primary btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
+        <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={validateInput}>Create</button>
+        <button type="button" className="btn btn-dark btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
         <br/>
         { isSuccess &&<Success>Task created!</Success> }
         { isError &&<Error>Please check the format of your information.</Error> }

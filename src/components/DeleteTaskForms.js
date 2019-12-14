@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React from "react";
 import axios from 'axios';
-import { Form, Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
-import { useAuth } from "../context/auth";
-import { Sleep } from "../components/Utils"
 
 function DeleteTask(data) {
   function delTask() {
@@ -27,8 +23,8 @@ function DeleteTask(data) {
     <div className="auth-inner">
       <p className="prompt"> Are you sure you want to delete the task <span className="trackedtask">{data.job_name}</span>?</p>
       <br/>
-      <button className="btn btn-primary btn-block" onClick={e => delTask()}>Delete</button>
-      <button type="button" className="btn btn-primary btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
+      <button className="btn btn-dark btn-block" onClick={e => delTask()}>Delete</button>
+      <button type="button" className="btn btn-dark btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
     </div>
   );
 }

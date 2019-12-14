@@ -50,16 +50,16 @@ function Signup() {
 
   return (
     <div className="auth-inner">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={"/"}>Todo_Manager</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
+          <Link className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo_Manager</Link>
+          <div className="collapse navbar-collapse">
+            <ul className="navbar-nav text-uppercase ml-auto">
               <li className="nav-item">
-                <Link className="nav-link" to={"/login"}>Login</Link>
+                <Link className="nav-link nav-text" to={"/login"}>Login</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={"/signup"}>Sign up</Link>
+                <Link className="nav-link nav-text" to={"/signup"}>Sign up</Link>
               </li>
             </ul>
           </div>

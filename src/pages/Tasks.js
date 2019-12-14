@@ -10,7 +10,6 @@ import { useAuth } from "../context/auth";
 
 function Tasks(props) {
   const { setAuthTokens } = useAuth();
-  const [totasks, setToTasks] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [showNewTask, setNewTaskShow] = useState(false);
   const [showEditTask, setEditTaskShow] = useState(false);
@@ -79,16 +78,16 @@ function Tasks(props) {
 
   return (
     <div className="tasks-inner">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
         <div className="container">
-          <Link className="navbar-brand" to={"/"}>Todo_Manager</Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
+          <Link className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo_Manager</Link>
+          <div className="collapse navbar-collapse">
+            <ul className="navbar-nav text-uppercase ml-auto">
               <li className="nav-item">
-                <Link className="nav-link" to={"/profile"}>My Profile</Link>
+                <Link className="nav-link nav-text" to={"/profile"}>Profile</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to={"/"} onClick={() => logOut}>Logout</Link>
+                <Link className="nav-link nav-text" onClick={() => logOut}>Logout</Link>
               </li>
             </ul>
           </div>
@@ -96,33 +95,33 @@ function Tasks(props) {
       </nav>
 
       <h3>Tasks</h3>
-      <table id="students">
+      <table id="tasks">
         <tbody>
           <tr>{renderTableHeader()}</tr>
           {renderTableData()}
         </tbody>
       </table>
       <br/>
-      <button type="button" className="btn btn-primary btn-block" variant="primary" onClick={handleNewTaskShow}>
+      <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={handleNewTaskShow}>
         Create New Task
       </button>
 
       <Modal show={showNewTask} onHide={handleNewTaskClose}>
-        <Modal.Header>
+        <Modal.Header className="modal_header_bg">
           <Modal.Title>Create New Task</Modal.Title>
         </Modal.Header>
         <Modal.Body><NewTask></NewTask></Modal.Body>
       </Modal>
 
       <Modal show={showEditTask} onHide={handleEditTaskClose}>
-        <Modal.Header>
+        <Modal.Header className="modal_header_bg">
           <Modal.Title>Edit Task</Modal.Title>
         </Modal.Header>
         <Modal.Body><EditTask task={trackedTask}></EditTask></Modal.Body>
       </Modal>
 
       <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
-        <Modal.Header>
+        <Modal.Header className="modal_header_bg">
           <Modal.Title>Delete Task</Modal.Title>
         </Modal.Header>
         <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name}></DeleteTask></Modal.Body>
