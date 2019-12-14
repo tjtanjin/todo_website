@@ -42,8 +42,8 @@ function Tasks(props) {
   function renderTableData() {
     return tasks.map((task, index) => {
       const { id, job_name, job_desc, category, tag, due, created_at, updated_at } = task
-      const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i class="fa fa-wrench"></i></button>
-      const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i class="fa fa-remove"></i></button>
+      const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
+      const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
         return (
           <tr key={id}>
             <td>{id}</td>
