@@ -4,9 +4,9 @@ import { decode } from 'jsonwebtoken'
 
 function EditTask(data) {
   data = data.task
-  const [job_name, setJobName] = useState("");
-  const [job_desc, setJobDesc] = useState("");
-  const [category, setCategory] = useState("");
+  const [job_name, setJobName] = useState(data.job_name);
+  const [job_desc, setJobDesc] = useState(data.job_desc);
+  const [category, setCategory] = useState(data.category);
   const [tag, setTag] = useState("");
   const [due, setDue] = useState("");
 
