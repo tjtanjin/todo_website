@@ -81,6 +81,7 @@ function Login(props) {
               setEmail(e.target.value);
             }}
             placeholder="Enter email"
+            autoFocus
           />
         </div>
 
