@@ -87,7 +87,7 @@ function Tasks(props) {
                 <Link className="nav-link nav-text" to={"/profile"}>Profile</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link nav-text" onClick={() => logOut}>Logout</Link>
+                <Link className="nav-link nav-text" to={"/login"} onClick={() => logOut}>Logout</Link>
               </li>
             </ul>
           </div>
