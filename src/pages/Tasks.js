@@ -5,8 +5,9 @@ import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import { Modal } from 'react-bootstrap'
 import { Link } from "react-router-dom";
-import { decode } from 'jsonwebtoken'
+import { decode } from 'jsonwebtoken';
 import { useAuth } from "../context/auth";
+import { Navbar } from "../components/Navbar";
 
 function Tasks(props) {
   const [searchWord, setSearchWord] = useState("");
@@ -80,21 +81,7 @@ function Tasks(props) {
 
   return (
     <div className="tasks-inner">
-      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div className="container">
-          <Link className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo_Manager</Link>
-          <div className="collapse navbar-collapse">
-            <ul className="navbar-nav text-uppercase ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link nav-text" to={"/profile"}>Profile</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link nav-text" to={"/login"} onClick={() => logOut}>Logout</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <Navbar></Navbar>
 
       <h3>Tasks</h3>
         <div class="search">
