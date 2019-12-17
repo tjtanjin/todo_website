@@ -1,11 +1,8 @@
 import React from "react";
-import axios from 'axios';
 import { Route, Redirect } from "react-router-dom";
-import { useAuth } from "./context/auth";
 import { VerifyAuth } from "./components/VerifyAuth"
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const { authTokens } = useAuth();
 
   return (
     <Route

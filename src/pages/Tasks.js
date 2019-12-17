@@ -4,14 +4,11 @@ import NewTask from '../components/NewTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import { Modal } from 'react-bootstrap'
-import { Link } from "react-router-dom";
 import { decode } from 'jsonwebtoken';
-import { useAuth } from "../context/auth";
 import { Navbar } from "../components/Navbar";
 
 function Tasks(props) {
   const [searchWord, setSearchWord] = useState("");
-  const { setAuthTokens } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [showNewTask, setNewTaskShow] = useState(false);
   const [showEditTask, setEditTaskShow] = useState(false);
@@ -29,10 +26,6 @@ function Tasks(props) {
     getTasks();
   }, []);
 
-  function logOut() {
-    setAuthTokens();
-  }
-
   function renderTableHeader() {
     let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT", "ACTIONS"]
     return header.map((key, index) => {
@@ -48,7 +41,7 @@ function Tasks(props) {
         const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
         return (
           <tr key={id}>
-            <td>{id}</td>
+            <td>{index + 1}</td>
             <td>{job_name}</td>
             <td>{job_desc}</td>
             <td>{category}</td>

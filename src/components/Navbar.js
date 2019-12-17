@@ -1,9 +1,5 @@
-import React, { useState } from "react";
-import axios from 'axios';
+import React from "react";
 import { Link } from "react-router-dom";
-import { Error, Success } from "../components/AuthForms";
-import { decode } from 'jsonwebtoken';
-import { Sleep } from "../components/Utils";
 import { VerifyAuth } from "../components/VerifyAuth";
 import { useAuth } from "../context/auth"
 
