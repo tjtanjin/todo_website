@@ -9,6 +9,7 @@ import { decode } from 'jsonwebtoken'
 import { useAuth } from "../context/auth";
 
 function Tasks(props) {
+  const [searchWord, setSearchWord] = useState("");
   const { setAuthTokens } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [showNewTask, setNewTaskShow] = useState(false);
@@ -32,18 +33,18 @@ function Tasks(props) {
   }
 
   function renderTableHeader() {
-      let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT", "ACTIONS"]
-      return header.map((key, index) => {
-         return <th key={index}>{key}</th>
-      })
-   }
-
+    let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT", "ACTIONS"]
+    return header.map((key, index) => {
+       return <th key={index}>{key}</th>
+    })
+  }
 
   function renderTableData() {
     return tasks.map((task, index) => {
-      const { id, job_name, job_desc, category, tag, due, created_at, updated_at } = task
-      const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
-      const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
+      if (searchWord === "" || task.category.includes(searchWord)) {
+        const { id, job_name, job_desc, category, tag, due, created_at, updated_at } = task
+        const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
+        const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
         return (
           <tr key={id}>
             <td>{id}</td>
@@ -57,6 +58,7 @@ function Tasks(props) {
             <td>{edit_button}{delete_button}</td>
           </tr>
         )
+      } else {}
     })
   }
 
@@ -95,6 +97,16 @@ function Tasks(props) {
       </nav>
 
       <h3>Tasks</h3>
+        <div class="search">
+          <input type="text" value={searchWord}
+            className="searchTerm" 
+            onChange={e => {
+              setSearchWord(e.target.value);
+            }} placeholder="Search by Category"/>
+          <button type="submit" className="searchButton">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
       <table id="tasks">
         <tbody>
           <tr>{renderTableHeader()}</tr>
