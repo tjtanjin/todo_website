@@ -24,7 +24,7 @@ function DeleteTask(data) {
       <p className="prompt"> Are you sure you want to delete the task <span className="trackedtask">{data.job_name}</span>?</p>
       <br/>
       <button className="btn btn-dark btn-block" onClick={e => delTask()}>Delete</button>
-      <button type="button" className="btn btn-dark btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
+      <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>
     </div>
   );
 }

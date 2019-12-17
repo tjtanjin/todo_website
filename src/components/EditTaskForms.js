@@ -3,6 +3,7 @@ import axios from 'axios';
 import { decode } from 'jsonwebtoken'
 
 function EditTask(data) {
+  const onCloseModal = data.onCloseModal
   data = data.task
   const [job_name, setJobName] = useState(data.job_name);
   const [job_desc, setJobDesc] = useState(data.job_desc);
@@ -110,7 +111,7 @@ function EditTask(data) {
         </div>
 
         <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={validateInput}>Update</button>
-        <button type="button" className="btn btn-dark btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
+        <button type="button" className="btn btn-dark btn-block" onClick={onCloseModal}>Back</button>
         <br/>
       </form>
     </div>

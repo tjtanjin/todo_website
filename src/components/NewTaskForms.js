@@ -120,7 +120,7 @@ function NewTask(data) {
         </div>
 
         <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={validateInput}>Create</button>
-        <button type="button" className="btn btn-dark btn-block" onClick={event => window.location.href='/tasks'}>Back</button>
+        <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>
         <br/>
         { isSuccess &&<Success>Task created!</Success> }
         { isError &&<Error>Please check the format of your information.</Error> }
