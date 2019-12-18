@@ -5,6 +5,7 @@ import { decode } from 'jsonwebtoken'
 import { Sleep } from "../components/Utils"
 
 function NewTask(data) {
+  const [apiResult, setApiResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [job_name, setJobName] = useState("");
@@ -12,15 +13,6 @@ function NewTask(data) {
   const [category, setCategory] = useState("");
   const [tag, setTag] = useState("");
   const [due, setDue] = useState("");
-
-  function validateInput() {
-    if (job_name !== "" && job_desc !== "" && category !== "") {
-      postNewTask();
-      return setIsError(false)
-    } else {
-      return setIsError(true)
-    }
-  }
 
   function postNewTask() {
     const token = JSON.parse(localStorage.getItem('tokens')).auth_token;
@@ -37,13 +29,11 @@ function NewTask(data) {
     }).then(result => {
       if (result.status === 200) {
         setIsSuccess(true);
-        Sleep(1000).then(() => {
-          window.location.assign("/tasks");
-        })
       } else {
         setIsError(true);
       }
     }).catch(e => {
+      setApiResult(e.response.data.error);
       setIsError(true);
     });
   }
@@ -119,11 +109,11 @@ function NewTask(data) {
           />
         </div>
 
-        <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={validateInput}>Create</button>
+        <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={postNewTask}>Create</button>
         <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>
         <br/>
         { isSuccess &&<Success>Task created!</Success> }
-        { isError &&<Error>Please check the format of your information.</Error> }
+        { isError &&<Error>{apiResult}</Error> }
       </form>
     </div>
   );

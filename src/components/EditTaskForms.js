@@ -1,23 +1,19 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import { Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
 
 function EditTask(data) {
   const onCloseModal = data.onCloseModal
   data = data.task
+  const [apiResult, setApiResult] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [job_name, setJobName] = useState(data.job_name);
   const [job_desc, setJobDesc] = useState(data.job_desc);
   const [category, setCategory] = useState(data.category);
   const [tag, setTag] = useState("");
   const [due, setDue] = useState("");
-
-  function validateInput() {
-    if (job_name !== "" && job_desc !== "" && category !== "") {
-      putEditTask();
-    } else {
-      return false;
-    }
-  }
 
   function putEditTask() {
     const token = JSON.parse(localStorage.getItem('tokens')).auth_token;
@@ -33,12 +29,13 @@ function EditTask(data) {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {
-        window.location.assign("/tasks");
+        setIsSuccess(true)
       } else {
-
+        setIsError(true)
       }
     }).catch(e => {
-      alert(e)
+      setApiResult(e.response.data.error);
+      setIsError(true);
     });
   }
 
@@ -110,9 +107,11 @@ function EditTask(data) {
           />
         </div>
 
-        <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={validateInput}>Update</button>
+        <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={putEditTask}>Update</button>
         <button type="button" className="btn btn-dark btn-block" onClick={onCloseModal}>Back</button>
         <br/>
+        { isSuccess &&<Success>Task created!</Success> }
+        { isError &&<Error>{apiResult}</Error> }
       </form>
     </div>
   );
