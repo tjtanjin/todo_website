@@ -5,6 +5,7 @@ import { Form, Error } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
 
 function Signup() {
+  const [apiResult, setApiResult] = useState("");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isError, setIsError] = useState(false);
   const [name, setUserName] = useState("");
@@ -27,7 +28,8 @@ function Signup() {
         setIsError(true);
       }
     }).catch(e => {
-      setIsError(true);
+      setApiResult(e.response.data.error)
+      setIsError(true)
     });
   }
 
@@ -122,7 +124,7 @@ function Signup() {
 
         <button id="submitButton" className="btn btn-primary btn-block" onClick={postSignup}>Sign Up</button>
         <Link to="/login">Already have an account?</Link>
-        { isError &&<Error>Please ensure that your email is valid and that your passwords match.</Error> }
+        { isError &&<Error>{apiResult}</Error> }
       </Form>
     </div>
   );
