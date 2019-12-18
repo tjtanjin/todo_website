@@ -122,7 +122,7 @@ function Signup() {
           />
         </div>
 
-        <button id="submitButton" className="btn btn-primary btn-block" onClick={postSignup}>Sign Up</button>
+        <button id="submitButton" className="btn btn-dark btn-block" onClick={postSignup}>Sign Up</button>
         <Link to="/login">Already have an account?</Link>
         { isError &&<Error>{apiResult}</Error> }
       </Form>
