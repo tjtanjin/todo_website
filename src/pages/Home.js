@@ -1,14 +1,17 @@
 import React from "react";
+import HttpsRedirect from 'react-https-redirect'
 import logoImg from "../img/logo.png";
 import { Logo } from "../components/AuthForms";
 import { Navbar } from "../components/Navbar";
 
 function Home(props) {
   return (
-  	<div className="home-inner">
-      <Navbar></Navbar>
-      <Logo src={logoImg} />
-    </div>
+    <HttpsRedirect>
+      <div className="home-inner">
+        <Navbar></Navbar>
+        <Logo src={logoImg} />
+      </div>
+    </HttpsRedirect>
   )
 }
 
