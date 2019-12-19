@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from 'axios';
 import { Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
-import { Sleep } from "../components/Utils"
 
 function NewTask(data) {
   const [apiResult, setApiResult] = useState("");
