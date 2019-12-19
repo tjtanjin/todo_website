@@ -30,6 +30,8 @@ function EditTask(data) {
     }).then(result => {
       if (result.status === 200) {
         setIsSuccess(true)
+        window.location.assign("/tasks");
+        onCloseModal()
       } else {
         setIsError(true)
       }
@@ -107,10 +109,10 @@ function EditTask(data) {
           />
         </div>
 
-        <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={putEditTask}>Update</button>
+        <button id="submitButton" type="button" className="btn btn-dark btn-block" onClick={putEditTask}>Update</button>
         <button type="button" className="btn btn-dark btn-block" onClick={onCloseModal}>Back</button>
         <br/>
-        { isSuccess &&<Success>Task created!</Success> }
+        { isSuccess &&<Success>Task updated!</Success> }
         { isError &&<Error>{apiResult}</Error> }
       </form>
     </div>

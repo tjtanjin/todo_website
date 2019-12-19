@@ -29,6 +29,8 @@ function NewTask(data) {
     }).then(result => {
       if (result.status === 200) {
         setIsSuccess(true);
+        window.location.assign("/tasks");
+        data.onCloseModal();
       } else {
         setIsError(true);
       }
@@ -51,7 +53,6 @@ function NewTask(data) {
               setJobName(e.target.value);
             }}
             placeholder="Enter task name"
-            required
           />
         </div>
 
@@ -65,7 +66,6 @@ function NewTask(data) {
               setJobDesc(e.target.value);
             }}
             placeholder="Enter description"
-            required
           />
         </div>
 
@@ -79,7 +79,6 @@ function NewTask(data) {
               setCategory(e.target.value);
             }}
             placeholder="Enter category"
-            required
           />
         </div>
 
@@ -109,7 +108,7 @@ function NewTask(data) {
           />
         </div>
 
-        <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={postNewTask}>Create</button>
+        <button id="submitButton" type="button" className="btn btn-dark btn-block" onClick={postNewTask}>Create</button>
         <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>
         <br/>
         { isSuccess &&<Success>Task created!</Success> }
