@@ -16,7 +16,7 @@ function NewTask(data) {
   function postNewTask() {
     const token = JSON.parse(localStorage.getItem('tokens')).auth_token;
     const user_id = decode(token).user_id;
-    axios.post("http://localhost:3000/api/v1/users/" + user_id + "/tasks", {
+    axios.post(process.env.REACT_APP_API_LINK + "/api/v1/users/" + user_id + "/tasks", {
       job_name,
       job_desc,
       category,

@@ -6,7 +6,7 @@ function DeleteTask(data) {
   function delTask() {
     const token = JSON.parse(localStorage.getItem('tokens')).auth_token;
     const user_id = decode(token).user_id;
-    axios.delete("http://localhost:3000/api/v1/users/" + user_id + "/tasks/" + data.id, {
+    axios.delete(process.env.REACT_APP_API_LINK + "/api/v1/users/" + user_id + "/tasks/" + data.id, {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {

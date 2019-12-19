@@ -18,7 +18,7 @@ function Login(props) {
   }
 
   function postLogin() {
-    axios.post("http://localhost:3000/authenticate", {
+    axios.post(process.env.REACT_APP_API_LINK, {
       email,
       password
     }).then(result => {

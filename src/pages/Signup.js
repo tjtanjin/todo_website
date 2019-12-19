@@ -15,7 +15,7 @@ function Signup() {
   const { setAuthTokens } = useAuth();
 
   function postSignup() {
-    axios.post("http://localhost:3000/api/v1/users", {"user": {
+    axios.post(process.env.REACT_APP_API_LINK + "/api/v1/users/", {"user": {
       name,
       email,
       password,
