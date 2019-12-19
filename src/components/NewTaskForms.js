@@ -10,7 +10,7 @@ function NewTask(data) {
   const [job_name, setJobName] = useState("");
   const [job_desc, setJobDesc] = useState("");
   const [category, setCategory] = useState("");
-  const [tag, setTag] = useState("");
+  const [tag, setTag] = useState("Low");
   const [due, setDue] = useState("");
 
   function postNewTask() {
@@ -96,21 +96,23 @@ function NewTask(data) {
 
         <div className="form-group">
           <label>Tag</label>
-          <input
+          <select 
             type="tag"
             value={tag}
             className="form-control" 
             onChange={e => {
               setTag(e.target.value);
-            }}
-            placeholder="Choose a tag"
-          />
+            }}>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
         </div>
 
         <div className="form-group">
           <label>Deadline</label>
           <input
-            type="due"
+            type="date"
             value={due}
             className="form-control" 
             onChange={e => {
