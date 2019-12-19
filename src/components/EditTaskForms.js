@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
@@ -40,6 +40,19 @@ function EditTask(data) {
       setIsError(true);
     });
   }
+
+  useEffect(() => {
+    const handleEnter = (event) => {
+      if (event.keyCode === 13) {
+        document.getElementById("submitButton").click()
+      }
+    };
+    window.addEventListener('keydown', handleEnter);
+
+    return () => {
+      window.removeEventListener('keydown', handleEnter);
+    };
+  }, []);
 
   return (
     <div className="auth-inner">
