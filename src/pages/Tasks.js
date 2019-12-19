@@ -27,7 +27,7 @@ function Tasks(props) {
   }, []);
 
   function renderTableHeader() {
-    let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "CREATED AT", "UPDATED AT", "ACTIONS"]
+    let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "ACTIONS"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
@@ -36,7 +36,7 @@ function Tasks(props) {
   function renderTableData() {
     return tasks.map((task, index) => {
       if (searchWord === "" || task.category.includes(searchWord)) {
-        const { id, job_name, job_desc, category, tag, due, created_at, updated_at } = task
+        const { id, job_name, job_desc, category, tag, due } = task
         const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
         const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
         return (
@@ -47,8 +47,6 @@ function Tasks(props) {
             <td>{category}</td>
             <td>{tag}</td>
             <td>{due}</td>
-            <td>{created_at}</td>
-            <td>{updated_at}</td>
             <td>{edit_button}{delete_button}</td>
           </tr>
         )
