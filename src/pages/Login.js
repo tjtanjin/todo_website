@@ -18,7 +18,7 @@ function Login(props) {
   }
 
   function postLogin() {
-    axios.post(process.env.REACT_APP_API_LINK, {
+    axios.post(process.env.REACT_APP_API_LINK + "/authenticate", {
       email,
       password
     }).then(result => {
