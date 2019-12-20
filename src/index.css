@@ -169,6 +169,10 @@ body{
   font-size: 20px;
 }
 
+.load {
+  align-self: center;
+}
+
 /*Resize the wrap to see the search bar change!*/
 .wrap{
   width: 30%;

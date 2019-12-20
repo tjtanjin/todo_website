@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { Form, Error } from "../components/AuthForms";
+import { Loading } from "../components/Loading";
 import { useAuth } from "../context/auth";
 
 function Signup() {
   const [apiResult, setApiResult] = useState("");
   const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [name, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,12 +17,15 @@ function Signup() {
   const { setAuthTokens } = useAuth();
 
   function postSignup() {
+    setIsLoading(true);
+    setIsError(false);
     axios.post(process.env.REACT_APP_API_LINK + "/api/v1/users/", {"user": {
       name,
       email,
       password,
       password_confirmation
     }}).then(result => {
+      setIsLoading(false);
       if (result.status === 200) {
         setAuthTokens(result.data);
         setLoggedIn(true);
@@ -28,6 +33,7 @@ function Signup() {
         setIsError(true);
       }
     }).catch(e => {
+      setIsLoading(false);
       setApiResult(e.response.data.error)
       setIsError(true)
     });
@@ -124,6 +130,7 @@ function Signup() {
 
         <button id="submitButton" className="btn btn-dark btn-block" onClick={postSignup}>Sign Up</button>
         <Link className="link" to="/login">Already have an account?</Link>
+        { isLoading&&<Loading></Loading> }
         { isError &&<Error>{apiResult}</Error> }
       </Form>
     </div>
