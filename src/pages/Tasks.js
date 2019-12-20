@@ -27,7 +27,7 @@ function Tasks(props) {
   }, []);
 
   function renderTableHeader() {
-    let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "TAG", "DEADLINE", "ACTIONS"]
+    let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
@@ -45,7 +45,7 @@ function Tasks(props) {
             <td>{job_name}</td>
             <td>{job_desc}</td>
             <td>{category}</td>
-            <td>{tag}</td>
+            <td className={tag}>{tag}</td>
             <td>{due}</td>
             <td>{edit_button}{delete_button}</td>
           </tr>
