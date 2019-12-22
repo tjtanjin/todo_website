@@ -30,7 +30,7 @@ function EditTask(data) {
     }).then(result => {
       if (result.status === 200) {
         setIsSuccess(true)
-        window.location.assign("/tasks");
+        window.location.reload();
         onCloseModal()
       } else {
         setIsError(true)
@@ -98,27 +98,29 @@ function EditTask(data) {
 
         <div className="form-group">
           <label>Tag</label>
-          <input
+          <select 
             type="tag"
             defaultValue={data.tag}
             className="form-control" 
             onChange={e => {
               setTag(e.target.value);
-            }}
-            placeholder=""
-          />
+            }}>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
         </div>
 
         <div className="form-group">
           <label>Deadline</label>
           <input
-            type="due"
+            type="date"
             defaultValue={data.due}
             className="form-control" 
             onChange={e => {
               setDue(e.target.value);
             }}
-            placeholder=""
+            placeholder="Enter deadline"
           />
         </div>
 
