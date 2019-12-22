@@ -5,6 +5,7 @@ import { decode } from 'jsonwebtoken'
 
 function EditTask(data) {
   const onCloseModal = data.onCloseModal
+  const getTasks = data.getTasks
   data = data.task
   const [apiResult, setApiResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -29,9 +30,9 @@ function EditTask(data) {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {
-        setIsSuccess(true)
-        window.location.reload();
-        onCloseModal()
+        setIsSuccess(true);
+        getTasks();
+        onCloseModal();
       } else {
         setIsError(true)
       }

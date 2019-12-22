@@ -10,7 +10,8 @@ function DeleteTask(data) {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {
-        window.location.reload();
+        data.getTasks();
+        data.onCloseModal();
       } else {
 
       }

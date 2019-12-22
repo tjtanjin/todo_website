@@ -5,6 +5,7 @@ import { decode } from 'jsonwebtoken'
 
 function EditUser(data) {
   const onCloseModal = data.onCloseModal
+  const getUsers = data.getUsers;
   data = data.user
   const [apiResult, setApiResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -23,7 +24,7 @@ function EditUser(data) {
     }).then(result => {
       if (result.status === 200) {
         setIsSuccess(true)
-        window.location.reload();
+        data.getUsers();
         onCloseModal()
       } else {
         setIsError(true)

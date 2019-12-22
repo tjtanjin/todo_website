@@ -100,21 +100,21 @@ function Tasks(props) {
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Create New Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><NewTask onCloseModal={handleNewTaskClose}></NewTask></Modal.Body>
+        <Modal.Body><NewTask onCloseModal={handleNewTaskClose} getTasks={getTasks}></NewTask></Modal.Body>
       </Modal>
 
       <Modal show={showEditTask} onHide={handleEditTaskClose}>
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Edit Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose}></EditTask></Modal.Body>
+        <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose} getTasks={getTasks}></EditTask></Modal.Body>
       </Modal>
 
       <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Delete Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleDeleteTaskClose}></DeleteTask></Modal.Body>
+        <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
       </Modal>
     </div>
   )

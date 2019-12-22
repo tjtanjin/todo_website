@@ -28,7 +28,7 @@ function NewTask(data) {
     }).then(result => {
       if (result.status === 200) {
         setIsSuccess(true);
-        window.location.reload();
+        data.getTasks();
         data.onCloseModal();
       } else {
         setIsError(true);

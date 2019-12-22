@@ -97,21 +97,21 @@ function Users(props) {
         <Modal.Header className="modal_header_bg">
           <Modal.Title>{trackedUser.name}'s Tasks</Modal.Title>
         </Modal.Header>
-        <Modal.Body><UserTasks user={trackedUser} onCloseModal={handleUserTasksClose}></UserTasks></Modal.Body>
+        <Modal.Body><UserTasks user={trackedUser} onCloseModal={handleUserTasksClose} getUsers={getUsers}></UserTasks></Modal.Body>
       </Modal>
 
       <Modal show={showEditUser} onHide={handleEditUserClose}>
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Edit User</Modal.Title>
         </Modal.Header>
-        <Modal.Body><EditUser user={trackedUser} onCloseModal={handleEditUserClose}></EditUser></Modal.Body>
+        <Modal.Body><EditUser user={trackedUser} onCloseModal={handleEditUserClose} getUsers={getUsers}></EditUser></Modal.Body>
       </Modal>
 
       <Modal show={showDeleteUser} onHide={handleDeleteUserClose}>
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Delete User</Modal.Title>
         </Modal.Header>
-        <Modal.Body><DeleteUser id={trackedUser.id} name={trackedUser.name} onCloseModal={handleDeleteUserClose}></DeleteUser></Modal.Body>
+        <Modal.Body><DeleteUser id={trackedUser.id} name={trackedUser.name} onCloseModal={handleDeleteUserClose} getUsers={getUsers}></DeleteUser></Modal.Body>
       </Modal>
     </div>
   )
