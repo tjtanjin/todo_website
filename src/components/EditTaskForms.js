@@ -25,7 +25,6 @@ function EditTask(data) {
       category,
       tag,
       due,
-      user_id
     }, {
       headers: { Authorization: token }
     }).then(result => {
