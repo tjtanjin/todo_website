@@ -1,13 +1,13 @@
 import { decode } from 'jsonwebtoken'
 
-function VerifyAuth() {
+function VerifyAdmin() {
   const check_exist_data = JSON.parse(localStorage.getItem('todo_data'));
   if (check_exist_data === null) {
-  	return false;
+    return false;
   }
   else {
-    return check_exist_data.isLoggedIn === true;
+    return check_exist_data.isAdmin === true;
   }
 }
 
-export { VerifyAuth }
+export { VerifyAdmin }

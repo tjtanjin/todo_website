@@ -4,7 +4,7 @@ import { decode } from 'jsonwebtoken'
 
 function DeleteTask(data) {
   function delTask() {
-    const token = JSON.parse(localStorage.getItem('tokens')).auth_token;
+    const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
     axios.delete(process.env.REACT_APP_API_LINK + "/api/v1/users/" + user_id + "/tasks/" + data.id, {
       headers: { Authorization: token }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { VerifyAuth } from "../components/VerifyAuth";
+import { VerifyAdmin } from "../components/VerifyAdmin";
 import { useAuth } from "../context/auth"
 
 function Navbar() {
@@ -16,6 +17,8 @@ function Navbar() {
   let word2 = "Sign Up"
   let link3 = ""
   let word3 = ""
+  let link4 = ""
+  let word4 = ""
   if (VerifyAuth()) {
     link1 = "/profile"
     word1 = "My Profile"
@@ -24,12 +27,19 @@ function Navbar() {
     link3 = "/tasks"
     word3 = "My Tasks"
   } else {}
+  if (VerifyAdmin()) {
+    link4 = "/users"
+    word4 = "View Users"
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
       <div className="container">
         <Link className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo_Manager</Link>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav text-uppercase ml-auto">
+            <li className="nav-item">
+              <Link className="nav-link nav-text" to={link4}>{word4}</Link>
+            </li>
             <li className="nav-item">
               <Link className="nav-link nav-text" to={link3}>{word3}</Link>
             </li>
