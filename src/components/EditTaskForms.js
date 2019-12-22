@@ -13,8 +13,8 @@ function EditTask(data) {
   const [job_name, setJobName] = useState(data.job_name);
   const [job_desc, setJobDesc] = useState(data.job_desc);
   const [category, setCategory] = useState(data.category);
-  const [tag, setTag] = useState("");
-  const [due, setDue] = useState("");
+  const [tag, setTag] = useState(data.tag);
+  const [due, setDue] = useState(data.due);
 
   function putEditTask() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;

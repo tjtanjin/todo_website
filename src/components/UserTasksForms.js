@@ -94,7 +94,7 @@ function UserTasks(data) {
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Edit Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><EditTask task={trackedTask} onCloseModal={onCloseModal} getTasks={getTasks}></EditTask></Modal.Body>
+        <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose} getTasks={getTasks}></EditTask></Modal.Body>
       </Modal>
 
       <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>

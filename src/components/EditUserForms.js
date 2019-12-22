@@ -24,7 +24,7 @@ function EditUser(data) {
     }).then(result => {
       if (result.status === 200) {
         setIsSuccess(true)
-        data.getUsers();
+        getUsers();
         onCloseModal()
       } else {
         setIsError(true)

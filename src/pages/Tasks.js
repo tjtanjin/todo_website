@@ -27,7 +27,7 @@ function Tasks(props) {
   }, []);
 
   function renderTableHeader() {
-    let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS"]
+    let header = ["INDEX", "TASK NAME", "DESCRIPTION", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
