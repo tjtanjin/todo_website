@@ -188,6 +188,11 @@ body{
   font-weight: bold;
 }
 
+.large-modal {
+  width: 80%;
+  max-width:80%!important;
+}
+
 /*Resize the wrap to see the search bar change!*/
 .wrap{
   width: 30%;

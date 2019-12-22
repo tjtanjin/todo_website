@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import UserTasks from '../components/UserTasksForms'
 import EditUser from '../components/EditUserForms'
 import DeleteUser from '../components/DeleteUserForms'
 import { Modal } from 'react-bootstrap'
@@ -9,10 +10,13 @@ import { Navbar } from "../components/Navbar";
 function Users(props) {
   const [searchWord, setSearchWord] = useState("");
   const [users, setUsers] = useState([]);
+  const [showUserTasks, setUserTasksShow] = useState(false);
   const [showEditUser, setEditUserShow] = useState(false);
   const [showDeleteUser, setDeleteUserShow] = useState(false);
   const [trackedUser, setTrackedUser] = useState({});
 
+  const handleUserTasksClose = () => setUserTasksShow(false);
+  const handleUserTasksShow = () => setUserTasksShow(true);
   const handleEditUserClose = () => setEditUserShow(false);
   const handleEditUserShow = () => setEditUserShow(true);
   const handleDeleteUserClose = () => setDeleteUserShow(false);
@@ -23,7 +27,7 @@ function Users(props) {
   }, []);
 
   function renderTableHeader() {
-    let header = ["INDEX", "USERID", "USERNAME", "EMAIL", "CREATED_AT", "UPDATED_AT", "ACTIONS"]
+    let header = ["INDEX", "USERID", "USERNAME", "EMAIL", "CREATED_AT", "UPDATED_AT", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
@@ -33,6 +37,7 @@ function Users(props) {
     return users.map((user, index) => {
       if (searchWord === "" || user.name.includes(searchWord)) {
         const { id, name, email, created_at, updated_at } = user
+        const info_button = <button type="button" onClick={() => {handleUserTasksShow(); setTrackedUser(user)}}><i className="fa fa-tasks"></i></button>
         const edit_button = <button type="button" onClick={() => {handleEditUserShow(); setTrackedUser(user)}}><i className="fa fa-wrench"></i></button>
         const delete_button = <button type="button" onClick={() => {handleDeleteUserShow(); setTrackedUser(user)}}><i className="fa fa-remove"></i></button>
         return (
@@ -43,7 +48,7 @@ function Users(props) {
             <td>{email}</td>
             <td>{created_at}</td>
             <td>{updated_at}</td>
-            <td>{edit_button}{delete_button}</td>
+            <td>{info_button}{edit_button}{delete_button}</td>
           </tr>
         )
       } else {}
@@ -87,6 +92,13 @@ function Users(props) {
         </tbody>
       </table>
       <br/>
+
+      <Modal dialogClassName="large-modal" show={showUserTasks} onHide={handleUserTasksClose}>
+        <Modal.Header className="modal_header_bg">
+          <Modal.Title>{trackedUser.name}'s Tasks</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><UserTasks user={trackedUser} onCloseModal={handleUserTasksClose}></UserTasks></Modal.Body>
+      </Modal>
 
       <Modal show={showEditUser} onHide={handleEditUserClose}>
         <Modal.Header className="modal_header_bg">
