@@ -23,7 +23,7 @@ function EditUser(data) {
     }).then(result => {
       if (result.status === 200) {
         setIsSuccess(true)
-        window.location.assign("/users");
+        window.location.reload();
         onCloseModal()
       } else {
         setIsError(true)

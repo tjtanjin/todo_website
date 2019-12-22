@@ -10,7 +10,7 @@ function DeleteTask(data) {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {
-        window.location.assign("/tasks");
+        window.location.reload();
       } else {
 
       }
@@ -21,7 +21,7 @@ function DeleteTask(data) {
 
   return (
     <div className="auth-inner">
-      <p className="prompt"> Are you sure you want to delete the task <span className="trackedtask">{data.job_name}</span>?</p>
+      <p className="prompt"> Are you sure you want to delete the task <span className="trackedcontent">{data.job_name}</span>?</p>
       <br/>
       <button className="btn btn-dark btn-block" type="button" onClick={e => delTask()}>Delete</button>
       <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>

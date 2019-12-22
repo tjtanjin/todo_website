@@ -9,7 +9,7 @@ function DeleteUser(data) {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {
-        window.location.assign("/users");
+        window.location.reload();
       } else {
 
       }
