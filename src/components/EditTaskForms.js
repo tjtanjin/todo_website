@@ -19,7 +19,7 @@ function EditTask(data) {
   function putEditTask() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
-    axios.put(process.env.REACT_APP_API_LINK + "/api/v1/users/" + user_id + "/tasks/" + data.id, {
+    axios.put(process.env.REACT_APP_API_LINK + "/users/" + user_id + "/tasks/" + data.id, {
       job_name,
       job_desc,
       category,

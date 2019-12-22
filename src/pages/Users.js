@@ -57,7 +57,7 @@ function Users(props) {
 
   function getUsers() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
-    axios.get(process.env.REACT_APP_API_LINK + "/api/v1/users/", {
+    axios.get(process.env.REACT_APP_API_LINK + "/users/", {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {

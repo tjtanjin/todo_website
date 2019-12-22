@@ -5,7 +5,7 @@ import { decode } from 'jsonwebtoken'
 function DeleteUser(data) {
   function delUser() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
-    axios.delete(process.env.REACT_APP_API_LINK + "/api/v1/users/" + data.id, {
+    axios.delete(process.env.REACT_APP_API_LINK + "/users/" + data.id, {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {

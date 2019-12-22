@@ -16,7 +16,7 @@ function EditUser(data) {
   function putEditUser() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
-    axios.put(process.env.REACT_APP_API_LINK + "/api/v1/users/" + data.id, { "user": {
+    axios.put(process.env.REACT_APP_API_LINK + "/users/" + data.id, { "user": {
       name,
       email
     }}, {

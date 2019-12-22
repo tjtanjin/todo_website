@@ -19,7 +19,7 @@ function Signup() {
   function postSignup() {
     setIsLoading(true);
     setIsError(false);
-    axios.post(process.env.REACT_APP_API_LINK + "/api/v1/users/", {"user": {
+    axios.post(process.env.REACT_APP_API_LINK + "/users/", {"user": {
       name,
       email,
       password,
