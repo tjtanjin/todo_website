@@ -71,7 +71,7 @@ function Tasks(props) {
   }
 
   return (
-    <div className="tasks-inner">
+    <div className="content-inner">
       <Navbar></Navbar>
 
       <h3>Tasks</h3>
@@ -85,7 +85,7 @@ function Tasks(props) {
             <i class="fa fa-search"></i>
           </button>
         </div>
-      <table id="tasks">
+      <table id="content-table">
         <tbody>
           <tr>{renderTableHeader()}</tr>
           {renderTableData()}
