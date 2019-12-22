@@ -93,7 +93,7 @@ body, html, .App, #root, .auth-wrapper {
   background-color: #FF8C00;
 }
 
-.tasks-inner {
+.content-inner {
   width: 1000px;
   height: 80%;
   margin: auto;
@@ -119,7 +119,7 @@ body, html, .App, #root, .auth-wrapper {
   text-align: center;
 }
 
-.trackedtask {
+.trackedcontent {
   font-weight: bold;
   color: red;
 }
@@ -204,7 +204,7 @@ body{
   font-family: arial, sans-serif;
 }
 
-#tasks {
+#content-table {
   text-align: center;
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -212,16 +212,16 @@ body{
   width: 100%;
 }
 
-#tasks td, #tasks th {
+#content-table td, #content-table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#tasks tr:nth-child(even){background-color: #f2f2f2;}
+#content-table tr:nth-child(even){background-color: #f2f2f2;}
 
-#tasks tr:hover {background-color: #ddd;}
+#content-table tr:hover {background-color: #ddd;}
 
-#tasks th {
+#content-table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: center;

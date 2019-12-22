@@ -7,6 +7,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from './pages/Signup';
 import Tasks from "./pages/Tasks";
+import Profile from './pages/Profile';
+import Users from "./pages/Users";
 import { AuthContext } from "./context/auth";
 
 function App(props) {
@@ -27,6 +29,8 @@ function App(props) {
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <PrivateRoute path="/tasks" component={Tasks} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <PrivateRoute path="/users" component={Users} />
             </Switch>
           </div>
       </Router>
