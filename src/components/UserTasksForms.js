@@ -94,14 +94,14 @@ function UserTasks(data) {
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Edit Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><EditTask task={trackedTask} onCloseModal={onCloseModal}></EditTask></Modal.Body>
+        <Modal.Body><EditTask task={trackedTask} onCloseModal={onCloseModal} getTasks={getTasks}></EditTask></Modal.Body>
       </Modal>
 
       <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Delete Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleDeleteTaskClose}></DeleteTask></Modal.Body>
+        <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
       </Modal>
     </div>
   );

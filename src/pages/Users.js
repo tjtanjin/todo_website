@@ -97,7 +97,7 @@ function Users(props) {
         <Modal.Header className="modal_header_bg">
           <Modal.Title>{trackedUser.name}'s Tasks</Modal.Title>
         </Modal.Header>
-        <Modal.Body><UserTasks user={trackedUser} onCloseModal={handleUserTasksClose} getUsers={getUsers}></UserTasks></Modal.Body>
+        <Modal.Body><UserTasks user={trackedUser} onCloseModal={handleUserTasksClose}></UserTasks></Modal.Body>
       </Modal>
 
       <Modal show={showEditUser} onHide={handleEditUserClose}>
