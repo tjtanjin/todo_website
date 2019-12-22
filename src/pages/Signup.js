@@ -86,6 +86,7 @@ function Signup() {
               setUserName(e.target.value);
             }}
             placeholder="Enter username"
+            autoFocus
           />
         </div>
 
