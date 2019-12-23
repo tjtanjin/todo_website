@@ -23,7 +23,6 @@ function ChangePassword(data) {
         "email": data.email,
         "password": currentPassword
       }).then(result => {
-        setIsLoading(false);
         if (result.status === 200) {
           const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
           const user_id = decode(token).user_id;
@@ -32,6 +31,7 @@ function ChangePassword(data) {
           }}, {
             headers: { Authorization: token }
           }).then(result => {
+            setIsLoading(false);
             if (result.status === 200) {
               setIsSuccess(true)
               getSelf();
