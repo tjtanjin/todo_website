@@ -13,9 +13,8 @@ function AdminEditUser(data) {
   const [name, setUsername] = useState(data.name);
   const [email, setEmail] = useState(data.email);
 
-  function putEditUser() {
+  function putAdminEditUser() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
-    const user_id = decode(token).user_id;
     axios.put(process.env.REACT_APP_API_LINK + "/users/" + data.id, { "user": {
       name,
       email
@@ -77,7 +76,7 @@ function AdminEditUser(data) {
           />
         </div>
 
-        <button id="submitButton" type="button" className="btn btn-dark btn-block" onClick={putEditUser}>Update</button>
+        <button id="submitButton" type="button" className="btn btn-dark btn-block" onClick={putAdminEditUser}>Update</button>
         <button type="button" className="btn btn-dark btn-block" onClick={onCloseModal}>Back</button>
         <br/>
         { isSuccess &&<Success>Task updated!</Success> }
