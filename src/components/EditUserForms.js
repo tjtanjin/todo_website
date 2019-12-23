@@ -12,27 +12,45 @@ function EditUser(data) {
   const [isError, setIsError] = useState(false);
   const [name, setUsername] = useState(data.name);
   const [email, setEmail] = useState(data.email);
+  const [password, setPassword] = useState("");
 
   function putEditUser() {
-    const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
-    const user_id = decode(token).user_id;
-    axios.put(process.env.REACT_APP_API_LINK + "/users/" + user_id, { "user": {
-      name,
-      email
-    }}, {
-      headers: { Authorization: token }
-    }).then(result => {
-      if (result.status === 200) {
-        setIsSuccess(true)
-        getSelf();
-        onCloseModal()
-      } else {
-        setIsError(true)
-      }
-    }).catch(e => {
-      setApiResult(e.response.data.error);
-      setIsError(true);
-    });
+    function postAuthenticate() {
+      setIsError(false);
+      axios.post(process.env.REACT_APP_API_LINK + "/authenticate", {
+        "email": data.email,
+        password
+      }).then(result => {
+        if (result.status === 200) {
+          const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
+          const user_id = decode(token).user_id;
+          axios.put(process.env.REACT_APP_API_LINK + "/users/" + user_id, { "user": {
+            name,
+            email,
+            password
+          }}, {
+            headers: { Authorization: token }
+          }).then(result => {
+            if (result.status === 200) {
+              setIsSuccess(true)
+              getSelf();
+              onCloseModal()
+            } else {
+              setIsError(true)
+            }
+          }).catch(e => {
+            setApiResult(e.response.data.error);
+            setIsError(true);
+          });
+        } else {
+          setIsError(true);
+        }
+      }).catch(e => {
+        setApiResult(e.response.data.error);
+        setIsError(true);
+      });
+    }
+    postAuthenticate();
   }
 
   useEffect(() => {
@@ -74,6 +92,19 @@ function EditUser(data) {
               setEmail(e.target.value);
             }}
             placeholder=""
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Password</label>
+          <input
+            type="password"
+            value={password}
+            className="form-control" 
+            onChange={e => {
+              setPassword(e.target.value);
+            }}
+            placeholder="Enter password to save changes"
           />
         </div>
 
