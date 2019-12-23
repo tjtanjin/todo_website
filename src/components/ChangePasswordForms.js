@@ -44,6 +44,7 @@ function ChangePassword(data) {
             setIsError(true);
           });
         } else {
+          setIsLoading(false);
           setIsError(true);
         }
       }).catch(e => {

@@ -24,7 +24,6 @@ function EditUser(data) {
         "email": data.email,
         password
       }).then(result => {
-        setIsLoading(false);
         if (result.status === 200) {
           const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
           const user_id = decode(token).user_id;
@@ -35,6 +34,7 @@ function EditUser(data) {
           }}, {
             headers: { Authorization: token }
           }).then(result => {
+            setIsLoading(false);
             if (result.status === 200) {
               setIsSuccess(true)
               getSelf();
@@ -47,6 +47,7 @@ function EditUser(data) {
             setIsError(true);
           });
         } else {
+          setIsLoading(false);
           setIsError(true);
         }
       }).catch(e => {
