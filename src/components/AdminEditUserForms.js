@@ -79,7 +79,7 @@ function AdminEditUser(data) {
         <button id="submitButton" type="button" className="btn btn-dark btn-block" onClick={putAdminEditUser}>Update</button>
         <button type="button" className="btn btn-dark btn-block" onClick={onCloseModal}>Back</button>
         <br/>
-        { isSuccess &&<Success>Task updated!</Success> }
+        { isSuccess &&<Success>User updated!</Success> }
         { isError &&<Error>{apiResult}</Error> }
       </form>
     </div>

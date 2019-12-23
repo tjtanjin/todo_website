@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Error, Success } from "../components/AuthForms";
+import { Form, Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
+import { Loading } from "./Loading";
 
 function EditUser(data) {
   const onCloseModal = data.onCloseModal
   const getSelf = data.getSelf;
   data = data.user
   const [apiResult, setApiResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [name, setUsername] = useState(data.name);
@@ -16,11 +18,13 @@ function EditUser(data) {
 
   function putEditUser() {
     function postAuthenticate() {
+      setIsLoading(true);
       setIsError(false);
       axios.post(process.env.REACT_APP_API_LINK + "/authenticate", {
         "email": data.email,
         password
       }).then(result => {
+        setIsLoading(false);
         if (result.status === 200) {
           const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
           const user_id = decode(token).user_id;
@@ -46,6 +50,7 @@ function EditUser(data) {
           setIsError(true);
         }
       }).catch(e => {
+        setIsLoading(false);
         setApiResult(e.response.data.error);
         setIsError(true);
       });
@@ -68,7 +73,7 @@ function EditUser(data) {
 
   return (
     <div className="auth-inner">
-      <form>
+      <Form>
         <div className="form-group">
           <label>Username</label>
           <input
@@ -111,9 +116,10 @@ function EditUser(data) {
         <button id="submitButton" type="button" className="btn btn-dark btn-block" onClick={putEditUser}>Update</button>
         <button type="button" className="btn btn-dark btn-block" onClick={onCloseModal}>Back</button>
         <br/>
-        { isSuccess &&<Success>Task updated!</Success> }
+        { isLoading&&<Loading></Loading> }
+        { isSuccess &&<Success>Profile updated!</Success> }
         { isError &&<Error>{apiResult}</Error> }
-      </form>
+      </Form>
     </div>
   );
 }
