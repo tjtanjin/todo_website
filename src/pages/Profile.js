@@ -56,7 +56,7 @@ function Profile(props) {
   }, []);
 
   return (
-    <div className="auth-inner">
+    <div className="profile-inner">
       <Navbar></Navbar>
       
       <h3>{name}'s Profile</h3>
