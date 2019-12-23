@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
 
-function EditUser(data) {
+function AdminEditUser(data) {
   const onCloseModal = data.onCloseModal
   const getUsers = data.getUsers;
   data = data.user
@@ -87,4 +87,4 @@ function EditUser(data) {
   );
 }
 
-export default EditUser
+export default AdminEditUser
