@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Form, Error } from "../components/AuthForms";
 import { Loading } from "../components/Loading";
 import { useAuth } from "../context/auth";
+import { Navbar } from "../components/Navbar";
 
 function Signup() {
   const [apiResult, setApiResult] = useState("");
@@ -58,21 +59,8 @@ function Signup() {
 
   return (
     <div className="auth-inner">
-      <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div className="container">
-          <Link className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo_Manager</Link>
-          <div className="collapse navbar-collapse">
-            <ul className="navbar-nav text-uppercase ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link nav-text" to={"/login"}>Login</Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link nav-text" to={"/signup"}>Sign up</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <Navbar></Navbar>
+      
       <Form>
         <h3>Sign Up</h3>
 
