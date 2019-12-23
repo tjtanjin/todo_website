@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import EditUser from "../components/EditUserForms";
+import ChangePassword from "../components/ChangePasswordForms";
 import { Modal } from 'react-bootstrap'
 import { Form, Error } from "../components/AuthForms";
 import { Loading } from "../components/Loading";
@@ -13,6 +14,7 @@ import { formatDate } from "../components/Utils";
 function Profile(props) {
   const [isError, setIsError] = useState(false);
   const [showEditUser, setEditUserShow] = useState(false);
+  const [showChangePassword, setChangePasswordShow] = useState(false);
   const [userid, setUserID] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -24,6 +26,8 @@ function Profile(props) {
 
   const handleEditUserClose = () => setEditUserShow(false);
   const handleEditUserShow = () => setEditUserShow(true);
+  const handleChangePasswordClose = () => setChangePasswordShow(false);
+  const handleChangePasswordShow = () => setChangePasswordShow(true);
 
   function getSelf() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
@@ -107,7 +111,8 @@ function Profile(props) {
                 <p>{modifydate}</p>
             </div>
           </div>
-          <button id="submitButton" className="btn btn-dark btn-block" onClick={() => {handleEditUserShow()}}>Edit</button>
+          <button className="btn btn-dark btn-block" onClick={() => {handleEditUserShow()}}>Edit Profile</button>
+          <button className="btn btn-dark btn-block" onClick={() => {handleChangePasswordShow()}}>Change Password</button>
         </div>
       </div>
 
@@ -116,6 +121,13 @@ function Profile(props) {
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body><EditUser user={trackedUser} onCloseModal={handleEditUserClose} getSelf={getSelf}></EditUser></Modal.Body>
+      </Modal>
+
+      <Modal show={showChangePassword} onHide={handleChangePasswordClose}>
+        <Modal.Header className="modal_header_bg">
+          <Modal.Title>Change Password</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><ChangePassword user={trackedUser} onCloseModal={handleChangePasswordClose} getSelf={getSelf}></ChangePassword></Modal.Body>
       </Modal>
     </div>
   );
