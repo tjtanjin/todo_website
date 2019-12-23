@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
-import { Form, Error } from "../components/AuthForms";
+import { Form, Error, Success } from "../components/AuthForms";
 import { Loading } from "../components/Loading";
 import { useAuth } from "../context/auth";
 import { Navbar } from "../components/Navbar";
+import { checkDyno } from "../components/Utils"
 
 function Login(props) {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isWakingDyno, setDynoMessage] = useState(false)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
@@ -23,10 +25,14 @@ function Login(props) {
   function postLogin() {
     setIsLoading(true);
     setIsError(false);
+    let isDynoAwake = false;
+    setTimeout(() => checkDyno(isDynoAwake, setDynoMessage), 5000);
     axios.post(process.env.REACT_APP_API_LINK + "/authenticate", {
       email,
       password
     }).then(result => {
+      isDynoAwake = true;
+      setDynoMessage(false);
       setIsLoading(false);
       if (result.status === 200) {
         setAuthTokens(result.data);
@@ -35,6 +41,8 @@ function Login(props) {
         setIsError(true);
       }
     }).catch(e => {
+      isDynoAwake = true;
+      setDynoMessage(false);
       setIsLoading(false);
       setIsError(true);
     });
@@ -104,6 +112,7 @@ function Login(props) {
         <p className="forgot-password text-right">
           Forgot <a href="#" className="link">password?</a>
         </p>
+        { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }
         { isError &&<Error>The email or password provided were incorrect!</Error> }
       </Form>

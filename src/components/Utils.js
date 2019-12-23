@@ -7,4 +7,10 @@ function formatDate(string){
   return new Date(string).toLocaleDateString([],options);
 }
 
-export { sleep, formatDate };
+function checkDyno(isDynoAwake, setDynoMessage) {
+  if (!isDynoAwake) {
+    return setDynoMessage(true);
+  } else {}
+}
+
+export { sleep, formatDate, checkDyno };
