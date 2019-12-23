@@ -6,6 +6,7 @@ import DeleteUser from '../components/DeleteUserForms'
 import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
+import { formatDate } from "../components/Utils"
 
 function Users(props) {
   const [searchWord, setSearchWord] = useState("");
@@ -46,8 +47,8 @@ function Users(props) {
             <td>{id}</td>
             <td>{name}</td>
             <td>{email}</td>
-            <td>{created_at}</td>
-            <td>{updated_at}</td>
+            <td>{formatDate(created_at)}</td>
+            <td>{formatDate(updated_at)}</td>
             <td>{info_button}{edit_button}{delete_button}</td>
           </tr>
         )
