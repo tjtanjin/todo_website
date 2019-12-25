@@ -67,7 +67,6 @@ function Signup() {
 
   return (
     <div className="auth-inner">
-      <Navbar></Navbar>
       
       <Form>
         <h3>Sign Up</h3>

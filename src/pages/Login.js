@@ -69,7 +69,6 @@ function Login(props) {
 
   return (
     <div className="auth-inner">
-      <Navbar></Navbar>
       
       <Form>
         <h3>Sign In</h3>
