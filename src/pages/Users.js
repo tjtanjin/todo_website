@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import UserTasks from '../components/UserTasksForms'
 import AdminEditUser from '../components/AdminEditUserForms'
-import DeleteUser from '../components/DeleteUserForms'
+import AdminDeleteUser from '../components/AdminDeleteUserForms'
 import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
@@ -13,15 +13,15 @@ function Users(props) {
   const [users, setUsers] = useState([]);
   const [showUserTasks, setUserTasksShow] = useState(false);
   const [showAdminEditUser, setAdminEditUserShow] = useState(false);
-  const [showDeleteUser, setDeleteUserShow] = useState(false);
+  const [showAdminDeleteUser, setAdminDeleteUserShow] = useState(false);
   const [trackedUser, setTrackedUser] = useState({});
 
   const handleUserTasksClose = () => setUserTasksShow(false);
   const handleUserTasksShow = () => setUserTasksShow(true);
   const handleAdminEditUserClose = () => setAdminEditUserShow(false);
   const handleAdminEditUserShow = () => setAdminEditUserShow(true);
-  const handleDeleteUserClose = () => setDeleteUserShow(false);
-  const handleDeleteUserShow = () => setDeleteUserShow(true);
+  const handleAdminDeleteUserClose = () => setAdminDeleteUserShow(false);
+  const handleAdminDeleteUserShow = () => setAdminDeleteUserShow(true);
 
   useEffect(() => {
     getUsers();
@@ -40,7 +40,7 @@ function Users(props) {
         const { id, name, email, created_at, updated_at } = user
         const info_button = <button type="button" onClick={() => {handleUserTasksShow(); setTrackedUser(user)}}><i className="fa fa-tasks"></i></button>
         const edit_button = <button type="button" onClick={() => {handleAdminEditUserShow(); setTrackedUser(user)}}><i className="fa fa-wrench"></i></button>
-        const delete_button = <button type="button" onClick={() => {handleDeleteUserShow(); setTrackedUser(user)}}><i className="fa fa-remove"></i></button>
+        const delete_button = <button type="button" onClick={() => {handleAdminDeleteUserShow(); setTrackedUser(user)}}><i className="fa fa-remove"></i></button>
         return (
           <tr key={id}>
             <td>{index + 1}</td>
@@ -108,11 +108,11 @@ function Users(props) {
         <Modal.Body><AdminEditUser user={trackedUser} onCloseModal={handleAdminEditUserClose} getUsers={getUsers}></AdminEditUser></Modal.Body>
       </Modal>
 
-      <Modal show={showDeleteUser} onHide={handleDeleteUserClose}>
+      <Modal show={showAdminDeleteUser} onHide={handleAdminDeleteUserClose}>
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Delete User</Modal.Title>
         </Modal.Header>
-        <Modal.Body><DeleteUser id={trackedUser.id} name={trackedUser.name} onCloseModal={handleDeleteUserClose} getUsers={getUsers}></DeleteUser></Modal.Body>
+        <Modal.Body><AdminDeleteUser id={trackedUser.id} name={trackedUser.name} onCloseModal={handleAdminDeleteUserClose} getUsers={getUsers}></AdminDeleteUser></Modal.Body>
       </Modal>
     </div>
   )

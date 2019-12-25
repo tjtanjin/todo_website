@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import EditUser from "../components/EditUserForms";
+import DeleteUser from "../components/DeleteUserForms"
 import ChangePassword from "../components/ChangePasswordForms";
 import { Modal } from 'react-bootstrap'
 import { Form, Error } from "../components/AuthForms";
@@ -15,6 +16,7 @@ function Profile(props) {
   const [isError, setIsError] = useState(false);
   const [showEditUser, setEditUserShow] = useState(false);
   const [showChangePassword, setChangePasswordShow] = useState(false);
+  const [showDeleteUser, setDeleteUserShow] = useState(false);
   const [userid, setUserID] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,6 +30,8 @@ function Profile(props) {
   const handleEditUserShow = () => setEditUserShow(true);
   const handleChangePasswordClose = () => setChangePasswordShow(false);
   const handleChangePasswordShow = () => setChangePasswordShow(true);
+  const handleDeleteUserClose = () => setDeleteUserShow(false);
+  const handleDeleteUserShow = () => setDeleteUserShow(true);
 
   function getSelf() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
@@ -113,6 +117,7 @@ function Profile(props) {
           </div>
           <button className="btn btn-dark btn-block" onClick={() => {handleEditUserShow()}}>Edit Profile</button>
           <button className="btn btn-dark btn-block" onClick={() => {handleChangePasswordShow()}}>Change Password</button>
+          <button className="btn btn-danger btn-block" onClick={() => {handleDeleteUserShow()}}>Delete User</button>
         </div>
       </div>
 
@@ -128,6 +133,13 @@ function Profile(props) {
           <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body><ChangePassword user={trackedUser} onCloseModal={handleChangePasswordClose} getSelf={getSelf}></ChangePassword></Modal.Body>
+      </Modal>
+
+      <Modal show={showDeleteUser} onHide={handleDeleteUserClose}>
+        <Modal.Header className="modal_header_bg">
+          <Modal.Title>Delete User</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><DeleteUser id={trackedUser.id} name={trackedUser.name} email={trackedUser.email} onCloseModal={handleDeleteUserClose}></DeleteUser></Modal.Body>
       </Modal>
     </div>
   );
