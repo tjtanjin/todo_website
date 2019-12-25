@@ -16,7 +16,8 @@ function Login(props) {
   const [password, setPassword] = useState("");
   const { setAuthTokens } = useAuth();
   let referer = '';
-  if (typeof(props.location.state) == 'undefined') {
+
+  if (typeof(props.location.state) == 'undefined' || props.location.state === null) {
     referer = '/';
   } else {
     referer = props.location.state.referer
