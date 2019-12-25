@@ -28,7 +28,7 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .navbar-nav {
-    color: rgba(255,255,255,1);
+  color: rgba(255,255,255,1);
 }
 
 .nav-text {
@@ -36,6 +36,11 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .nav-text:hover {
+  color: #FF8C00 !important;
+}
+
+.nav-selected {
+  text-decoration: underline !important;
   color: #FF8C00 !important;
 }
 
