@@ -114,7 +114,7 @@ function Login(props) {
         </p>
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }
-        { isError &&<Error>The email or password provided were incorrect!</Error> }
+        { isError &&<Error>The email or password provided are incorrect!</Error> }
       </Form>
     </div>
   );

@@ -22,7 +22,7 @@ function DeleteTask(data) {
 
   return (
     <div className="auth-inner">
-      <p className="prompt"> Are you sure you want to delete the task <span className="trackedcontent">{data.job_name}</span>?</p>
+      <p className="prompt"> Are you sure you want to delete the task <span className="trackedcontent">{data.task_name}</span>?</p>
       <br/>
       <button className="btn btn-danger btn-block" type="button" onClick={e => delTask()}>Delete</button>
       <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>

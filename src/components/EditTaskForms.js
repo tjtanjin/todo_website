@@ -10,21 +10,21 @@ function EditTask(data) {
   const [apiResult, setApiResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [job_name, setJobName] = useState(data.job_name);
-  const [job_desc, setJobDesc] = useState(data.job_desc);
+  const [task_name, setTaskName] = useState(data.task_name);
+  const [task_description, setTaskDescription] = useState(data.task_description);
   const [category, setCategory] = useState(data.category);
-  const [tag, setTag] = useState(data.tag);
-  const [due, setDue] = useState(data.due);
+  const [priority, setPriority] = useState(data.priority);
+  const [deadline, setDeadline] = useState(data.deadline);
 
   function putEditTask() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
     axios.put(process.env.REACT_APP_API_LINK + "/users/" + user_id + "/tasks/" + data.id, {
-      job_name,
-      job_desc,
+      task_name,
+      task_description,
       category,
-      tag,
-      due,
+      priority,
+      deadline,
     }, {
       headers: { Authorization: token }
     }).then(result => {
@@ -60,11 +60,11 @@ function EditTask(data) {
         <div className="form-group">
           <label>Task Name</label>
           <input
-            type="job_name"
-            defaultValue={data.job_name}
+            type="task_name"
+            defaultValue={data.task_name}
             className="form-control" 
             onChange={e => {
-              setJobName(e.target.value);
+              setTaskName(e.target.value);
             }}
             placeholder=""
           />
@@ -73,11 +73,11 @@ function EditTask(data) {
         <div className="form-group">
           <label>Task Description</label>
           <input
-            type="job_desc"
-            defaultValue={data.job_desc}
+            type="task_description"
+            defaultValue={data.task_description}
             className="form-control" 
             onChange={e => {
-              setJobDesc(e.target.value);
+              setTaskDescription(e.target.value);
             }}
             placeholder=""
           />
@@ -99,11 +99,11 @@ function EditTask(data) {
         <div className="form-group">
           <label>Tag</label>
           <select 
-            type="tag"
-            defaultValue={data.tag}
+            type="priority"
+            defaultValue={data.priority}
             className="form-control" 
             onChange={e => {
-              setTag(e.target.value);
+              setPriority(e.target.value);
             }}>
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
@@ -115,10 +115,10 @@ function EditTask(data) {
           <label>Deadline</label>
           <input
             type="date"
-            defaultValue={data.due}
+            defaultValue={data.deadline}
             className="form-control" 
             onChange={e => {
-              setDue(e.target.value);
+              setDeadline(e.target.value);
             }}
             placeholder="Enter deadline"
           />

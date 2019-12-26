@@ -8,7 +8,7 @@ function CompleteTask(data) {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
     axios.put(process.env.REACT_APP_API_LINK + "/users/" + user_id + "/tasks/" + data.id, {
-      "tag": "Completed"
+      "priority": "Completed"
     }, {
       headers: { Authorization: token }
     }).then(result => {
@@ -38,7 +38,7 @@ function CompleteTask(data) {
 
   return (
     <div className="auth-inner">
-      <p className="prompt"> Are you sure you want to complete the task <span className="trackedcontent">{data.job_name}</span>?</p>
+      <p className="prompt"> Are you sure you want to complete the task <span className="trackedcontent">{data.task_name}</span>?</p>
       <br/>
       <button className="btn btn-dark btn-block" type="button" onClick={putCompleteTask}>Complete Task</button>
       <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>

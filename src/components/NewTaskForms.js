@@ -7,21 +7,21 @@ function NewTask(data) {
   const [apiResult, setApiResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [job_name, setJobName] = useState("");
-  const [job_desc, setJobDesc] = useState("");
+  const [task_name, setTaskName] = useState("");
+  const [task_description, setTaskDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [tag, setTag] = useState("Low");
-  const [due, setDue] = useState("");
+  const [priority, setPriority] = useState("Low");
+  const [deadline, setDeadline] = useState("");
 
   function postNewTask() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
     axios.post(process.env.REACT_APP_API_LINK + "/users/" + user_id + "/tasks", {
-      job_name,
-      job_desc,
+      task_name,
+      task_description,
       category,
-      tag,
-      due,
+      priority,
+      deadline,
       user_id
     }, {
       headers: { Authorization: token }
@@ -58,11 +58,11 @@ function NewTask(data) {
         <div className="form-group">
           <label>Task Name</label>
           <input
-            type="job_name"
-            value={job_name}
+            type="task_name"
+            value={task_name}
             className="form-control" 
             onChange={e => {
-              setJobName(e.target.value);
+              setTaskName(e.target.value);
             }}
             placeholder="Enter task name"
           />
@@ -71,11 +71,11 @@ function NewTask(data) {
         <div className="form-group">
           <label>Task Description</label>
           <input
-            type="job_desc"
-            value={job_desc}
+            type="task_description"
+            value={task_description}
             className="form-control" 
             onChange={e => {
-              setJobDesc(e.target.value);
+              setTaskDescription(e.target.value);
             }}
             placeholder="Enter description"
           />
@@ -97,11 +97,11 @@ function NewTask(data) {
         <div className="form-group">
           <label>Tag</label>
           <select 
-            type="tag"
-            value={tag}
+            type="priority"
+            value={priority}
             className="form-control" 
             onChange={e => {
-              setTag(e.target.value);
+              setPriority(e.target.value);
             }}>
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
@@ -113,10 +113,10 @@ function NewTask(data) {
           <label>Deadline</label>
           <input
             type="date"
-            value={due}
+            value={deadline}
             className="form-control" 
             onChange={e => {
-              setDue(e.target.value);
+              setDeadline(e.target.value);
             }}
             placeholder="Enter deadline"
           />

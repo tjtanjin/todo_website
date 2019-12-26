@@ -34,17 +34,17 @@ function UserTasks(data) {
   function renderTableData() {
     return tasks.map((task, index) => {
       if (searchWord === "" || task.category.includes(searchWord)) {
-        const { id, job_name, job_desc, category, tag, due } = task
+        const { id, task_name, task_description, category, priority, deadline } = task
         const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
         const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
         return (
           <tr key={id}>
             <td>{index + 1}</td>
-            <td>{job_name}</td>
-            <td>{job_desc}</td>
+            <td>{task_name}</td>
+            <td>{task_description}</td>
             <td>{category}</td>
-            <td className={tag}>{tag}</td>
-            <td>{due}</td>
+            <td className={priority}>{priority}</td>
+            <td>{deadline}</td>
             <td>{edit_button}{delete_button}</td>
           </tr>
         )
@@ -101,7 +101,7 @@ function UserTasks(data) {
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Delete Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
+        <Modal.Body><DeleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
       </Modal>
     </div>
   );

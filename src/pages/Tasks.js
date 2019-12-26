@@ -40,23 +40,23 @@ function Tasks(props) {
 
   function renderTableData() {
     return tasks.map((task, index) => {
-      if ((searchWord === "" || task.category.includes(searchWord)) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.tag !== "Completed") || taskChoice === task.tag)) {
-        const { id, job_name, job_desc, category, tag, due } = task
+      if ((searchWord === "" || task.category.includes(searchWord)) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed") || taskChoice === task.priority)) {
+        const { id, task_name, task_description, category, priority, deadline } = task
         let edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
         let delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
         let complete_button = <button type="button" onClick={() => {handleCompleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-check"></i></button>
-        if (task.tag === "Completed") {
+        if (task.priority === "Completed") {
           edit_button = "";
           complete_button = "";
         }
         return (
           <tr key={id}>
             <td>{index + 1}</td>
-            <td>{job_name}</td>
-            <td>{job_desc}</td>
+            <td>{task_name}</td>
+            <td>{task_description}</td>
             <td>{category}</td>
-            <td className={tag}>{tag}</td>
-            <td>{due}</td>
+            <td className={priority}>{priority}</td>
+            <td>{deadline}</td>
             <td>{edit_button}{delete_button}{complete_button}</td>
           </tr>
         )
@@ -137,14 +137,14 @@ function Tasks(props) {
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Delete Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
+        <Modal.Body><DeleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
       </Modal>
 
       <Modal show={showCompleteTask} onHide={handleCompleteTaskClose}>
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Complete Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><CompleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleCompleteTaskClose} getTasks={getTasks}></CompleteTask></Modal.Body>
+        <Modal.Body><CompleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleCompleteTaskClose} getTasks={getTasks}></CompleteTask></Modal.Body>
       </Modal>
     </div>
   )
