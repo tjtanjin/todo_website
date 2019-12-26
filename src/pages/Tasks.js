@@ -3,6 +3,7 @@ import axios from 'axios';
 import NewTask from '../components/NewTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
+import CompleteTask from '../components/CompleteTaskForms'
 import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
@@ -13,6 +14,7 @@ function Tasks(props) {
   const [showNewTask, setNewTaskShow] = useState(false);
   const [showEditTask, setEditTaskShow] = useState(false);
   const [showDeleteTask, setDeleteTaskShow] = useState(false);
+  const [showCompleteTask, setCompleteTaskShow] = useState(false);
   const [trackedTask, setTrackedTask] = useState({});
 
   const handleNewTaskClose = () => setNewTaskShow(false);
@@ -21,6 +23,8 @@ function Tasks(props) {
   const handleEditTaskShow = () => setEditTaskShow(true);
   const handleDeleteTaskClose = () => setDeleteTaskShow(false);
   const handleDeleteTaskShow = () => setDeleteTaskShow(true);
+  const handleCompleteTaskClose = () => setCompleteTaskShow(false);
+  const handleCompleteTaskShow = () => setCompleteTaskShow(true);
 
   useEffect(() => {
     getTasks();
@@ -37,8 +41,13 @@ function Tasks(props) {
     return tasks.map((task, index) => {
       if (searchWord === "" || task.category.includes(searchWord)) {
         const { id, job_name, job_desc, category, tag, due } = task
-        const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
-        const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
+        let edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
+        let delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
+        let complete_button = <button type="button" onClick={() => {handleCompleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-check"></i></button>
+        if (task.tag === "Completed") {
+          edit_button = "";
+          complete_button = "";
+        }
         return (
           <tr key={id}>
             <td>{index + 1}</td>
@@ -47,7 +56,7 @@ function Tasks(props) {
             <td>{category}</td>
             <td className={tag}>{tag}</td>
             <td>{due}</td>
-            <td>{edit_button}{delete_button}</td>
+            <td>{edit_button}{delete_button}{complete_button}</td>
           </tr>
         )
       } else {}
@@ -115,6 +124,13 @@ function Tasks(props) {
           <Modal.Title>Delete Task</Modal.Title>
         </Modal.Header>
         <Modal.Body><DeleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
+      </Modal>
+
+      <Modal show={showCompleteTask} onHide={handleCompleteTaskClose}>
+        <Modal.Header className="modal_header_bg">
+          <Modal.Title>Complete Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><CompleteTask id={trackedTask.id} job_name={trackedTask.job_name} onCloseModal={handleCompleteTaskClose} getTasks={getTasks}></CompleteTask></Modal.Body>
       </Modal>
     </div>
   )

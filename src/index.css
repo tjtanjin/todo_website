@@ -190,18 +190,23 @@ body{
   align-self: center;
 }
 
+.Completed {
+  background-color: #99FF99;
+  font-weight: bold;
+}
+
 .Low {
-  background-color: #00FF00;
+  background-color: #FFFF99;
   font-weight: bold;
 }
 
 .Medium {
-  background-color: #FFFF00;
+  background-color: #FFCC99;
   font-weight: bold;
 }
 
 .High {
-  background-color: #FF0000;
+  background-color: #F08080;
   font-weight: bold;
 }
 
