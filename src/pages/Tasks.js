@@ -4,11 +4,12 @@ import NewTask from '../components/NewTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import CompleteTask from '../components/CompleteTaskForms'
-import { Modal } from 'react-bootstrap'
+import { Modal, Dropdown } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 
 function Tasks(props) {
+  const [taskChoice, setTaskChoice] = useState("In-progress");
   const [searchWord, setSearchWord] = useState("");
   const [tasks, setTasks] = useState([]);
   const [showNewTask, setNewTaskShow] = useState(false);
@@ -39,7 +40,7 @@ function Tasks(props) {
 
   function renderTableData() {
     return tasks.map((task, index) => {
-      if (searchWord === "" || task.category.includes(searchWord)) {
+      if ((searchWord === "" || task.category.includes(searchWord)) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.tag !== "Completed") || taskChoice === task.tag)) {
         const { id, job_name, job_desc, category, tag, due } = task
         let edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
         let delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
@@ -84,7 +85,7 @@ function Tasks(props) {
       <Navbar></Navbar>
 
       <h3>Tasks</h3>
-        <div class="search">
+        <div className="search">
           <input type="text" value={searchWord}
             className="searchTerm" 
             onChange={e => {
@@ -93,6 +94,19 @@ function Tasks(props) {
           <button type="submit" className="searchButton">
             <i class="fa fa-search"></i>
           </button>
+        </div>
+        <div className="sort-task"> 
+          <Dropdown>
+            <Dropdown.Toggle variant="dark" id="dropdown-basic">
+              {taskChoice}
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => setTaskChoice("In-progress")}>In-progress</Dropdown.Item>
+              <Dropdown.Item onClick={() => setTaskChoice("Completed")}>Completed</Dropdown.Item>
+              <Dropdown.Item onClick={() => setTaskChoice("All Tasks")}>All Tasks</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       <table id="content-table">
         <tbody>

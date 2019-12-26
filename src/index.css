@@ -21,6 +21,10 @@ body, html, .App, #root, .auth-wrapper {
   height: 100%;
 }
 
+.sort-task {
+  float: right;
+}
+
 .btn-home {
   width: 200px;
 }
@@ -149,7 +153,8 @@ body{
 }
 
 .search {
-  width: 100%;
+  width: 30%;
+  float: left;
   position: relative;
   display: flex;
 }
