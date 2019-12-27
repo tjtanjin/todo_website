@@ -3,7 +3,7 @@ import axios from 'axios';
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import { Error, Success } from "../components/AuthForms";
-import { Modal } from 'react-bootstrap'
+import { Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken'
 
 function UserTasks(data) {
@@ -11,10 +11,13 @@ function UserTasks(data) {
   data = data.user
   const [searchWord, setSearchWord] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [showDetailsTask, setDetailsTaskShow] = useState(false);
   const [showEditTask, setEditTaskShow] = useState(false);
   const [showDeleteTask, setDeleteTaskShow] = useState(false);
   const [trackedTask, setTrackedTask] = useState({});
 
+  const handleDetailsTaskClose = () => setDetailsTaskShow(false);
+  const handleDetailsTaskShow = () => setDetailsTaskShow(true);
   const handleEditTaskClose = () => setEditTaskShow(false);
   const handleEditTaskShow = () => setEditTaskShow(true);
   const handleDeleteTaskClose = () => setDeleteTaskShow(false);
@@ -32,11 +35,19 @@ function UserTasks(data) {
   }
 
   function renderTableData() {
+
+    const action_button = (click_action, task, icon, text) => (
+      <OverlayTrigger overlay={renderTooltip(text)}>
+        <button type="button" onClick={() => {click_action(); setTrackedTask(task)}}><i className={icon}></i></button>
+      </OverlayTrigger>
+    );
+
     return tasks.map((task, index) => {
       if (searchWord === "" || task.category.includes(searchWord)) {
         const { id, task_name, task_description, category, priority, deadline } = task
-        const edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
-        const delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
+        let details_button = action_button(handleDetailsTaskShow, task, "fa fa-info-circle", "View task details")
+        let edit_button = action_button(handleEditTaskShow, task, "fa fa-wrench", "Edit task")
+        let delete_button = action_button(handleDeleteTaskShow, task, "fa fa-remove", "Delete task")
         return (
           <tr key={id}>
             <td>{index + 1}</td>
@@ -45,11 +56,15 @@ function UserTasks(data) {
             <td>{category}</td>
             <td className={priority}>{priority}</td>
             <td>{deadline}</td>
-            <td>{edit_button}{delete_button}</td>
+            <td>{details_button}{edit_button}{delete_button}</td>
           </tr>
         )
       } else {}
     })
+  }
+
+  function renderTooltip(text) {
+    return <Tooltip delay={{ show: 250, hide: 400 }}>{text}</Tooltip>;
   }
 
   function getTasks() {

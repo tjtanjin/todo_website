@@ -3,7 +3,7 @@ import axios from 'axios';
 import UserTasks from '../components/UserTasksForms'
 import AdminEditUser from '../components/AdminEditUserForms'
 import AdminDeleteUser from '../components/AdminDeleteUserForms'
-import { Modal } from 'react-bootstrap'
+import { Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 import { formatDate } from "../components/Utils"
@@ -35,12 +35,19 @@ function Users(props) {
   }
 
   function renderTableData() {
+
+    const action_button = (click_action, user, icon, text) => (
+      <OverlayTrigger overlay={renderTooltip(text)}>
+        <button type="button" onClick={() => {click_action(); setTrackedUser(user)}}><i className={icon}></i></button>
+      </OverlayTrigger>
+    );
+
     return users.map((user, index) => {
       if (searchWord === "" || user.name.includes(searchWord)) {
         const { id, name, email, created_at, updated_at } = user
-        const info_button = <button type="button" onClick={() => {handleUserTasksShow(); setTrackedUser(user)}}><i className="fa fa-tasks"></i></button>
-        const edit_button = <button type="button" onClick={() => {handleAdminEditUserShow(); setTrackedUser(user)}}><i className="fa fa-wrench"></i></button>
-        const delete_button = <button type="button" onClick={() => {handleAdminDeleteUserShow(); setTrackedUser(user)}}><i className="fa fa-remove"></i></button>
+        const info_button = action_button(handleUserTasksShow, user, "fa fa-tasks", "View user's task")
+        const edit_button = action_button(handleAdminEditUserShow, user, "fa fa-wrench", "Edit user")
+        const delete_button = action_button(handleAdminDeleteUserShow, user, "fa fa-remove", "Delete user")
         return (
           <tr key={id}>
             <td>{index + 1}</td>
@@ -54,6 +61,10 @@ function Users(props) {
         )
       } else {}
     })
+  }
+
+  function renderTooltip(text) {
+    return <Tooltip delay={{ show: 250, hide: 400 }}>{text}</Tooltip>;
   }
 
   function getUsers() {

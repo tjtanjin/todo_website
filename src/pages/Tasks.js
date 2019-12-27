@@ -4,7 +4,7 @@ import NewTask from '../components/NewTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import CompleteTask from '../components/CompleteTaskForms'
-import { Modal, Dropdown } from 'react-bootstrap'
+import { Modal, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 
@@ -13,6 +13,7 @@ function Tasks(props) {
   const [searchWord, setSearchWord] = useState("");
   const [tasks, setTasks] = useState([]);
   const [showNewTask, setNewTaskShow] = useState(false);
+  const [showDetailsTask, setDetailsTaskShow] = useState(false);
   const [showEditTask, setEditTaskShow] = useState(false);
   const [showDeleteTask, setDeleteTaskShow] = useState(false);
   const [showCompleteTask, setCompleteTaskShow] = useState(false);
@@ -20,6 +21,8 @@ function Tasks(props) {
 
   const handleNewTaskClose = () => setNewTaskShow(false);
   const handleNewTaskShow = () => setNewTaskShow(true);
+  const handleDetailsTaskClose = () => setDetailsTaskShow(false);
+  const handleDetailsTaskShow = () => setDetailsTaskShow(true);
   const handleEditTaskClose = () => setEditTaskShow(false);
   const handleEditTaskShow = () => setEditTaskShow(true);
   const handleDeleteTaskClose = () => setDeleteTaskShow(false);
@@ -39,12 +42,21 @@ function Tasks(props) {
   }
 
   function renderTableData() {
+
+    const action_button = (click_action, task, icon, text) => (
+      <OverlayTrigger overlay={renderTooltip(text)}>
+        <button type="button" onClick={() => {click_action(); setTrackedTask(task)}}><i className={icon}></i></button>
+      </OverlayTrigger>
+    );
+
     return tasks.map((task, index) => {
+
       if ((searchWord === "" || task.category.includes(searchWord)) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed") || taskChoice === task.priority)) {
         const { id, task_name, task_description, category, priority, deadline } = task
-        let edit_button = <button type="button" onClick={() => {handleEditTaskShow(); setTrackedTask(task)}}><i className="fa fa-wrench"></i></button>
-        let delete_button = <button type="button" onClick={() => {handleDeleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-remove"></i></button>
-        let complete_button = <button type="button" onClick={() => {handleCompleteTaskShow(); setTrackedTask(task)}}><i className="fa fa-check"></i></button>
+        let details_button = action_button(handleDetailsTaskShow, task, "fa fa-info-circle", "View task details")
+        let edit_button = action_button(handleEditTaskShow, task, "fa fa-wrench", "Edit task")
+        let delete_button = action_button(handleDeleteTaskShow, task, "fa fa-remove", "Delete task")
+        let complete_button = action_button(handleCompleteTaskShow, task, "fa fa-check", "Mark as complete")
         if (task.priority === "Completed") {
           edit_button = "";
           complete_button = "";
@@ -57,11 +69,15 @@ function Tasks(props) {
             <td>{category}</td>
             <td className={priority}>{priority}</td>
             <td>{deadline}</td>
-            <td>{edit_button}{delete_button}{complete_button}</td>
+            <td>{details_button}{edit_button}{delete_button}{complete_button}</td>
           </tr>
         )
       } else {}
     })
+  }
+
+  function renderTooltip(text) {
+    return <Tooltip delay={{ show: 250, hide: 400 }}>{text}</Tooltip>;
   }
 
   function getTasks() {
