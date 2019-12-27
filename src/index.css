@@ -30,7 +30,7 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .text-home-primary {
-  color: #FF8C00;
+  color: #40E0D0;
 }
 
 .text-home-secondary {
@@ -52,16 +52,16 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .nav-text:hover {
-  color: #FF8C00 !important;
+  color: #40E0D0 !important;
 }
 
 .nav-selected {
   text-decoration: underline !important;
-  color: #FF8C00 !important;
+  color: #40E0D0 !important;
 }
 
 .link {
-  color: #FF8C00 !important;
+  color: #40E0D0 !important;
 }
 
 .auth-wrapper {
@@ -111,7 +111,7 @@ body, html, .App, #root, .auth-wrapper {
 }
 
 .modal_header_bg {
-  background-color: #FF8C00;
+  background-color: #40E0D0;
 }
 
 .content-inner {
@@ -171,12 +171,12 @@ body{
 }
 
 .searchTerm:focus {
-  border: 3px solid #FF8C00;
+  border: 3px solid #40E0D0;
 }
 
 .searchTerm:focus ~ .searchButton {
-  border: 1px solid #FF8C00;
-  background: #FF8C00;
+  border: 1px solid #40E0D0;
+  background: #40E0D0;
 }
 
 .searchButton {
