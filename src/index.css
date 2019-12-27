@@ -240,7 +240,9 @@ body{
   overflow-wrap: break-word;
 }
 
-
+.details-inner {
+  overflow-wrap: break-word;
+}
 
 #title {
   text-align: center;

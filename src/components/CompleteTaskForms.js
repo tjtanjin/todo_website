@@ -38,7 +38,7 @@ function CompleteTask(data) {
 
   return (
     <div className="auth-inner">
-      <p className="prompt"> Are you sure you want to complete the task <span className="trackedcontent">{data.task_name}</span>?</p>
+      <p className="prompt"> Are you sure you want to mark the task <span className="trackedcontent">{data.task_name}</span> as complete?</p>
       <br/>
       <button className="btn btn-dark btn-block" type="button" onClick={putCompleteTask}>Complete Task</button>
       <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>

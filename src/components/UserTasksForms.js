@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import DetailsTask from '../components/DetailsTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import { Error, Success } from "../components/AuthForms";
@@ -28,7 +29,7 @@ function UserTasks(data) {
   }, []);
 
   function renderTableHeader() {
-    let header = ["ID", "TASK NAME", "DESCRIPTION", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS"]
+    let header = ["ID", "TASK NAME", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
@@ -44,7 +45,7 @@ function UserTasks(data) {
 
     return tasks.map((task, index) => {
       if (searchWord === "" || task.category.includes(searchWord)) {
-        const { id, task_name, task_description, category, priority, deadline } = task
+        const { id, task_name, category, priority, deadline } = task
         let details_button = action_button(handleDetailsTaskShow, task, "fa fa-info-circle", "View task details")
         let edit_button = action_button(handleEditTaskShow, task, "fa fa-wrench", "Edit task")
         let delete_button = action_button(handleDeleteTaskShow, task, "fa fa-remove", "Delete task")
@@ -52,7 +53,6 @@ function UserTasks(data) {
           <tr key={id}>
             <td>{index + 1}</td>
             <td>{task_name}</td>
-            <td>{task_description}</td>
             <td>{category}</td>
             <td className={priority}>{priority}</td>
             <td>{deadline}</td>
@@ -104,6 +104,13 @@ function UserTasks(data) {
       <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={onCloseModal}>
         Close
       </button>
+
+      <Modal show={showDetailsTask} onHide={handleDetailsTaskClose}>
+        <Modal.Header className="modal_header_bg">
+          <Modal.Title>{trackedTask.task_name} Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><DetailsTask task={trackedTask} onCloseModal={handleDetailsTaskClose} getTasks={getTasks}></DetailsTask></Modal.Body>
+      </Modal>
 
       <Modal show={showEditTask} onHide={handleEditTaskClose}>
         <Modal.Header className="modal_header_bg">
