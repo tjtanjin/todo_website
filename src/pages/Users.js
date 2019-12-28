@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import UserTasks from '../components/UserTasksForms'
+import DetailsUser from '../components/DetailsUserForms'
 import AdminEditUser from '../components/AdminEditUserForms'
 import AdminDeleteUser from '../components/AdminDeleteUserForms'
 import { Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
@@ -12,12 +13,15 @@ function Users(props) {
   const [searchWord, setSearchWord] = useState("");
   const [users, setUsers] = useState([]);
   const [showUserTasks, setUserTasksShow] = useState(false);
+  const [showDetailsUser, setDetailsUserShow] = useState(false);
   const [showAdminEditUser, setAdminEditUserShow] = useState(false);
   const [showAdminDeleteUser, setAdminDeleteUserShow] = useState(false);
   const [trackedUser, setTrackedUser] = useState({});
 
   const handleUserTasksClose = () => setUserTasksShow(false);
   const handleUserTasksShow = () => setUserTasksShow(true);
+  const handleDetailsUserClose = () => setDetailsUserShow(false);
+  const handleDetailsUserShow = () => setDetailsUserShow(true);
   const handleAdminEditUserClose = () => setAdminEditUserShow(false);
   const handleAdminEditUserShow = () => setAdminEditUserShow(true);
   const handleAdminDeleteUserClose = () => setAdminDeleteUserShow(false);
@@ -28,7 +32,7 @@ function Users(props) {
   }, []);
 
   function renderTableHeader() {
-    let header = ["INDEX", "USERID", "USERNAME", "EMAIL", "CREATED_AT", "UPDATED_AT", "ACTIONS/TOOLS"]
+    let header = ["INDEX", "USERNAME", "EMAIL", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
@@ -44,19 +48,17 @@ function Users(props) {
 
     return users.map((user, index) => {
       if (searchWord === "" || user.name.includes(searchWord)) {
-        const { id, name, email, created_at, updated_at } = user
+        const { id, name, email } = user
+        const details_button = action_button(handleDetailsUserShow, user, "fa fa-info-circle", "View user's details")
         const info_button = action_button(handleUserTasksShow, user, "fa fa-tasks", "View user's task")
         const edit_button = action_button(handleAdminEditUserShow, user, "fa fa-wrench", "Edit user")
         const delete_button = action_button(handleAdminDeleteUserShow, user, "fa fa-remove", "Delete user")
         return (
           <tr key={id}>
             <td>{index + 1}</td>
-            <td>{id}</td>
             <td>{name}</td>
             <td>{email}</td>
-            <td>{formatDate(created_at)}</td>
-            <td>{formatDate(updated_at)}</td>
-            <td>{info_button}{edit_button}{delete_button}</td>
+            <td>{details_button}{info_button}{edit_button}{delete_button}</td>
           </tr>
         )
       } else {}
@@ -110,6 +112,13 @@ function Users(props) {
           <Modal.Title>{trackedUser.name}'s Tasks</Modal.Title>
         </Modal.Header>
         <Modal.Body><UserTasks user={trackedUser} onCloseModal={handleUserTasksClose}></UserTasks></Modal.Body>
+      </Modal>
+
+      <Modal show={showDetailsUser} onHide={handleDetailsUserClose}>
+        <Modal.Header className="modal_header_bg">
+          <Modal.Title>{trackedUser.name}'s Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><DetailsUser user={trackedUser} onCloseModal={handleDetailsUserClose} getUsers={getUsers}></DetailsUser></Modal.Body>
       </Modal>
 
       <Modal show={showAdminEditUser} onHide={handleAdminEditUserClose}>
