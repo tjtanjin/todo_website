@@ -36,13 +36,14 @@ function EditUser(data) {
           }).then(result => {
             setIsLoading(false);
             if (result.status === 200) {
-              setIsSuccess(true)
+              setIsSuccess(true);
               getSelf();
-              onCloseModal()
+              onCloseModal();
             } else {
-              setIsError(true)
+              setIsError(true);
             }
           }).catch(e => {
+            setIsLoading(false);
             setApiResult(e.response.data.error);
             setIsError(true);
           });
