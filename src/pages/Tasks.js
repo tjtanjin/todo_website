@@ -11,6 +11,7 @@ import { Navbar } from "../components/Navbar";
 
 function Tasks(props) {
   const [taskChoice, setTaskChoice] = useState("In-progress");
+  const [searchType, setSearchType] = useState("category");
   const [searchWord, setSearchWord] = useState("");
   const [tasks, setTasks] = useState([]);
   const [showNewTask, setNewTaskShow] = useState(false);
@@ -51,8 +52,7 @@ function Tasks(props) {
     );
 
     return tasks.map((task, index) => {
-
-      if ((searchWord === "" || task.category.toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed") || taskChoice === task.priority)) {
+      if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
         let details_button = action_button(handleDetailsTaskShow, task, "fa fa-info-circle", "View task details")
         let edit_button = action_button(handleEditTaskShow, task, "fa fa-wrench", "Edit task")
@@ -106,10 +106,18 @@ function Tasks(props) {
             className="searchTerm" 
             onChange={e => {
               setSearchWord(e.target.value);
-            }} placeholder="Search by Category"/>
-          <button type="submit" className="searchButton">
-            <i class="fa fa-search"></i>
-          </button>
+            }} placeholder={"Search by " + searchType}/>
+          <Dropdown>
+            <Dropdown.Toggle variant="dark">
+              <i class="fa fa-search"></i>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => setSearchType("task_name")}>Task Name</Dropdown.Item>
+              <Dropdown.Item onClick={() => setSearchType("category")}>Category</Dropdown.Item>
+              <Dropdown.Item onClick={() => setSearchType("priority")}>Priority</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
         <div className="sort-task"> 
           <Dropdown>

@@ -4,12 +4,13 @@ import UserTasks from '../components/UserTasksForms'
 import DetailsUser from '../components/DetailsUserForms'
 import AdminEditUser from '../components/AdminEditUserForms'
 import AdminDeleteUser from '../components/AdminDeleteUserForms'
-import { Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Modal, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 import { formatDate } from "../components/Utils"
 
 function Users(props) {
+  const [searchType, setSearchType] = useState("name");
   const [searchWord, setSearchWord] = useState("");
   const [users, setUsers] = useState([]);
   const [showUserTasks, setUserTasksShow] = useState(false);
@@ -47,7 +48,7 @@ function Users(props) {
     );
 
     return users.map((user, index) => {
-      if (searchWord === "" || user.name.includes(searchWord)) {
+      if (searchWord === "" || user[searchType].toUpperCase().includes(searchWord.toUpperCase())) {
         const { id, name, email } = user
         const details_button = action_button(handleDetailsUserShow, user, "fa fa-info-circle", "View user's details")
         const info_button = action_button(handleUserTasksShow, user, "fa fa-tasks", "View user's task")
@@ -94,10 +95,17 @@ function Users(props) {
             className="searchTerm" 
             onChange={e => {
               setSearchWord(e.target.value);
-            }} placeholder="Search by Username"/>
-          <button type="submit" className="searchButton">
-            <i class="fa fa-search"></i>
-          </button>
+            }} placeholder={"Search by " + searchType}/>
+          <Dropdown>
+            <Dropdown.Toggle variant="dark">
+              <i class="fa fa-search"></i>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => setSearchType("name")}>Username</Dropdown.Item>
+              <Dropdown.Item onClick={() => setSearchType("email")}>Email</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       <table id="content-table">
         <tbody>
