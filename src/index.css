@@ -37,6 +37,11 @@ body, html, .App, #root, .auth-wrapper {
   color: #fff;
 }
 
+.navbar-img {
+  max-height: 50px;
+  max-width: 40px;
+}
+
 .navbar-dark {
   background-color: #000;
   height: 8%;

@@ -1,8 +1,8 @@
 import React from "react";
 import HttpsRedirect from 'react-https-redirect'
+import logoImg from "../img/logo.png";
 import { VerifyAuth } from "../components/VerifyAuth";
 import { Link } from 'react-router-dom'
-import logoImg from "../img/logo.png";
 import { Logo } from "../components/AuthForms";
 import { Navbar } from "../components/Navbar";
 
@@ -25,6 +25,8 @@ function Home(props) {
     <HttpsRedirect>
         <header class="masthead d-flex">
 		  <div class="container text-center my-auto">
+        <img src={logoImg}></img>
+        <br/><br/><br/>
 		    <h1 class="mb-1 text-home-primary">Welcome {primary_text}</h1>
 		    <h3 class="mb-5 text-home-secondary">
 		      <em>{secondary_text}</em>

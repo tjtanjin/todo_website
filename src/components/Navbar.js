@@ -1,4 +1,5 @@
 import React from "react";
+import logoImg from "../img/logo.png";
 import { NavLink } from "react-router-dom";
 import { VerifyAuth } from "../components/VerifyAuth";
 import { VerifyAdmin } from "../components/VerifyAdmin";
@@ -34,6 +35,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
       <div className="container">
+        <img className="navbar-brand navbar-img" src={logoImg}></img>
         <NavLink className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo_Manager</NavLink>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav text-uppercase ml-auto">
