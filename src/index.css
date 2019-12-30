@@ -128,7 +128,6 @@ body, html, .App, #root, .auth-wrapper {
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
   transition: all .3s;
-  overflow: scroll;
 }
 
 .home-inner {
@@ -265,9 +264,15 @@ body{
 #content-table td, #content-table th {
   border: 1px solid #ddd;
   padding: 8px;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-#content-table tr:nth-child(even){background-color: #f2f2f2;}
+#content-table tr:nth-child(even){
+  background-color: #f2f2f2;
+}
 
 #content-table tr:hover {background-color: #ddd;}
 

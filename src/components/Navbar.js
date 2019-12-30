@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { VerifyAuth } from "../components/VerifyAuth";
 import { VerifyAdmin } from "../components/VerifyAdmin";
 import { useAuth } from "../context/auth"
+import { Dropdown, DropdownButton, MenuItem } from 'react-bootstrap'
 
 function Navbar() {
   const { setAuthTokens } = useAuth();
@@ -36,8 +37,14 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
       <div className="container">
         <img className="navbar-brand navbar-img" src={logoImg}></img>
-        <NavLink className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo_Manager</NavLink>
-        <div className="collapse navbar-collapse">
+        <NavLink className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo Manager</NavLink>
+        <DropdownButton variant="dark" className="navbar-toggler" title=<i className="fa fa-bars"></i> id="bg-vertical-dropdown-1">
+          <Dropdown.Item href="./users">USERS</Dropdown.Item>
+          <Dropdown.Item href="./tasks">TASKS</Dropdown.Item>
+          <Dropdown.Item href="./profile">PROFILE</Dropdown.Item>
+          <Dropdown.Item onClick={logOut} href="./">LOGOUT</Dropdown.Item>
+        </DropdownButton>
+        <div id="navbarResponsive" className="collapse navbar-collapse">
           <ul className="navbar-nav text-uppercase ml-auto">
             <li className="nav-item">
               <NavLink activeClassName="nav-selected" className="nav-link nav-text" to={link4}>{word4}</NavLink>
