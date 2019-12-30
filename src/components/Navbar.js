@@ -39,10 +39,10 @@ function Navbar() {
         <img className="navbar-brand navbar-img" src={logoImg}></img>
         <NavLink className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo Manager</NavLink>
         <DropdownButton variant="dark" className="navbar-toggler" title=<i className="fa fa-bars"></i> id="bg-vertical-dropdown-1">
-          <Dropdown.Item href="./users">USERS</Dropdown.Item>
-          <Dropdown.Item href="./tasks">TASKS</Dropdown.Item>
-          <Dropdown.Item href="./profile">PROFILE</Dropdown.Item>
-          <Dropdown.Item onClick={logOut} href="./">LOGOUT</Dropdown.Item>
+          <Dropdown.Item href={link4}>{word4}</Dropdown.Item>
+          <Dropdown.Item href={link3}>{word3}</Dropdown.Item>
+          <Dropdown.Item href={link1}>{word1}</Dropdown.Item>
+          <Dropdown.Item onClick={logOut} href={link2}>{word2}</Dropdown.Item>
         </DropdownButton>
         <div id="navbarResponsive" className="collapse navbar-collapse">
           <ul className="navbar-nav text-uppercase ml-auto">
