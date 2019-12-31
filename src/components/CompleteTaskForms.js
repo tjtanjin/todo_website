@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from 'axios';
-import { Error, Success } from "../components/AuthForms";
 import { decode } from 'jsonwebtoken'
 
 function CompleteTask(data) {

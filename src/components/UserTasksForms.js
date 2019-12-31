@@ -3,9 +3,7 @@ import axios from 'axios';
 import DetailsTask from '../components/DetailsTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
-import { Error, Success } from "../components/AuthForms";
 import { Modal, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { decode } from 'jsonwebtoken'
 
 function UserTasks(data) {
   const onCloseModal = data.onCloseModal
@@ -28,6 +26,7 @@ function UserTasks(data) {
 
   useEffect(() => {
     getTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function renderTableHeader() {
@@ -62,6 +61,7 @@ function UserTasks(data) {
           </tr>
         )
       } else {}
+      return null;
     })
   }
 

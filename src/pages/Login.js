@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Form, Error, Success } from "../components/AuthForms";
 import { Loading } from "../components/Loading";
 import { useAuth } from "../context/auth";
-import { Navbar } from "../components/Navbar";
 import { checkDyno } from "../components/Utils"
 
 function Login(props) {
@@ -61,6 +60,7 @@ function Login(props) {
     return () => {
       window.removeEventListener('keydown', handleEnter);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isLoggedIn) {

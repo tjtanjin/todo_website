@@ -1,10 +1,10 @@
 import React from "react";
 import logoImg from "../img/logo.png";
 import { NavLink } from "react-router-dom";
-import { VerifyAuth } from "../components/VerifyAuth";
-import { VerifyAdmin } from "../components/VerifyAdmin";
+import { VerifyAuth } from "../components/Utils";
+import { VerifyAdmin } from "../components/Utils";
 import { useAuth } from "../context/auth"
-import { Dropdown, DropdownButton, MenuItem } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap'
 
 function Navbar() {
   const { setAuthTokens } = useAuth();
@@ -36,14 +36,17 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
       <div className="container">
-        <img className="navbar-brand navbar-img" src={logoImg}></img>
+        <img className="navbar-brand navbar-img" alt="Todo-Manager Logo" src={logoImg}></img>
         <NavLink className="navbar-brand nav-link navbar-nav text-uppercase" to={"/"}>Todo Manager</NavLink>
-        <DropdownButton variant="dark" className="navbar-toggler" title=<i className="fa fa-bars"></i> id="bg-vertical-dropdown-1">
-          <Dropdown.Item href={link4}>{word4}</Dropdown.Item>
-          <Dropdown.Item href={link3}>{word3}</Dropdown.Item>
-          <Dropdown.Item href={link1}>{word1}</Dropdown.Item>
-          <Dropdown.Item onClick={logOut} href={link2}>{word2}</Dropdown.Item>
-        </DropdownButton>
+        <Dropdown alignRight className="navbar-toggler">
+          <Dropdown.Toggle variant="dark" id="dropdown-custom-1"><i className="fa fa-bars"></i></Dropdown.Toggle>
+          <Dropdown.Menu className="nav-dropdown" >
+            <Dropdown.Item className="nav-link nav-text" href={link4}>{word4}</Dropdown.Item>
+            <Dropdown.Item className="nav-link nav-text" href={link3}>{word3}</Dropdown.Item>
+            <Dropdown.Item className="nav-link nav-text" href={link1}>{word1}</Dropdown.Item>
+            <Dropdown.Item className="nav-link nav-text" onClick={logOut} href={link2}>{word2}</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
         <div id="navbarResponsive" className="collapse navbar-collapse">
           <ul className="navbar-nav text-uppercase ml-auto">
             <li className="nav-item">

@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import EditUser from "../components/EditUserForms";
 import DeleteUser from "../components/DeleteUserForms"
 import ChangePassword from "../components/ChangePasswordForms";
 import { Modal } from 'react-bootstrap'
-import { Form, Error } from "../components/AuthForms";
-import { Loading } from "../components/Loading";
-import { useAuth } from "../context/auth";
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 import { formatDate } from "../components/Utils";
 
 function Profile(props) {
-  const [isError, setIsError] = useState(false);
   const [showEditUser, setEditUserShow] = useState(false);
   const [showChangePassword, setChangePasswordShow] = useState(false);
   const [showDeleteUser, setDeleteUserShow] = useState(false);
@@ -23,7 +18,6 @@ function Profile(props) {
   const [role, setRole] = useState("");
   const [createdate, setCreateDate] = useState("");
   const [modifydate, setModifyDate] = useState("");
-  const [password, setPassword] = useState("");
   const [trackedUser, setTrackedUser] = useState("");
 
   const handleEditUserClose = () => setEditUserShow(false);

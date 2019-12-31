@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Form, Error, Success } from "../components/AuthForms";
 import { Loading } from "../components/Loading";
 import { useAuth } from "../context/auth";
-import { Navbar } from "../components/Navbar";
 import { checkDyno } from "../components/Utils"
 
 function Signup() {

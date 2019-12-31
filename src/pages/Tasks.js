@@ -73,6 +73,7 @@ function Tasks(props) {
           </tr>
         )
       } else {}
+      return null;
     })
   }
 

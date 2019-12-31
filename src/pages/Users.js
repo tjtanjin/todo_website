@@ -5,9 +5,7 @@ import DetailsUser from '../components/DetailsUserForms'
 import AdminEditUser from '../components/AdminEditUserForms'
 import AdminDeleteUser from '../components/AdminDeleteUserForms'
 import { Modal, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
-import { formatDate } from "../components/Utils"
 
 function Users(props) {
   const [searchType, setSearchType] = useState("name");
@@ -63,6 +61,7 @@ function Users(props) {
           </tr>
         )
       } else {}
+      return null;
     })
   }
 

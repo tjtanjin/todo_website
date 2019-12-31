@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { VerifyAuth } from "./components/VerifyAuth"
+import { VerifyAuth } from "./components/Utils"
 
 function PrivateRoute({ component: Component, ...rest }) {
 

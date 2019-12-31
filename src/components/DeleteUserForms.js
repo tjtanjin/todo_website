@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Form, Error, Success } from "../components/AuthForms";
-import { decode } from 'jsonwebtoken'
 import { Loading } from "./Loading";
 import { useAuth } from "../context/auth"
 
@@ -11,13 +10,7 @@ function DeleteUser(data) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [name, setUsername] = useState(data.name);
-  const [email, setEmail] = useState(data.email);
   const [password, setPassword] = useState("");
-
-  function logOut() {
-    setAuthTokens("undefined");
-  }
 
   function delUser() {
     function postAuthenticate() {
@@ -33,7 +26,8 @@ function DeleteUser(data) {
             headers: { Authorization: token }
           }).then(result => {
             if (result.status === 200) {
-              setAuthTokens("undefined")
+              setAuthTokens("undefined");
+              setIsSuccess(true);
               data.onCloseModal();
             } else {
 

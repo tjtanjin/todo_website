@@ -1,20 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Link, Redirect } from "react-router-dom";
-import axios from 'axios';
-import EditUser from "../components/EditUserForms";
-import DeleteUser from "../components/DeleteUserForms"
-import ChangePassword from "../components/ChangePasswordForms";
-import { Modal } from 'react-bootstrap'
-import { Form, Error } from "../components/AuthForms";
-import { Loading } from "../components/Loading";
-import { useAuth } from "../context/auth";
-import { decode } from 'jsonwebtoken';
-import { Navbar } from "../components/Navbar";
+import React from "react";
 import { formatDate } from "../components/Utils";
 
 function DetailsTask(data) {
   const onCloseModal = data.onCloseModal
-  const getTasks = data.getTasks
   data = data.task
 
   return ( 

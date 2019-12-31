@@ -1,10 +1,8 @@
 import React from "react";
 import HttpsRedirect from 'react-https-redirect'
 import logoImg from "../img/logo.png";
-import { VerifyAuth } from "../components/VerifyAuth";
+import { VerifyAuth } from "../components/Utils";
 import { Link } from 'react-router-dom'
-import { Logo } from "../components/AuthForms";
-import { Navbar } from "../components/Navbar";
 
 function Home(props) {
   let primary_text = "to Todo Manager"
@@ -25,7 +23,7 @@ function Home(props) {
     <HttpsRedirect>
         <header class="masthead d-flex">
 		  <div class="container text-center my-auto">
-        <img src={logoImg}></img>
+        <img src={logoImg} alt="Todo-Manager Logo"></img>
         <br/><br/><br/>
 		    <h1 class="mb-1 text-home-primary">Welcome {primary_text}</h1>
 		    <h3 class="mb-5 text-home-secondary">

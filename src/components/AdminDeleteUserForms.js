@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import axios from 'axios';
-import { decode } from 'jsonwebtoken'
 import { Form } from "../components/AuthForms"
 
 function AdminDeleteUser(data) {
