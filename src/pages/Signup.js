@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { Form, Error, Success } from "../components/AuthForms";
-import { Loading } from "../components/Loading";
 import { useAuth } from "../context/auth";
-import { checkDyno } from "../components/Utils"
+import { checkDyno, logOut, Loading } from "../components/Utils"
 
 function Signup() {
+
+  // declare stateful values to be used
   const [apiResult, setApiResult] = useState("");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,6 +19,11 @@ function Signup() {
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const { setAuthTokens } = useAuth();
 
+  /*
+  The function postSignup makes a POST request to the API endpoint to create a new user.
+  Args:
+      None     
+  */
   function postSignup() {
     setIsLoading(true);
     setIsError(false);
@@ -36,6 +42,7 @@ function Signup() {
         setAuthTokens(result.data);
         setLoggedIn(true);
       } else {
+        setApiResult("An error has occurred, please contact an administrator.")
         setIsError(true);
       }
     }).catch(e => {
@@ -47,7 +54,9 @@ function Signup() {
     });
   }
 
+  // logout user on visting page and listen for enter key input to submit form
   useEffect(() => {
+    logOut(setAuthTokens);
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
         document.getElementById("submitButton").click()
@@ -58,12 +67,15 @@ function Signup() {
     return () => {
       window.removeEventListener('keydown', handleEnter);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // redirect to homepage upon successful signup + login
   if (isLoggedIn) {
     return <Redirect to="/" />;
   }
 
+  // render signup page
   return (
     <div className="auth-inner">
       

@@ -4,10 +4,13 @@ import UserTasks from '../components/UserTasksForms'
 import DetailsUser from '../components/DetailsUserForms'
 import AdminEditUser from '../components/AdminEditUserForms'
 import AdminDeleteUser from '../components/AdminDeleteUserForms'
-import { Modal, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { renderTooltip } from '../components/Utils'
+import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { Navbar } from "../components/Navbar";
 
 function Users(props) {
+
+  // declare stateful values to be used 
   const [searchType, setSearchType] = useState("name");
   const [searchWord, setSearchWord] = useState("");
   const [users, setUsers] = useState([]);
@@ -17,6 +20,7 @@ function Users(props) {
   const [showAdminDeleteUser, setAdminDeleteUserShow] = useState(false);
   const [trackedUser, setTrackedUser] = useState({});
 
+  // declare controllers for showing and hiding modals
   const handleUserTasksClose = () => setUserTasksShow(false);
   const handleUserTasksShow = () => setUserTasksShow(true);
   const handleDetailsUserClose = () => setDetailsUserShow(false);
@@ -26,10 +30,16 @@ function Users(props) {
   const handleAdminDeleteUserClose = () => setAdminDeleteUserShow(false);
   const handleAdminDeleteUserShow = () => setAdminDeleteUserShow(true);
 
+  // get all users at the start
   useEffect(() => {
     getUsers();
   }, []);
 
+  /*
+  The function renderTableData generates the header for the users table.
+  Args:
+      None     
+  */
   function renderTableHeader() {
     let header = ["INDEX", "USERNAME", "EMAIL", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
@@ -37,6 +47,11 @@ function Users(props) {
     })
   }
 
+  /*
+  The function renderTableData generates the users table containing the relevant information as specified by the admin.
+  Args:
+      None     
+  */
   function renderTableData() {
 
     const action_button = (click_action, user, icon, text) => (
@@ -65,10 +80,11 @@ function Users(props) {
     })
   }
 
-  function renderTooltip(text) {
-    return <Tooltip delay={{ show: 250, hide: 400 }}>{text}</Tooltip>;
-  }
-
+  /*
+  The function getUsers makes a GET request to the API endpoint to get users.
+  Args:
+      None     
+  */
   function getUsers() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     axios.get(process.env.REACT_APP_API_LINK + "/users/", {
@@ -77,13 +93,14 @@ function Users(props) {
       if (result.status === 200) {
         setUsers(result.data);
       } else {
-
+        alert("An error has occurred, please contact an administrator.")
       }
     }).catch(e => {
-
+      alert(e)
     });
   }
 
+  // render users page
   return (
     <div className="content-inner">
       <Navbar></Navbar>

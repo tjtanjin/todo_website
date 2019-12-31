@@ -1,10 +1,13 @@
 import React from "react";
-import { formatDate } from "../components/Utils";
+import { formatDate } from "./Utils";
 
 function DetailsUser(data) {
+
+  // prepared passed in data
   const onCloseModal = data.onCloseModal
   data = data.user
 
+  // render user details modal
   return ( 
     <div className="details-inner">
       <div class="row">

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Error, Success } from "../components/AuthForms";
+import { Error, Success } from "./AuthForms";
 import { decode } from 'jsonwebtoken'
 
 function EditTask(data) {
+
+  // prepared pass in data
   const onCloseModal = data.onCloseModal
   const getTasks = data.getTasks
   data = data.task
+
+  // declare stateful values to be used 
   const [apiResult, setApiResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -16,6 +20,11 @@ function EditTask(data) {
   const [priority, setPriority] = useState(data.priority);
   const [deadline, setDeadline] = useState(data.deadline);
 
+  /*
+  The function putEditTask makes a PUT request to the API endpoint to edit the specified task.
+  Args:
+      None     
+  */
   function putEditTask() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
@@ -33,6 +42,7 @@ function EditTask(data) {
         getTasks();
         onCloseModal();
       } else {
+        setApiResult("An error has occurred, please contact an administrator.")
         setIsError(true)
       }
     }).catch(e => {
@@ -41,6 +51,7 @@ function EditTask(data) {
     });
   }
 
+  // listen for enter key input to submit form
   useEffect(() => {
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
@@ -54,6 +65,7 @@ function EditTask(data) {
     };
   }, []);
 
+  // render edit task modal
   return (
     <div className="auth-inner">
       <form>

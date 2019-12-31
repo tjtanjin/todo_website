@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { Form, Error, Success } from "../components/AuthForms";
-import { Loading } from "../components/Loading";
 import { useAuth } from "../context/auth";
-import { checkDyno } from "../components/Utils"
+import { checkDyno, logOut, Loading } from "../components/Utils"
 
 function Login(props) {
+
+  // declare stateful values to be used
+  const [apiResult, setApiResult] = useState("");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -16,12 +18,18 @@ function Login(props) {
   const { setAuthTokens } = useAuth();
   let referer = '';
 
+  // set location to redirect to upon logging in
   if (typeof(props.location.state) == 'undefined' || props.location.state === null) {
     referer = '/';
   } else {
     referer = props.location.state.referer
   }
 
+  /*
+  The function postLogin makes a POST request to the API endpoint to authenticate the user.
+  Args:
+      None     
+  */
   function postLogin() {
     setIsLoading(true);
     setIsError(false);
@@ -38,18 +46,21 @@ function Login(props) {
         setAuthTokens(result.data);
         setLoggedIn(true);
       } else {
+        setApiResult("An error has occurred, please contact an administrator.")
         setIsError(true);
       }
     }).catch(e => {
       isDynoAwake = true;
       setDynoMessage(false);
       setIsLoading(false);
+      setApiResult(e.response.data.error)
       setIsError(true);
     });
   }
 
+  // logout user on visting page and listen for enter key input to submit form
   useEffect(() => {
-    setAuthTokens("undefined");
+    logOut(setAuthTokens);
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
         document.getElementById("submitButton").click()
@@ -63,10 +74,12 @@ function Login(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // redirect one logged in
   if (isLoggedIn) {
     return <Redirect to={referer} />;
   }
 
+  // render login page
   return (
     <div className="auth-inner">
       
@@ -114,7 +127,7 @@ function Login(props) {
         </p>
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }
-        { isError &&<Error>The email or password provided are incorrect!</Error> }
+        { isError &&<Error>{apiResult}</Error> }
       </Form>
     </div>
   );

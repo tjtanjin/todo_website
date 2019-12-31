@@ -5,12 +5,16 @@ import { VerifyAuth } from "../components/Utils";
 import { Link } from 'react-router-dom'
 
 function Home(props) {
+
+  // declare variables that will change depending on whether user is authenticated
   let primary_text = "to Todo Manager"
   let secondary_text = "Plan and organize your tasks today!"
   let btn_text1 = "Login"
   let btn_link1 = "/login"
   let btn_text2 = "Sign Up"
   let btn_link2 = "/signup"
+
+  // check if user is authenticated and adjust variables accordingly
   if (VerifyAuth()) {
   	primary_text = JSON.parse(localStorage.getItem('todo_data')).userName;
   	secondary_text = "What would you like to do today?"
@@ -19,6 +23,8 @@ function Home(props) {
   	btn_text2 = "My Profile"
     btn_link2 = "/profile"
   }
+
+  // render homepage
   return (
     <HttpsRedirect>
         <header class="masthead d-flex">

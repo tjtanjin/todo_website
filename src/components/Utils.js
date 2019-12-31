@@ -1,3 +1,6 @@
+import React from 'react'
+import { Tooltip } from 'react-bootstrap'
+
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -33,4 +36,20 @@ function VerifyAdmin() {
   }
 }
 
-export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin };
+function logOut(setAuthTokens) {
+  setAuthTokens("undefined");
+}
+
+function renderTooltip(text) {
+  return <Tooltip delay={{ show: 250, hide: 400 }}>{text}</Tooltip>;
+}
+
+function Loading() {
+  return (
+    <div class="spinner-border load" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  )
+}
+
+export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading };

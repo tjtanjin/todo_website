@@ -5,11 +5,14 @@ import DetailsTask from '../components/DetailsTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import CompleteTask from '../components/CompleteTaskForms'
-import { Modal, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
+import { renderTooltip} from '../components/Utils'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 
 function Tasks(props) {
+
+  // declare stateful values to be used 
   const [taskChoice, setTaskChoice] = useState("In-progress");
   const [searchType, setSearchType] = useState("category");
   const [searchWord, setSearchWord] = useState("");
@@ -21,6 +24,7 @@ function Tasks(props) {
   const [showCompleteTask, setCompleteTaskShow] = useState(false);
   const [trackedTask, setTrackedTask] = useState({});
 
+  // declare controllers for showing and hiding modals
   const handleNewTaskClose = () => setNewTaskShow(false);
   const handleNewTaskShow = () => setNewTaskShow(true);
   const handleDetailsTaskClose = () => setDetailsTaskShow(false);
@@ -32,10 +36,16 @@ function Tasks(props) {
   const handleCompleteTaskClose = () => setCompleteTaskShow(false);
   const handleCompleteTaskShow = () => setCompleteTaskShow(true);
 
+  // get all tasks belonging to the user at the start
   useEffect(() => {
     getTasks();
   }, []);
 
+  /*
+  The function renderTableHeader generates the header for the tasks table.
+  Args:
+      None     
+  */
   function renderTableHeader() {
     let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
@@ -43,6 +53,11 @@ function Tasks(props) {
     })
   }
 
+  /*
+  The function renderTableData generates the tasks table containing the relevant information as specified by the user.
+  Args:
+      None     
+  */
   function renderTableData() {
 
     const action_button = (click_action, task, icon, text) => (
@@ -77,10 +92,11 @@ function Tasks(props) {
     })
   }
 
-  function renderTooltip(text) {
-    return <Tooltip delay={{ show: 250, hide: 400 }}>{text}</Tooltip>;
-  }
-
+  /*
+  The function getTasks makes a GET request to the API endpoint to get all tasks of the user.
+  Args:
+      None     
+  */
   function getTasks() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
@@ -90,13 +106,14 @@ function Tasks(props) {
       if (result.status === 200) {
         setTasks(result.data);
       } else {
-
+        alert("An error has occurred, please contact an administrator.")
       }
     }).catch(e => {
-
+      alert(e)
     });
   }
 
+  // render tasks page
   return (
     <div className="content-inner">
       <Navbar></Navbar>

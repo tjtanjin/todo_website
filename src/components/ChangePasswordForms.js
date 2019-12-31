@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Form, Error, Success } from "../components/AuthForms";
+import { Form, Error, Success } from "./AuthForms";
 import { decode } from 'jsonwebtoken'
-import { Loading } from "./Loading";
+import { Loading } from "./Utils";
 
 function ChangePassword(data) {
+
+  // prepare passed in data
   const onCloseModal = data.onCloseModal
   const getSelf = data.getSelf;
   data = data.user
+
+  // declare stateful values to be used 
   const [apiResult, setApiResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -15,6 +19,11 @@ function ChangePassword(data) {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
+  /*
+  The function putChangePassword makes a PUT request to the API endpoint to update the password of the specified user.
+  Args:
+      None     
+  */
   function putChangePassword() {
     function postAuthenticate() {
       setIsLoading(true);
@@ -37,6 +46,7 @@ function ChangePassword(data) {
               getSelf();
               onCloseModal();
             } else {
+              setApiResult("An error has occurred, please contact an administrator.")
               setIsError(true);
             }
           }).catch(e => {
@@ -46,6 +56,7 @@ function ChangePassword(data) {
           });
         } else {
           setIsLoading(false);
+          setApiResult("An error has occurred, please contact an administrator.")
           setIsError(true);
         }
       }).catch(e => {
@@ -57,6 +68,7 @@ function ChangePassword(data) {
     postAuthenticate();
   }
 
+  // listen for enter key input to submit form
   useEffect(() => {
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
@@ -70,6 +82,7 @@ function ChangePassword(data) {
     };
   }, []);
 
+  // render change password modal
   return (
     <div className="auth-inner">
       <Form>

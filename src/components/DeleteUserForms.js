@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Form, Error, Success } from "../components/AuthForms";
-import { Loading } from "./Loading";
+import { Form, Error, Success } from "./AuthForms";
+import { Loading } from "./Utils";
 import { useAuth } from "../context/auth"
 
 function DeleteUser(data) {
+
+  // declare stateful values to be used
   const { setAuthTokens } = useAuth();
   const [apiResult, setApiResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +14,12 @@ function DeleteUser(data) {
   const [isError, setIsError] = useState(false);
   const [password, setPassword] = useState("");
 
-  function delUser() {
+  /*
+  The function delDeleteUser makes a DELETE request to the API endpoint to delete the specified user.
+  Args:
+      None     
+  */
+  function delDeleteUser() {
     function postAuthenticate() {
       setIsLoading(true);
       setIsError(false);
@@ -25,18 +32,23 @@ function DeleteUser(data) {
           axios.delete(process.env.REACT_APP_API_LINK + "/users/" + data.id, {
             headers: { Authorization: token }
           }).then(result => {
+            setIsLoading(false);
             if (result.status === 200) {
               setAuthTokens("undefined");
               setIsSuccess(true);
               data.onCloseModal();
             } else {
-
+              setApiResult("An error has occurred, please contact an administrator.")
+              setIsError(true);
             }
           }).catch(e => {
-            alert(e)
+            setIsLoading(false);
+            setApiResult(e.response.data.error);
+            setIsError(true);
           });
         } else {
           setIsLoading(false);
+          setApiResult("An error has occurred, please contact an administrator.")
           setIsError(true);
         }
       }).catch(e => {
@@ -48,6 +60,7 @@ function DeleteUser(data) {
     postAuthenticate();
   }
 
+  // listen for enter key input to submit form
   useEffect(() => {
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
@@ -61,6 +74,7 @@ function DeleteUser(data) {
     };
   }, []);
 
+  // render delete user modal
   return (
     <div className="auth-inner">
       <Form>
@@ -76,7 +90,7 @@ function DeleteUser(data) {
             placeholder="Enter password"
           />
         </div>
-        <button id="submitButton" className="btn btn-danger btn-block" type="button" onClick={e => delUser()}>Delete</button>
+        <button id="submitButton" className="btn btn-danger btn-block" type="button" onClick={e => delDeleteUser()}>Delete</button>
         <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>
         <br/>
         { isLoading&&<Loading></Loading> }

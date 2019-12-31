@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Error, Success } from "../components/AuthForms";
+import { Error, Success } from "./AuthForms";
 import { decode } from 'jsonwebtoken'
 
 function NewTask(data) {
+
+  // declare stateful values to be used
   const [apiResult, setApiResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -13,6 +15,11 @@ function NewTask(data) {
   const [priority, setPriority] = useState("Low");
   const [deadline, setDeadline] = useState("");
 
+  /*
+  The function postNewTask makes a POST request to the API endpoint to create a new task.
+  Args:
+      None     
+  */
   function postNewTask() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
@@ -31,6 +38,7 @@ function NewTask(data) {
         data.getTasks();
         data.onCloseModal();
       } else {
+        setApiResult("An error has occurred, please contact an administrator.")
         setIsError(true);
       }
     }).catch(e => {
@@ -39,6 +47,7 @@ function NewTask(data) {
     });
   }
 
+  // listen for enter key input to submit form
   useEffect(() => {
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
@@ -52,6 +61,7 @@ function NewTask(data) {
     };
   }, []);
 
+  // render new task modal
   return (
     <div className="auth-inner">
       <form>

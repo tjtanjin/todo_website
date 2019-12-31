@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import DetailsTask from '../components/DetailsTaskForms'
-import EditTask from '../components/EditTaskForms'
-import DeleteTask from '../components/DeleteTaskForms'
+import DetailsTask from './DetailsTaskForms'
+import EditTask from './EditTaskForms'
+import DeleteTask from './DeleteTaskForms'
 import { Modal, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { renderTooltip } from './Utils'
 
 function UserTasks(data) {
+
+  // prepared pass in data
   const onCloseModal = data.onCloseModal
   data = data.user
+
+  // declare stateful values to be used
   const [taskChoice, setTaskChoice] = useState("In-progress");
   const [searchType, setSearchType] = useState("category");
   const [searchWord, setSearchWord] = useState("");
@@ -17,6 +22,7 @@ function UserTasks(data) {
   const [showDeleteTask, setDeleteTaskShow] = useState(false);
   const [trackedTask, setTrackedTask] = useState({});
 
+  // declare controllers for showing and hiding modals
   const handleDetailsTaskClose = () => setDetailsTaskShow(false);
   const handleDetailsTaskShow = () => setDetailsTaskShow(true);
   const handleEditTaskClose = () => setEditTaskShow(false);
@@ -24,11 +30,17 @@ function UserTasks(data) {
   const handleDeleteTaskClose = () => setDeleteTaskShow(false);
   const handleDeleteTaskShow = () => setDeleteTaskShow(true);
 
+  // get all tasks belonging to specified user at the start
   useEffect(() => {
     getTasks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /*
+  The function renderTableHeader generates the header for the tasks table.
+  Args:
+      None     
+  */
   function renderTableHeader() {
     let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
@@ -36,6 +48,11 @@ function UserTasks(data) {
     })
   }
 
+  /*
+  The function renderTableData generates the tasks table containing the relevant information as specified by the user.
+  Args:
+      None     
+  */
   function renderTableData() {
 
     const action_button = (click_action, task, icon, text) => (
@@ -65,10 +82,11 @@ function UserTasks(data) {
     })
   }
 
-  function renderTooltip(text) {
-    return <Tooltip delay={{ show: 250, hide: 400 }}>{text}</Tooltip>;
-  }
-
+  /*
+  The function getTasks makes a GET request to the API endpoint to get all tasks of the specified user.
+  Args:
+      None     
+  */
   function getTasks() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     axios.get(process.env.REACT_APP_API_LINK + "/users/" + data.id + "/tasks", {
@@ -77,13 +95,14 @@ function UserTasks(data) {
       if (result.status === 200) {
         setTasks(result.data);
       } else {
-
+        alert("An error has occurred, please contact an administrator.")
       }
     }).catch(e => {
-
+      alert(e)
     });
   }
 
+  // render user tasks modal for admin
   return (
     <div className="content-inner">
       <div className="search">

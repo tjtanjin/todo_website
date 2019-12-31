@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800');
 
+/******************************
+        General Styling
+******************************/
+
 * {
   box-sizing: border-box;
 }
@@ -16,14 +20,33 @@ h1,h2,h3,h4,h5,h6,label,span {
   font-family: 'Fira Sans', sans-serif;
 }
 
-body, html, .App, #root, .auth-wrapper {
+body, html, .App, #root, .wrapper {
   width: 100%;
   height: 100%;
 }
 
-.sort-task {
-  float: right;
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
 }
+
+.wrapper .form-control:focus {
+  border-color: #167bff;
+  box-shadow: none;
+}
+
+.wrapper h3 {
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+/******************************
+      Home Page Styling
+******************************/
 
 .btn-home {
   width: 200px;
@@ -36,6 +59,10 @@ body, html, .App, #root, .auth-wrapper {
 .text-home-secondary {
   color: #fff;
 }
+
+/******************************
+        Navbar Styling
+******************************/
 
 .nav-dropdown {
   background-color: #000 !important;
@@ -75,12 +102,9 @@ body, html, .App, #root, .auth-wrapper {
   color: #40E0D0 !important;
 }
 
-.auth-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: left;
-}
+/******************************
+  Login/Signup Pages Styling
+******************************/
 
 .auth-inner {
   width: 450px;
@@ -90,22 +114,7 @@ body, html, .App, #root, .auth-wrapper {
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
   transition: all .3s;
-}
-
-.auth-wrapper .form-control:focus {
-  border-color: #167bff;
-  box-shadow: none;
-}
-
-.auth-wrapper h3 {
-  text-align: center;
-  margin: 0;
-  line-height: 1;
-  padding-bottom: 20px;
-}
-
-.custom-control-label {
-  font-weight: 400;
+  overflow-wrap: break-word;
 }
 
 .forgot-password,
@@ -121,9 +130,9 @@ body, html, .App, #root, .auth-wrapper {
   color: #167bff;
 }
 
-.modal_header_bg {
-  background-color: #40E0D0;
-}
+/******************************
+    Tasks/Users Pages Styling
+******************************/
 
 .content-inner {
   width: 1000px;
@@ -136,28 +145,9 @@ body, html, .App, #root, .auth-wrapper {
   transition: all .3s;
 }
 
-.home-inner {
-  box-sizing: border-box;
-  max-width: 410px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.prompt {
-  text-align: center;
-}
-
-.trackedcontent {
-  font-weight: bold;
-  color: red;
-}
-
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
-body{
+body {
   background: #f2f2f2;
   font-family: 'Open Sans', sans-serif;
 }
@@ -201,13 +191,8 @@ body{
   font-size: 20px;
 }
 
-.load {
-  align-self: center;
-}
-
-.Completed {
-  background-color: #99FF99;
-  font-weight: bold;
+.sort-task {
+  float: right;
 }
 
 .Low {
@@ -225,19 +210,17 @@ body{
   font-weight: bold;
 }
 
-.large-modal {
-  width: 80%;
-  max-width:80%!important;
-}
-
-/*Resize the wrap to see the search bar change!*/
-.wrap{
+.wrap {
   width: 30%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+/******************************
+    Profile Pages Styling
+******************************/
 
 .profile-inner {
   width: 500px;
@@ -250,9 +233,45 @@ body{
   overflow-wrap: break-word;
 }
 
+/******************************
+  Modal Layout/Content Styling
+******************************/
+
+.modal_header_bg {
+  background-color: #40E0D0;
+  overflow: hidden;
+}
+
+.prompt {
+  text-align: center;
+}
+
+.trackedcontent {
+  font-weight: bold;
+  color: red;
+}
+
+.load {
+  align-self: center;
+}
+
+.Completed {
+  background-color: #99FF99;
+  font-weight: bold;
+}
+
+.large-modal {
+  width: 80%;
+  max-width:80%!important;
+}
+
 .details-inner {
   overflow-wrap: break-word;
 }
+
+/******************************
+        Table Styling
+******************************/
 
 #title {
   text-align: center;

@@ -9,6 +9,8 @@ import { Navbar } from "../components/Navbar";
 import { formatDate } from "../components/Utils";
 
 function Profile(props) {
+
+  // declare stateful values to be used 
   const [showEditUser, setEditUserShow] = useState(false);
   const [showChangePassword, setChangePasswordShow] = useState(false);
   const [showDeleteUser, setDeleteUserShow] = useState(false);
@@ -20,6 +22,7 @@ function Profile(props) {
   const [modifydate, setModifyDate] = useState("");
   const [trackedUser, setTrackedUser] = useState("");
 
+  // declare controllers for showing and hiding modals
   const handleEditUserClose = () => setEditUserShow(false);
   const handleEditUserShow = () => setEditUserShow(true);
   const handleChangePasswordClose = () => setChangePasswordShow(false);
@@ -27,6 +30,16 @@ function Profile(props) {
   const handleDeleteUserClose = () => setDeleteUserShow(false);
   const handleDeleteUserShow = () => setDeleteUserShow(true);
 
+  // get user at the start
+  useEffect(() => {
+    getSelf();
+  }, []);
+
+  /*
+  The function getSelf makes a GET request to the API endpoint to get information belonging to the current user.
+  Args:
+      None     
+  */
   function getSelf() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
@@ -42,17 +55,14 @@ function Profile(props) {
         setCreateDate(formatDate(result.data.created_at));
         setModifyDate(formatDate(result.data.updated_at));
       } else {
-
+        alert("An error has occurred, please contact an administrator.")
       }
     }).catch(e => {
-
+      alert(e)
     });
   }
 
-  useEffect(() => {
-    getSelf();
-  }, []);
-
+  // render profile page
   return (
     <div className="profile-inner">
       <Navbar></Navbar>

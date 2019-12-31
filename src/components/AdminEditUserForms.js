@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Error, Success } from "../components/AuthForms";
+import { Error, Success } from "./AuthForms";
 
 function AdminEditUser(data) {
+
+  // prepare passed in data
   const onCloseModal = data.onCloseModal
   const getUsers = data.getUsers;
   data = data.user
+
+  // declare stateful values to be used 
   const [apiResult, setApiResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [name, setUsername] = useState(data.name);
   const [email, setEmail] = useState(data.email);
 
+  /*
+  The function putAdminEditUser makes a PUT request to the API endpoint to update the profile of the specified user.
+  Args:
+      None     
+  */
   function putAdminEditUser() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     axios.put(process.env.REACT_APP_API_LINK + "/users/" + data.id, { "user": {
@@ -25,6 +34,7 @@ function AdminEditUser(data) {
         getUsers();
         onCloseModal()
       } else {
+        setApiResult("An error has occurred, please contact an administrator.")
         setIsError(true)
       }
     }).catch(e => {
@@ -33,6 +43,7 @@ function AdminEditUser(data) {
     });
   }
 
+  // listen for enter key input to submit form
   useEffect(() => {
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
@@ -46,6 +57,7 @@ function AdminEditUser(data) {
     };
   }, []);
 
+  // render admin edit user modal
   return (
     <div className="auth-inner">
       <form>
