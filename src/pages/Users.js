@@ -147,7 +147,7 @@ function Users(props) {
 
       <Modal show={showLoading}>
         <Modal.Body>
-          <h5 className="prompt">Retrieving Data</h5><br/>
+          <h5 className="prompt">Loading</h5><br/>
           <Form><Loading></Loading></Form></Modal.Body>
       </Modal>
 
