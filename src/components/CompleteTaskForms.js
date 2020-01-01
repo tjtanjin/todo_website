@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
+import { Error, Success } from "./AuthForms";
 import { decode } from 'jsonwebtoken'
 
 function CompleteTask(data) {
@@ -57,6 +58,8 @@ function CompleteTask(data) {
       <br/>
       <button className="btn btn-dark btn-block" type="button" onClick={putCompleteTask}>Complete Task</button>
       <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>
+      { isSuccess &&<Success>Task completed!</Success> }
+      { isError &&<Error>{apiResult}</Error> }
     </div>
   );
 }

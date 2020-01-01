@@ -3,7 +3,7 @@ import axios from 'axios';
 import DetailsTask from './DetailsTaskForms'
 import EditTask from './EditTaskForms'
 import DeleteTask from './DeleteTaskForms'
-import { Modal, Dropdown, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { renderTooltip } from './Utils'
 
 function UserTasks(data) {

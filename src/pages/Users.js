@@ -4,7 +4,8 @@ import UserTasks from '../components/UserTasksForms'
 import DetailsUser from '../components/DetailsUserForms'
 import AdminEditUser from '../components/AdminEditUserForms'
 import AdminDeleteUser from '../components/AdminDeleteUserForms'
-import { renderTooltip } from '../components/Utils'
+import { Form } from "../components/AuthForms";
+import { renderTooltip, Loading } from '../components/Utils'
 import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { Navbar } from "../components/Navbar";
 
@@ -14,6 +15,7 @@ function Users(props) {
   const [searchType, setSearchType] = useState("name");
   const [searchWord, setSearchWord] = useState("");
   const [users, setUsers] = useState([]);
+  const [showLoading, setLoadingShow] = useState(false);
   const [showUserTasks, setUserTasksShow] = useState(false);
   const [showDetailsUser, setDetailsUserShow] = useState(false);
   const [showAdminEditUser, setAdminEditUserShow] = useState(false);
@@ -21,6 +23,8 @@ function Users(props) {
   const [trackedUser, setTrackedUser] = useState({});
 
   // declare controllers for showing and hiding modals
+  const handleLoadingClose = () => setLoadingShow(false);
+  const handleLoadingShow = () => setLoadingShow(true);
   const handleUserTasksClose = () => setUserTasksShow(false);
   const handleUserTasksShow = () => setUserTasksShow(true);
   const handleDetailsUserClose = () => setDetailsUserShow(false);
@@ -33,6 +37,7 @@ function Users(props) {
   // get all users at the start
   useEffect(() => {
     getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /*
@@ -98,10 +103,12 @@ function Users(props) {
       None     
   */
   function getUsers() {
+    handleLoadingShow();
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     axios.get(process.env.REACT_APP_API_LINK + "/users/", {
       headers: { Authorization: token }
     }).then(result => {
+      handleLoadingClose();
       if (result.status === 200) {
         setUsers(result.data);
       } else {
@@ -137,6 +144,12 @@ function Users(props) {
         </div>
       {renderTableData()}
       <br/>
+
+      <Modal show={showLoading}>
+        <Modal.Body>
+          <h5 className="prompt">Retrieving Data</h5><br/>
+          <Form><Loading></Loading></Form></Modal.Body>
+      </Modal>
 
       <Modal dialogClassName="large-modal" show={showUserTasks} onHide={handleUserTasksClose}>
         <Modal.Header className="modal_header_bg">

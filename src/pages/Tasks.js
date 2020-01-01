@@ -5,8 +5,9 @@ import DetailsTask from '../components/DetailsTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import CompleteTask from '../components/CompleteTaskForms'
+import { Form } from "../components/AuthForms";
 import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
-import { renderTooltip} from '../components/Utils'
+import { renderTooltip, Loading } from '../components/Utils'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 
@@ -30,6 +31,7 @@ function Tasks(props) {
   const [searchType, setSearchType] = useState(setDefaultValue("defaultSearchType", defaultSearchType));
   const [searchWord, setSearchWord] = useState(setDefaultValue("defaultSearchWord", defaultSearchWord));
   const [tasks, setTasks] = useState([]);
+  const [showLoading, setLoadingShow] = useState(false);
   const [showNewTask, setNewTaskShow] = useState(false);
   const [showDetailsTask, setDetailsTaskShow] = useState(false);
   const [showEditTask, setEditTaskShow] = useState(false);
@@ -38,6 +40,8 @@ function Tasks(props) {
   const [trackedTask, setTrackedTask] = useState({});
 
   // declare controllers for showing and hiding modals
+  const handleLoadingClose = () => setLoadingShow(false);
+  const handleLoadingShow = () => setLoadingShow(true);
   const handleNewTaskClose = () => setNewTaskShow(false);
   const handleNewTaskShow = () => setNewTaskShow(true);
   const handleDetailsTaskClose = () => setDetailsTaskShow(false);
@@ -52,6 +56,7 @@ function Tasks(props) {
   // get all tasks belonging to the user at the start
   useEffect(() => {
     getTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /*
@@ -123,11 +128,13 @@ function Tasks(props) {
       None     
   */
   function getTasks() {
+    handleLoadingShow();
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
     axios.get(process.env.REACT_APP_API_LINK + "/users/" + user_id + "/tasks", {
       headers: { Authorization: token }
     }).then(result => {
+      handleLoadingClose();
       if (result.status === 200) {
         setTasks(result.data);
       } else {
@@ -181,6 +188,12 @@ function Tasks(props) {
       <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={handleNewTaskShow}>
         Create New Task
       </button>
+
+      <Modal show={showLoading}>
+        <Modal.Body>
+          <h5 className="prompt">Retrieving Data</h5><br/>
+          <Form><Loading></Loading></Form></Modal.Body>
+      </Modal>
 
       <Modal show={showNewTask} onHide={handleNewTaskClose}>
         <Modal.Header className="modal_header_bg">

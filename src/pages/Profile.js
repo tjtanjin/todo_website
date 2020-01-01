@@ -3,14 +3,16 @@ import axios from 'axios';
 import EditUser from "../components/EditUserForms";
 import DeleteUser from "../components/DeleteUserForms"
 import ChangePassword from "../components/ChangePasswordForms";
+import { Form } from "../components/AuthForms";
 import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
-import { formatDate } from "../components/Utils";
+import { formatDate, Loading } from "../components/Utils";
 
 function Profile(props) {
 
-  // declare stateful values to be used 
+  // declare stateful values to be used
+  const [showLoading, setLoadingShow] = useState(false);
   const [showEditUser, setEditUserShow] = useState(false);
   const [showChangePassword, setChangePasswordShow] = useState(false);
   const [showDeleteUser, setDeleteUserShow] = useState(false);
@@ -23,6 +25,8 @@ function Profile(props) {
   const [trackedUser, setTrackedUser] = useState("");
 
   // declare controllers for showing and hiding modals
+  const handleLoadingClose = () => setLoadingShow(false);
+  const handleLoadingShow = () => setLoadingShow(true);
   const handleEditUserClose = () => setEditUserShow(false);
   const handleEditUserShow = () => setEditUserShow(true);
   const handleChangePasswordClose = () => setChangePasswordShow(false);
@@ -33,6 +37,7 @@ function Profile(props) {
   // get user at the start
   useEffect(() => {
     getSelf();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /*
@@ -41,11 +46,13 @@ function Profile(props) {
       None     
   */
   function getSelf() {
+    handleLoadingShow();
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
     axios.get(process.env.REACT_APP_API_LINK + "/users/" + user_id, {
       headers: { Authorization: token }
     }).then(result => {
+      handleLoadingClose();
       if (result.status === 200) {
         setTrackedUser(result.data);
         setUserID(result.data.id);
@@ -124,6 +131,12 @@ function Profile(props) {
           <button className="btn btn-danger btn-block" onClick={() => {handleDeleteUserShow()}}>Delete User</button>
         </div>
       </div>
+
+      <Modal show={showLoading}>
+        <Modal.Body>
+          <h5 className="prompt">Retrieving Data</h5><br/>
+          <Form><Loading></Loading></Form></Modal.Body>
+      </Modal>
 
       <Modal show={showEditUser} onHide={handleEditUserClose}>
         <Modal.Header className="modal_header_bg">
