@@ -12,10 +12,23 @@ import { Navbar } from "../components/Navbar";
 
 function Tasks(props) {
 
+  // prepare passed in data
+  let defaultSearchWord = "";
+  let defaultSearchType = "category";
+  let defaultTaskChoice = "In-progress";
+
+  function setDefaultValue(key, value) {
+    if (props.location.state === null || props.location.state === undefined || props.location.state[key] === undefined ) {
+      return value;
+    } else {
+      return props.location.state[key];
+    }
+  }
+
   // declare stateful values to be used 
-  const [taskChoice, setTaskChoice] = useState("In-progress");
-  const [searchType, setSearchType] = useState("category");
-  const [searchWord, setSearchWord] = useState("");
+  const [taskChoice, setTaskChoice] = useState(setDefaultValue("defaultTaskChoice", defaultTaskChoice));
+  const [searchType, setSearchType] = useState(setDefaultValue("defaultSearchType", defaultSearchType));
+  const [searchWord, setSearchWord] = useState(setDefaultValue("defaultSearchWord", defaultSearchWord));
   const [tasks, setTasks] = useState([]);
   const [showNewTask, setNewTaskShow] = useState(false);
   const [showDetailsTask, setDetailsTaskShow] = useState(false);
@@ -66,7 +79,7 @@ function Tasks(props) {
       </OverlayTrigger>
     );
 
-    return tasks.map((task, index) => {
+    const table = tasks.map((task, index) => {
       if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
         let details_button = action_button(handleDetailsTaskShow, task, "fa fa-info-circle", "View task details")
@@ -90,6 +103,18 @@ function Tasks(props) {
       } else {}
       return null;
     })
+    if (!table.every(e => e === null)) {
+      return (
+        <table id="content-table">
+          <tbody>
+            <tr>{renderTableHeader()}</tr>
+            {table}
+          </tbody>
+        </table>
+      )
+    } else {
+      return <div class="card-body"><br/><br/><h3 className="prompt">You have no tasks!</h3></div>
+    }
   }
 
   /*
@@ -115,7 +140,7 @@ function Tasks(props) {
 
   // render tasks page
   return (
-    <div className="content-inner">
+    <div className="content-inner col-xl-9 col-md-9 col-sm-12">
       <Navbar></Navbar>
 
       <h3>Tasks</h3>
@@ -151,12 +176,7 @@ function Tasks(props) {
           </Dropdown>
         </div>
       <br/>
-      <table id="content-table">
-        <tbody>
-          <tr>{renderTableHeader()}</tr>
-          {renderTableData()}
-        </tbody>
-      </table>
+      {renderTableData()}
       <br/>
       <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={handleNewTaskShow}>
         Create New Task

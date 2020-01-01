@@ -64,7 +64,7 @@ function Profile(props) {
 
   // render profile page
   return (
-    <div className="profile-inner">
+    <div className="profile-inner w-50">
       <Navbar></Navbar>
       
       <h3>{name}'s Profile</h3>

@@ -36,7 +36,7 @@ function Users(props) {
   }, []);
 
   /*
-  The function renderTableData generates the header for the users table.
+  The function renderTableHeader generates the header for the users table.
   Args:
       None     
   */
@@ -60,7 +60,7 @@ function Users(props) {
       </OverlayTrigger>
     );
 
-    return users.map((user, index) => {
+    const table = users.map((user, index) => {
       if (searchWord === "" || user[searchType].toUpperCase().includes(searchWord.toUpperCase())) {
         const { id, name, email } = user
         const details_button = action_button(handleDetailsUserShow, user, "fa fa-info-circle", "View user's details")
@@ -78,6 +78,18 @@ function Users(props) {
       } else {}
       return null;
     })
+    if (!table.every(e => e === null)) {
+      return (
+        <table id="content-table">
+          <tbody>
+            <tr>{renderTableHeader()}</tr>
+            {table}
+          </tbody>
+        </table>
+      )
+    } else {
+      return <div class="card-body"><br/><br/><h3 className="prompt">Insufficient Permissions!</h3></div>
+    }
   }
 
   /*
@@ -102,7 +114,7 @@ function Users(props) {
 
   // render users page
   return (
-    <div className="content-inner">
+    <div className="content-inner col-xl-9 col-md-9 col-sm-12">
       <Navbar></Navbar>
 
       <h3>Users</h3>
@@ -123,12 +135,7 @@ function Users(props) {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-      <table id="content-table">
-        <tbody>
-          <tr>{renderTableHeader()}</tr>
-          {renderTableData()}
-        </tbody>
-      </table>
+      {renderTableData()}
       <br/>
 
       <Modal dialogClassName="large-modal" show={showUserTasks} onHide={handleUserTasksClose}>

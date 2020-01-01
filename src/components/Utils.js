@@ -52,4 +52,15 @@ function Loading() {
   )
 }
 
-export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading };
+function compareDate(date) {
+  if (date === null) {
+    return -1;
+  } else {
+    let currentDate = new Date();
+    let dateparts = date.split('-');
+    let deadline = new Date(dateparts[0], dateparts[1] - 1, dateparts[2]);
+    return Math.ceil((deadline - currentDate) / (1000 * 3600 * 24))
+  }
+} 
+
+export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate };

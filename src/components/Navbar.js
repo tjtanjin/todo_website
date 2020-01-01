@@ -16,17 +16,21 @@ function Navbar() {
   let word3 = ""
   let link4 = ""
   let word4 = ""
+  let link5 = ""
+  let word5 = ""
   if (VerifyAuth()) {
     link1 = "/profile"
-    word1 = "My Profile"
+    word1 = "Profile"
     link2 = "/"
     word2 = "Logout"
     link3 = "/tasks"
-    word3 = "My Tasks"
+    word3 = "Tasks"
+    link4 = "/dashboard"
+    word4 = "Dashboard"
   } else {}
   if (VerifyAdmin()) {
-    link4 = "/users"
-    word4 = "View Users"
+    link5 = "/users"
+    word5 = "Users"
   }
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -36,6 +40,7 @@ function Navbar() {
         <Dropdown alignRight className="navbar-toggler">
           <Dropdown.Toggle variant="dark" id="dropdown-custom-1"><i className="fa fa-bars"></i></Dropdown.Toggle>
           <Dropdown.Menu className="nav-dropdown" >
+            <Dropdown.Item className="nav-link nav-text" href={link5}>{word5}</Dropdown.Item>
             <Dropdown.Item className="nav-link nav-text" href={link4}>{word4}</Dropdown.Item>
             <Dropdown.Item className="nav-link nav-text" href={link3}>{word3}</Dropdown.Item>
             <Dropdown.Item className="nav-link nav-text" href={link1}>{word1}</Dropdown.Item>
@@ -44,6 +49,9 @@ function Navbar() {
         </Dropdown>
         <div id="navbarResponsive" className="collapse navbar-collapse">
           <ul className="navbar-nav text-uppercase ml-auto">
+            <li className="nav-item">
+              <NavLink activeClassName="nav-selected" className="nav-link nav-text" to={link5}>{word5}</NavLink>
+            </li>
             <li className="nav-item">
               <NavLink activeClassName="nav-selected" className="nav-link nav-text" to={link4}>{word4}</NavLink>
             </li>

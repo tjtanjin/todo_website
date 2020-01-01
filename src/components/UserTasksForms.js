@@ -61,7 +61,7 @@ function UserTasks(data) {
       </OverlayTrigger>
     );
 
-    return tasks.map((task, index) => {
+    const table = tasks.map((task, index) => {
       if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
         let details_button = action_button(handleDetailsTaskShow, task, "fa fa-info-circle", "View task details")
@@ -80,6 +80,18 @@ function UserTasks(data) {
       } else {}
       return null;
     })
+    if (!table.every(e => e === null)) {
+      return (
+        <table id="content-table">
+          <tbody>
+            <tr>{renderTableHeader()}</tr>
+            {table}
+          </tbody>
+        </table>
+      )
+    } else {
+      return <div class="card-body"><br/><br/><h3 className="prompt">{data.name} has no task!</h3></div>
+    }
   }
 
   /*
@@ -137,12 +149,7 @@ function UserTasks(data) {
           </Dropdown>
         </div>
       <br/>
-      <table id="content-table">
-        <tbody>
-          <tr>{renderTableHeader()}</tr>
-          {renderTableData()}
-        </tbody>
-      </table>
+      {renderTableData()}
       <br/>
       <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={onCloseModal}>
         Close

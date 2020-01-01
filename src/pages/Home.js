@@ -1,10 +1,14 @@
 import React from "react";
 import HttpsRedirect from 'react-https-redirect'
 import logoImg from "../img/logo.png";
-import { VerifyAuth } from "../components/Utils";
-import { Link } from 'react-router-dom'
+import { VerifyAuth, logOut } from "../components/Utils";
+import { useAuth } from "../context/auth";
+import { Link } from 'react-router-dom';
 
 function Home(props) {
+
+  // declare stateful values to be used
+  const { setAuthTokens } = useAuth();
 
   // declare variables that will change depending on whether user is authenticated
   let primary_text = "to Todo Manager"
@@ -18,10 +22,10 @@ function Home(props) {
   if (VerifyAuth()) {
   	primary_text = JSON.parse(localStorage.getItem('todo_data')).userName;
   	secondary_text = "What would you like to do today?"
-  	btn_text1 = "My Tasks"
-  	btn_link1 = "/tasks"
-  	btn_text2 = "My Profile"
-    btn_link2 = "/profile"
+  	btn_text1 = "Go to Dashboard"
+  	btn_link1 = "/dashboard"
+  	btn_text2 = "Logout"
+    btn_link2 = "/"
   }
 
   // render homepage
@@ -37,7 +41,7 @@ function Home(props) {
 		    </h3>
 		    <Link class="btn btn-dark btn-home" to={btn_link1}>{btn_text1}</Link>
 		    <br/><br/>
-		    <Link class="btn btn-dark btn-home" to={btn_link2}>{btn_text2}</Link>
+		    <Link class="btn btn-dark btn-home" to={btn_link2} onClick={() => logOut(setAuthTokens)}>{btn_text2}</Link>
 		    </div>
 		  <div class="overlay"></div>
 		</header>
