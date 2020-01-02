@@ -115,6 +115,7 @@ function Users(props) {
         alert("An error has occurred, please contact an administrator.")
       }
     }).catch(e => {
+      handleLoadingClose();
       alert(e)
     });
   }
