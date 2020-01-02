@@ -6,11 +6,13 @@ import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 import { compareDate, Loading } from "../components/Utils";
+import { useAuth } from "../context/auth"
 import ReactStoreIndicator from 'react-score-indicator'
 
 function Dashboard(props) {
 
-  // declare stateful values to be used 
+  // declare stateful values to be used
+  const { setAuthTokens } = useAuth();
   const [showLoading, setLoadingShow] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [countCompleted, setCountCompleted] = useState(0);
@@ -127,7 +129,12 @@ function Dashboard(props) {
       }
     }).catch(e => {
       handleLoadingClose();
-      alert(e)
+      if (e.message.includes("401")) {
+        alert("Please login again.");
+        setAuthTokens("undefined");
+      } else {
+        alert(e);
+      }
     });
   }
 

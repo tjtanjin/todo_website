@@ -8,6 +8,7 @@ import CompleteTask from '../components/CompleteTaskForms'
 import { Form } from "../components/AuthForms";
 import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { renderTooltip, Loading } from '../components/Utils'
+import { useAuth } from "../context/auth"
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 
@@ -26,7 +27,8 @@ function Tasks(props) {
     }
   }
 
-  // declare stateful values to be used 
+  // declare stateful values to be used
+  const { setAuthTokens } = useAuth();
   const [taskChoice, setTaskChoice] = useState(setDefaultValue("defaultTaskChoice", defaultTaskChoice));
   const [searchType, setSearchType] = useState(setDefaultValue("defaultSearchType", defaultSearchType));
   const [searchWord, setSearchWord] = useState(setDefaultValue("defaultSearchWord", defaultSearchWord));
@@ -142,7 +144,12 @@ function Tasks(props) {
       }
     }).catch(e => {
       handleLoadingClose();
-      alert(e)
+      if (e.message.includes("401")) {
+        alert("Please login again.");
+        setAuthTokens("undefined");
+      } else {
+        alert(e);
+      }
     });
   }
 

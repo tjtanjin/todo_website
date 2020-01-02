@@ -6,12 +6,14 @@ import AdminEditUser from '../components/AdminEditUserForms'
 import AdminDeleteUser from '../components/AdminDeleteUserForms'
 import { Form } from "../components/AuthForms";
 import { renderTooltip, Loading } from '../components/Utils'
+import { useAuth } from "../context/auth"
 import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { Navbar } from "../components/Navbar";
 
 function Users(props) {
 
-  // declare stateful values to be used 
+  // declare stateful values to be used
+  const { setAuthTokens } = useAuth();
   const [searchType, setSearchType] = useState("name");
   const [searchWord, setSearchWord] = useState("");
   const [users, setUsers] = useState([]);
@@ -116,7 +118,12 @@ function Users(props) {
       }
     }).catch(e => {
       handleLoadingClose();
-      alert(e)
+      if (e.message.includes("401")) {
+        alert("Please login again.");
+        setAuthTokens("undefined");
+      } else {
+        alert(e);
+      }
     });
   }
 

@@ -8,10 +8,12 @@ import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 import { formatDate, Loading } from "../components/Utils";
+import { useAuth } from "../context/auth"
 
 function Profile(props) {
 
   // declare stateful values to be used
+  const { setAuthTokens } = useAuth();
   const [showLoading, setLoadingShow] = useState(false);
   const [showEditUser, setEditUserShow] = useState(false);
   const [showChangePassword, setChangePasswordShow] = useState(false);
@@ -66,7 +68,12 @@ function Profile(props) {
       }
     }).catch(e => {
       handleLoadingClose();
-      alert(e)
+      if (e.message.includes("401")) {
+        alert("Please login again.");
+        setAuthTokens("undefined");
+      } else {
+        alert(e);
+      }
     });
   }
 
