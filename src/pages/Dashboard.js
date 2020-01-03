@@ -5,7 +5,7 @@ import { Form } from "../components/AuthForms";
 import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
-import { compareDate, Loading } from "../components/Utils";
+import { compareDate, Loading, top5 } from "../components/Utils";
 import { useAuth } from "../context/auth"
 import ReactStoreIndicator from 'react-score-indicator'
 
@@ -15,10 +15,12 @@ function Dashboard(props) {
   const { setAuthTokens } = useAuth();
   const [showLoading, setLoadingShow] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [countTasks, setCountTasks] = useState(0);
   const [countCompleted, setCountCompleted] = useState(0);
   const [countLow, setCountLow] = useState(0);
   const [countMedium, setCountMedium] = useState(0);
   const [countHigh, setCountHigh] = useState(0);
+  const [arrTop, setArrTop] = useState([[1, 0], [2, 0], [3, 0], [4, 0], [5, 0]]);
 
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
@@ -78,6 +80,19 @@ function Dashboard(props) {
     }
   }
 
+  function rendertop5() {
+    return arrTop.map((task, index) => {
+      return (
+        <div>
+          <h4 class="small font-weight-bold">{arrTop[index][0]}<span class="float-right">{Math.ceil(arrTop[index][1]*100/countTasks) + "%"}</span></h4>
+          <div class="progress mb-4">
+            <div class="progress-bar bg-success" role="progressbar" style={{ width: arrTop[index][1]*100/countTasks + "%" }} aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      )
+    })
+  }
+
   /*
   The function display_data takes tasks data and renders values to the dashboard accordingly.
   Args:
@@ -88,6 +103,7 @@ function Dashboard(props) {
     let low = 0;
     let medium = 0;
     let high = 0;
+    let category_arr = [];
     data.forEach(task => {
       if (task.priority === "Completed") { 
         completed += 1;
@@ -101,11 +117,14 @@ function Dashboard(props) {
       if (task.priority === "High") {
         high += 1;
       }
+      category_arr.push(task.category.toUpperCase());
     })
+    setArrTop(top5(category_arr));
     setCountCompleted(completed);
     setCountLow(low);
     setCountMedium(medium);
     setCountHigh(high);
+    setCountTasks(completed + low + medium + high);
   }
 
   /*
@@ -252,10 +271,10 @@ function Dashboard(props) {
         <div class="col-lg-6 mb-4">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Top 5 Task Types</h6>
+              <h6 class="m-0 font-weight-bold text-dark">Top 5 Task Categories</h6>
             </div>
             <div class="card-body">
-              <h4 className="prompt">Coming soon</h4>
+              {rendertop5()}
             </div>
           </div>
         </div>

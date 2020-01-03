@@ -92,4 +92,22 @@ function validateTask(task_name, task_description, category, priority, date) {
   return true;
 }
 
-export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate, validateUser, validateTask };
+function top5(tasks) {
+  let cnts = tasks.reduce( function (obj, val) {
+      obj[val] = (obj[val] || 0) + 1;
+      return obj;
+  }, {} );
+  var sortable=[];
+  for(var key in cnts)
+    if(cnts.hasOwnProperty(key))
+      sortable.push([key, cnts[key]]); // each item is an array in format [key, value]
+  
+  // sort items by value
+  sortable.sort(function(a, b)
+  {
+    return b[1]-a[1]; // compare numbers
+  });
+  return sortable; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
+}
+
+export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate, validateUser, validateTask, top5 };
