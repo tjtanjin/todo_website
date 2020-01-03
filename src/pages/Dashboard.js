@@ -76,7 +76,7 @@ function Dashboard(props) {
         </table>
       )
     } else {
-      return <h3 className="prompt">You have no tasks due within the next 3 days!</h3>
+      return <h4 className="prompt">You have no tasks due within the next 3 days!</h4>
     }
   }
 
@@ -86,7 +86,7 @@ function Dashboard(props) {
       None     
   */
   function rendertop5() {
-    return arrTop.map((task, index) => {
+    const table = arrTop.map((task, index) => {
       return (
         <div>
           <h4 class="small font-weight-bold">{arrTop[index][0]}<span class="float-right">{Math.ceil(arrTop[index][1]*100/countTasks) + "%"}</span></h4>
@@ -96,6 +96,11 @@ function Dashboard(props) {
         </div>
       )
     })
+    if (!table.every(e => e === null)) {
+      return <div>{table}</div>
+    } else {
+      return <h4 className="prompt">You do not have any task!</h4>
+    }
   }
 
   /*
