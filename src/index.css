@@ -152,22 +152,6 @@ body, html, .App, #root, .wrapper {
   width: 50%;
 }
 
-.temp2 {
-  width: 20%;
-}
-.temp3 {
-  width: 40%;
-}
-.temp4 {
-  width: 60%;
-}
-.temp5 {
-  width: 80%;
-}
-.temp6 {
-  width: 100%;
-}
-
 .temp7 {
   width: 25rem;
 }
@@ -237,17 +221,27 @@ body {
 }
 
 .Low {
-  background-color: #FFFF99;
+  background-color: #28A745;
   font-weight: bold;
 }
 
 .Medium {
-  background-color: #FFCC99;
+  background-color: #FFC107;
   font-weight: bold;
 }
 
 .High {
-  background-color: #F08080;
+  background-color: #DC3545;
+  font-weight: bold;
+}
+
+.Completed {
+  background-color: #17A2B8;
+  font-weight: bold;
+}
+
+.Overdue {
+  background-color: #6C757D;
   font-weight: bold;
 }
 
@@ -294,11 +288,6 @@ body {
 
 .load {
   align-self: center;
-}
-
-.Completed {
-  background-color: #99FF99;
-  font-weight: bold;
 }
 
 .large-modal {
