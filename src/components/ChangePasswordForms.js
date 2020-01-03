@@ -12,7 +12,7 @@ function ChangePassword(data) {
   data = data.user
 
   // declare stateful values to be used 
-  const [apiResult, setApiResult] = useState("");
+  const [submitResult, setSubmitResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -46,22 +46,22 @@ function ChangePassword(data) {
               getSelf();
               onCloseModal();
             } else {
-              setApiResult("An error has occurred, please contact an administrator.")
+              setSubmitResult("An error has occurred, please contact an administrator.")
               setIsError(true);
             }
           }).catch(e => {
             setIsLoading(false);
-            setApiResult(e.response.data.error);
+            setSubmitResult(e.response.data.error);
             setIsError(true);
           });
         } else {
           setIsLoading(false);
-          setApiResult("An error has occurred, please contact an administrator.")
+          setSubmitResult("An error has occurred, please contact an administrator.")
           setIsError(true);
         }
       }).catch(e => {
         setIsLoading(false);
-        setApiResult(e.response.data.error);
+        setSubmitResult(e.response.data.error);
         setIsError(true);
       });
     }
@@ -117,7 +117,7 @@ function ChangePassword(data) {
         <br/>
         { isLoading&&<Loading></Loading> }
         { isSuccess &&<Success>Password updated!</Success> }
-        { isError &&<Error>{apiResult}</Error> }
+        { isError &&<Error>{submitResult}</Error> }
       </Form>
     </div>
   );

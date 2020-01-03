@@ -3,12 +3,12 @@ import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { Form, Error, Success } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
-import { checkDyno, logOut, Loading } from "../components/Utils"
+import { checkDyno, logOut, Loading, validateUser } from "../components/Utils"
 
 function Signup() {
 
   // declare stateful values to be used
-  const [apiResult, setApiResult] = useState("");
+  const [submitResult, setSubmitResult] = useState("");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -25,6 +25,12 @@ function Signup() {
       None     
   */
   function postSignup() {
+    const validateInput = validateUser(name, email);
+    if (validateInput !== true) {
+      setSubmitResult(validateInput);
+      setIsError(true);
+      return;
+    }
     setIsLoading(true);
     setIsError(false);
     let isDynoAwake = false;
@@ -42,14 +48,14 @@ function Signup() {
         setAuthTokens(result.data);
         setLoggedIn(true);
       } else {
-        setApiResult("An error has occurred, please contact an administrator.")
+        setSubmitResult("An error has occurred, please contact an administrator.")
         setIsError(true);
       }
     }).catch(e => {
       isDynoAwake = true;
       setDynoMessage(false);
       setIsLoading(false);
-      setApiResult(e.response.data.error)
+      setSubmitResult(e.response.data.error)
       setIsError(true)
     });
   }
@@ -139,7 +145,7 @@ function Signup() {
         <Link className="link" to="/login">Already have an account?</Link>
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }
-        { isError &&<Error>{apiResult}</Error> }
+        { isError &&<Error>{submitResult}</Error> }
       </Form>
     </div>
   );

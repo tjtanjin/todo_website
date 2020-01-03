@@ -61,6 +61,35 @@ function compareDate(date) {
     let deadline = new Date(dateparts[0], dateparts[1] - 1, dateparts[2]);
     return Math.ceil((deadline - currentDate) / (1000 * 3600 * 24))
   }
-} 
+}
 
-export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate };
+function validateUser(name, email) {
+  if (name === "" || name.length < 2) {
+    return "Username is too short (minimum 2 characters)"
+  }
+  if (email === "" || !email.includes("@")) {
+    return "Please enter a valid email"
+  }
+  return true
+}
+
+function validateTask(task_name, task_description, category, priority, date) {
+  if (task_name === "") {
+    return "Please give your task a name"
+  }
+  if (task_description === "") {
+    return "Please enter a task description" 
+  }
+  if (category === "") {
+    return "Please enter a category"
+  }
+  if (priority !== "Low" && priority !== "Medium" && priority !== "High" && priority !== "Completed") {
+    return "Please enter a valid priority"
+  }
+  if (date === "") {
+    return "Please enter a valid deadline"
+  }
+  return true;
+}
+
+export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate, validateUser, validateTask };

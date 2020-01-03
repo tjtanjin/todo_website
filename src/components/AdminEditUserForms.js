@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Error, Success } from "./AuthForms";
+import { Form, Error, Success } from "./AuthForms";
+import { Loading, validateUser } from "./Utils";
 
 function AdminEditUser(data) {
 
@@ -10,7 +11,8 @@ function AdminEditUser(data) {
   data = data.user
 
   // declare stateful values to be used 
-  const [apiResult, setApiResult] = useState("");
+  const [submitResult, setSubmitResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [name, setUsername] = useState(data.name);
@@ -22,6 +24,14 @@ function AdminEditUser(data) {
       None     
   */
   function putAdminEditUser() {
+    const validateInput = validateUser(name, email);
+    if (validateInput !== true) {
+      setSubmitResult(validateInput);
+      setIsError(true);
+      return;
+    }
+    setIsLoading(true);
+    setIsError(false);
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     axios.put(process.env.REACT_APP_API_LINK + "/users/" + data.id, { "user": {
       name,
@@ -29,16 +39,18 @@ function AdminEditUser(data) {
     }}, {
       headers: { Authorization: token }
     }).then(result => {
+      setIsLoading(false);
       if (result.status === 200) {
         setIsSuccess(true)
         getUsers();
         onCloseModal()
       } else {
-        setApiResult("An error has occurred, please contact an administrator.")
+        setSubmitResult("An error has occurred, please contact an administrator.")
         setIsError(true)
       }
     }).catch(e => {
-      setApiResult(e.response.data.error);
+      setIsLoading(false);
+      setSubmitResult(e.response.data.error);
       setIsError(true);
     });
   }
@@ -60,7 +72,7 @@ function AdminEditUser(data) {
   // render admin edit user modal
   return (
     <div className="auth-inner">
-      <form>
+      <Form>
         <div className="form-group">
           <label>Username</label>
           <input
@@ -90,9 +102,10 @@ function AdminEditUser(data) {
         <button id="submitButton" type="button" className="btn btn-dark btn-block" onClick={putAdminEditUser}>Update</button>
         <button type="button" className="btn btn-dark btn-block" onClick={onCloseModal}>Back</button>
         <br/>
+        { isLoading&&<Loading></Loading> }
         { isSuccess &&<Success>User updated!</Success> }
-        { isError &&<Error>{apiResult}</Error> }
-      </form>
+        { isError &&<Error>{submitResult}</Error> }
+      </Form>
     </div>
   );
 }

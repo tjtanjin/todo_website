@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import { Error, Success } from "./AuthForms";
+import { Form, Error, Success } from "./AuthForms";
 import { decode } from 'jsonwebtoken'
+import { Loading, validateTask } from './Utils';
 
 function NewTask(data) {
 
   // declare stateful values to be used
-  const [apiResult, setApiResult] = useState("");
+  const [submitResult, setSubmitResult] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [task_name, setTaskName] = useState("");
@@ -21,6 +23,14 @@ function NewTask(data) {
       None     
   */
   function postNewTask() {
+    const validateInput = validateTask(task_name, task_description, category, priority, deadline);
+    if (validateInput !== true) {
+      setSubmitResult(validateInput);
+      setIsError(true);
+      return;
+    }
+    setIsLoading(true);
+    setIsError(false);
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     const user_id = decode(token).user_id;
     axios.post(process.env.REACT_APP_API_LINK + "/users/" + user_id + "/tasks", {
@@ -33,16 +43,18 @@ function NewTask(data) {
     }, {
       headers: { Authorization: token }
     }).then(result => {
+      setIsLoading(false);
       if (result.status === 200) {
         setIsSuccess(true);
         data.getTasks();
         data.onCloseModal();
       } else {
-        setApiResult("An error has occurred, please contact an administrator.")
+        setSubmitResult("An error has occurred, please contact an administrator.")
         setIsError(true);
       }
     }).catch(e => {
-      setApiResult(e.response.data.error);
+      setIsLoading(false);
+      setSubmitResult(e.response.data.error);
       setIsError(true);
     });
   }
@@ -64,7 +76,7 @@ function NewTask(data) {
   // render new task modal
   return (
     <div className="auth-inner">
-      <form>
+      <Form>
         <div className="form-group">
           <label>Task Name</label>
           <input
@@ -135,9 +147,10 @@ function NewTask(data) {
         <button id="submitButton" type="button" className="btn btn-dark btn-block" onClick={postNewTask}>Create</button>
         <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>
         <br/>
+        { isLoading&&<Loading></Loading> }
         { isSuccess &&<Success>Task created!</Success> }
-        { isError &&<Error>{apiResult}</Error> }
-      </form>
+        { isError &&<Error>{submitResult}</Error> }
+      </Form>
     </div>
   );
 }

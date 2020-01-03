@@ -8,7 +8,7 @@ import { checkDyno, logOut, Loading } from "../components/Utils"
 function Login(props) {
 
   // declare stateful values to be used
-  const [apiResult, setApiResult] = useState("");
+  const [submitResult, setSubmitResult] = useState("");
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -46,14 +46,14 @@ function Login(props) {
         setAuthTokens(result.data);
         setLoggedIn(true);
       } else {
-        setApiResult("An error has occurred, please contact an administrator.")
+        setSubmitResult("An error has occurred, please contact an administrator.")
         setIsError(true);
       }
     }).catch(e => {
       isDynoAwake = true;
       setDynoMessage(false);
       setIsLoading(false);
-      setApiResult(e.response.data.error)
+      setSubmitResult(e.response.data.error)
       setIsError(true);
     });
   }
@@ -127,7 +127,7 @@ function Login(props) {
         </p>
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }
-        { isError &&<Error>{apiResult}</Error> }
+        { isError &&<Error>{submitResult}</Error> }
       </Form>
     </div>
   );

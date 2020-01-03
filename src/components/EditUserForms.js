@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Form, Error, Success } from "./AuthForms";
 import { decode } from 'jsonwebtoken'
-import { Loading } from "./Utils";
+import { Loading, validateUser } from "./Utils";
 
 function EditUser(data) {
 
@@ -12,20 +12,25 @@ function EditUser(data) {
   data = data.user
 
   // declare stateful values to be used
-  const [apiResult, setApiResult] = useState("");
+  const [submitResult, setSubmitResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [name, setUsername] = useState(data.name);
   const [email, setEmail] = useState(data.email);
   const [password, setPassword] = useState("");
-
   /*
   The function putEditUser makes a PUT request to the API endpoint to edit the specified user.
   Args:
       None     
   */
   function putEditUser() {
+    const validateInput = validateUser(name, email);
+    if (validateInput !== true) {
+      setSubmitResult(validateInput);
+      setIsError(true);
+      return;
+    }
     function postAuthenticate() {
       setIsLoading(true);
       setIsError(false);
@@ -49,22 +54,22 @@ function EditUser(data) {
               getSelf();
               onCloseModal();
             } else {
-              setApiResult("An error has occurred, please contact an administrator.")
+              setSubmitResult("An error has occurred, please contact an administrator.")
               setIsError(true);
             }
           }).catch(e => {
             setIsLoading(false);
-            setApiResult(e.response.data.error);
+            setSubmitResult(e.response.data.error);
             setIsError(true);
           });
         } else {
           setIsLoading(false);
-          setApiResult("An error has occurred, please contact an administrator.")
+          setSubmitResult("An error has occurred, please contact an administrator.")
           setIsError(true);
         }
       }).catch(e => {
         setIsLoading(false);
-        setApiResult(e.response.data.error);
+        setSubmitResult(e.response.data.error);
         setIsError(true);
       });
     }
@@ -133,7 +138,7 @@ function EditUser(data) {
         <br/>
         { isLoading&&<Loading></Loading> }
         { isSuccess &&<Success>Profile updated!</Success> }
-        { isError &&<Error>{apiResult}</Error> }
+        { isError &&<Error>{submitResult}</Error> }
       </Form>
     </div>
   );

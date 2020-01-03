@@ -6,7 +6,7 @@ import { decode } from 'jsonwebtoken'
 function CompleteTask(data) {
 
   // declare stateful values to be used 
-  const [apiResult, setApiResult] = useState("");
+  const [submitResult, setSubmitResult] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -28,11 +28,11 @@ function CompleteTask(data) {
         data.getTasks();
         data.onCloseModal();
       } else {
-        setApiResult("An error has occurred, please contact an administrator.")
+        setSubmitResult("An error has occurred, please contact an administrator.")
         setIsError(true)
       }
     }).catch(e => {
-      setApiResult(e.response.data.error);
+      setSubmitResult(e.response.data.error);
       setIsError(true);
     });
   }
@@ -59,7 +59,7 @@ function CompleteTask(data) {
       <button className="btn btn-dark btn-block" type="button" onClick={putCompleteTask}>Complete Task</button>
       <button type="button" className="btn btn-dark btn-block" onClick={data.onCloseModal}>Back</button>
       { isSuccess &&<Success>Task completed!</Success> }
-      { isError &&<Error>{apiResult}</Error> }
+      { isError &&<Error>{submitResult}</Error> }
     </div>
   );
 }
