@@ -80,6 +80,11 @@ function Dashboard(props) {
     }
   }
 
+  /*
+  The function rendertop5 generates the top 5 task categories of the user and expresses them as a percentage of the total tasks.
+  Args:
+      None     
+  */
   function rendertop5() {
     return arrTop.map((task, index) => {
       return (
@@ -239,11 +244,11 @@ function Dashboard(props) {
 
       <div class="row">
         <div class="col-xl-8 col-lg-7">
-          <div class="card shadow mb-4">
+          <div class="card shadow mb-4 dashboard-card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 class="m-0 font-weight-bold text-danger">Expiring Tasks</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body dashboard-body">
               <div class="list-group">
                 {renderTableData()}
               </div>
@@ -252,7 +257,7 @@ function Dashboard(props) {
         </div>
 
         <div class="col-xl-4 col-lg-5">
-          <div class="card shadow mb-4">
+          <div class="card shadow mb-4 dashboard-card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <h6 class="m-0 font-weight-bold text-success">Task Completion Score</h6>
             </div>

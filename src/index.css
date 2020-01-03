@@ -139,6 +139,15 @@ body, html, .App, #root, .wrapper {
   width: 95% !important;
 }
 
+.dashboard-card {
+  height: 93%;
+}
+
+.dashboard-body {
+  max-height: 300px;
+  overflow: scroll;
+}
+
 .temp1 {
   width: 50%;
 }
