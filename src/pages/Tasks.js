@@ -87,13 +87,13 @@ function Tasks(props) {
     );
 
     const table = tasks.map((task, index) => {
-      if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed") || taskChoice === task.priority)) {
+      if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed" && task.priority !== "Overdue") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
         let details_button = action_button(handleDetailsTaskShow, task, "fa fa-info-circle", "View task details")
         let edit_button = action_button(handleEditTaskShow, task, "fa fa-wrench", "Edit task")
         let delete_button = action_button(handleDeleteTaskShow, task, "fa fa-remove", "Delete task")
         let complete_button = action_button(handleCompleteTaskShow, task, "fa fa-check", "Mark as complete")
-        if (task.priority === "Completed") {
+        if (task.priority === "Completed" || task.priority === "Overdue") {
           edit_button = "";
           complete_button = "";
         }
@@ -186,6 +186,7 @@ function Tasks(props) {
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => setTaskChoice("In-progress")}>In-progress</Dropdown.Item>
               <Dropdown.Item onClick={() => setTaskChoice("Completed")}>Completed</Dropdown.Item>
+              <Dropdown.Item onClick={() => setTaskChoice("Overdue")}>Overdue</Dropdown.Item>
               <Dropdown.Item onClick={() => setTaskChoice("All Tasks")}>All Tasks</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
