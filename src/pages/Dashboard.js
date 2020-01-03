@@ -5,7 +5,7 @@ import { Form } from "../components/AuthForms";
 import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
-import { compareDate, Loading, top5 } from "../components/Utils";
+import { compareDate, Loading, top5, scoreMessage } from "../components/Utils";
 import { useAuth } from "../context/auth"
 import ReactStoreIndicator from 'react-score-indicator'
 
@@ -16,10 +16,12 @@ function Dashboard(props) {
   const [showLoading, setLoadingShow] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [countTasks, setCountTasks] = useState(0);
+  const [countOverdue, setCountOverdue] = useState(0);
   const [countCompleted, setCountCompleted] = useState(0);
   const [countLow, setCountLow] = useState(0);
   const [countMedium, setCountMedium] = useState(0);
   const [countHigh, setCountHigh] = useState(0);
+  const [countCompletionScore, setCountCompletionScore] = useState(0);
   const [arrTop, setArrTop] = useState([[1, 0], [2, 0], [3, 0], [4, 0], [5, 0]]);
 
   // declare controllers for showing and hiding modals
@@ -109,12 +111,16 @@ function Dashboard(props) {
       data: tasks data returned from the API
   */
   function display_data(data) {
+    let overdue = 0;
     let completed = 0;
     let low = 0;
     let medium = 0;
     let high = 0;
     let category_arr = [];
     data.forEach(task => {
+      if (task.priority === "Overdue") {
+        overdue += 1;
+      }
       if (task.priority === "Completed") { 
         completed += 1;
       }
@@ -130,11 +136,13 @@ function Dashboard(props) {
       category_arr.push(task.category.toUpperCase());
     })
     setArrTop(top5(category_arr));
+    setCountOverdue(overdue);
     setCountCompleted(completed);
     setCountLow(low);
     setCountMedium(medium);
     setCountHigh(high);
-    setCountTasks(completed + low + medium + high);
+    setCountTasks(overdue + completed + low + medium + high);
+    setCountCompletionScore((100 - overdue/(overdue + completed + low + medium + high) * 100).toFixed(1));
   }
 
   /*
@@ -268,10 +276,10 @@ function Dashboard(props) {
             </div>
             <div class="card-body">
               <ReactStoreIndicator
-                value={100}
+                value={countCompletionScore}
                 maxValue={100}
               />
-              <h4 className="prompt">Coming soon</h4>
+              {scoreMessage(countCompletionScore)}
             </div>
           </div>
         </div>

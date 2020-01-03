@@ -110,4 +110,20 @@ function top5(tasks) {
   return sortable; // array in format [ [ key1, val1 ], [ key2, val2 ], ... ]
 }
 
-export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate, validateUser, validateTask, top5 };
+function scoreMessage(score) {
+  if (score < 30) {
+    return <h5 className="prompt text-danger">Please put in more effort to complete your tasks!</h5>
+  } else if (score < 40) {
+    return <h5 className="prompt text-warning">You can do much better, don't give up!</h5>
+  } else if (score < 50) {
+    return <h5 className="prompt text-success">Almost there!</h5>
+  } else if (score < 70) {
+    return <h5 className="prompt text-success">Push yourself harder!</h5>
+  } else if (score < 90) {
+    return <h5 className="prompt text-success">Nice work! Keep it up!</h5>
+  } else {
+    return <h5 className="prompt text-success">You are fantastic!</h5>
+  }
+}
+
+export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate, validateUser, validateTask, top5, scoreMessage };
