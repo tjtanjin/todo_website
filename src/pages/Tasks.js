@@ -155,89 +155,91 @@ function Tasks(props) {
 
   // render tasks page
   return (
-    <div className="content-inner col-xl-9 col-md-9 col-sm-12">
+    <div>
       <Navbar></Navbar>
+      <div className="content-inner col-xl-9 col-md-9 col-sm-12">
 
-      <h3>Tasks</h3>
-        <div className="search">
-          <input type="text" value={searchWord}
-            className="searchTerm" 
-            onChange={e => {
-              setSearchWord(e.target.value);
-            }} placeholder={"Search by " + searchType}/>
-          <Dropdown>
-            <Dropdown.Toggle variant="dark">
-              <i class="fa fa-search"></i>
-            </Dropdown.Toggle>
+        <h3>Tasks</h3>
+          <div className="search">
+            <input type="text" value={searchWord}
+              className="searchTerm" 
+              onChange={e => {
+                setSearchWord(e.target.value);
+              }} placeholder={"Search by " + searchType}/>
+            <Dropdown>
+              <Dropdown.Toggle variant="dark">
+                <i class="fa fa-search"></i>
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setSearchType("task_name")}>Task Name</Dropdown.Item>
-              <Dropdown.Item onClick={() => setSearchType("category")}>Category</Dropdown.Item>
-              <Dropdown.Item onClick={() => setSearchType("priority")}>Priority</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-        <div className="sort-task"> 
-          <Dropdown>
-            <Dropdown.Toggle variant="dark" id="dropdown-basic">
-              {taskChoice}
-            </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => setSearchType("task_name")}>Task Name</Dropdown.Item>
+                <Dropdown.Item onClick={() => setSearchType("category")}>Category</Dropdown.Item>
+                <Dropdown.Item onClick={() => setSearchType("priority")}>Priority</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+          <div className="sort-task"> 
+            <Dropdown>
+              <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                {taskChoice}
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setTaskChoice("In-progress")}>In-progress</Dropdown.Item>
-              <Dropdown.Item onClick={() => setTaskChoice("Completed")}>Completed</Dropdown.Item>
-              <Dropdown.Item onClick={() => setTaskChoice("Overdue")}>Overdue</Dropdown.Item>
-              <Dropdown.Item onClick={() => setTaskChoice("All Tasks")}>All Tasks</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      <br/>
-      {renderTableData()}
-      <br/>
-      <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={handleNewTaskShow}>
-        Create New Task
-      </button>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => setTaskChoice("In-progress")}>In-progress</Dropdown.Item>
+                <Dropdown.Item onClick={() => setTaskChoice("Completed")}>Completed</Dropdown.Item>
+                <Dropdown.Item onClick={() => setTaskChoice("Overdue")}>Overdue</Dropdown.Item>
+                <Dropdown.Item onClick={() => setTaskChoice("All Tasks")}>All Tasks</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        <br/>
+        {renderTableData()}
+        <br/>
+        <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={handleNewTaskShow}>
+          Create New Task
+        </button>
 
-      <Modal show={showLoading}>
-        <Modal.Body>
-          <h5 className="prompt">Loading</h5><br/>
-          <Form><Loading></Loading></Form></Modal.Body>
-      </Modal>
+        <Modal show={showLoading}>
+          <Modal.Body>
+            <h5 className="prompt">Loading</h5><br/>
+            <Form><Loading></Loading></Form></Modal.Body>
+        </Modal>
 
-      <Modal show={showNewTask} onHide={handleNewTaskClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Create New Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><NewTask onCloseModal={handleNewTaskClose} getTasks={getTasks}></NewTask></Modal.Body>
-      </Modal>
+        <Modal show={showNewTask} onHide={handleNewTaskClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Create New Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><NewTask onCloseModal={handleNewTaskClose} getTasks={getTasks}></NewTask></Modal.Body>
+        </Modal>
 
-      <Modal show={showDetailsTask} onHide={handleDetailsTaskClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>{trackedTask.task_name} Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><DetailsTask task={trackedTask} onCloseModal={handleDetailsTaskClose} getTasks={getTasks}></DetailsTask></Modal.Body>
-      </Modal>
+        <Modal show={showDetailsTask} onHide={handleDetailsTaskClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>{trackedTask.task_name} Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><DetailsTask task={trackedTask} onCloseModal={handleDetailsTaskClose} getTasks={getTasks}></DetailsTask></Modal.Body>
+        </Modal>
 
-      <Modal show={showEditTask} onHide={handleEditTaskClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Edit Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose} getTasks={getTasks}></EditTask></Modal.Body>
-      </Modal>
+        <Modal show={showEditTask} onHide={handleEditTaskClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Edit Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose} getTasks={getTasks}></EditTask></Modal.Body>
+        </Modal>
 
-      <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Delete Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><DeleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
-      </Modal>
+        <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Delete Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><DeleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
+        </Modal>
 
-      <Modal show={showCompleteTask} onHide={handleCompleteTaskClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Complete Task</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><CompleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleCompleteTaskClose} getTasks={getTasks}></CompleteTask></Modal.Body>
-      </Modal>
+        <Modal show={showCompleteTask} onHide={handleCompleteTaskClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Complete Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><CompleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleCompleteTaskClose} getTasks={getTasks}></CompleteTask></Modal.Body>
+        </Modal>
+      </div>
     </div>
   )
 }

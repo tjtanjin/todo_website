@@ -79,93 +79,95 @@ function Profile(props) {
 
   // render profile page
   return (
-    <div className="profile-inner w-50">
+    <div>
       <Navbar></Navbar>
-      
-      <h3>{name}'s Profile</h3>
-      <br/>
-      <div class="tab-content profile-tab" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <div class="row">
-            <div class="col-md-6">
-              <label>User ID</label>
+      <div className="profile-inner col-xl-5 col-md-5 col-sm-8">
+        
+        <h3>{name}'s Profile</h3>
+        <br/>
+        <div class="tab-content profile-tab" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="row">
+              <div class="col-md-6">
+                <label>User ID</label>
+              </div>
+              <div class="col-md-6">
+              <p>{userid}</p>
+              </div>
             </div>
-            <div class="col-md-6">
-            <p>{userid}</p>
+            <div class="row">
+              <div class="col-md-6">
+                  <label>Name</label>
+              </div>
+              <div class="col-md-6">
+                  <p>{name}</p>
+              </div>
             </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                  <p>{email}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <label>Role</label>
+              </div>
+              <div class="col-md-6">
+                  <p>{role}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <label>Created at</label>
+              </div>
+              <div class="col-md-6">
+                  <p>{createdate}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <label>Last modified</label>
+              </div>
+              <div class="col-md-6">
+                  <p>{modifydate}</p>
+              </div>
+            </div>
+            <button className="btn btn-dark btn-block" onClick={() => {handleEditUserShow()}}>Edit Profile</button>
+            <button className="btn btn-dark btn-block" onClick={() => {handleChangePasswordShow()}}>Change Password</button>
+            <button className="btn btn-danger btn-block" onClick={() => {handleDeleteUserShow()}}>Delete User</button>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-                <label>Name</label>
-            </div>
-            <div class="col-md-6">
-                <p>{name}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-                <label>Email</label>
-            </div>
-            <div class="col-md-6">
-                <p>{email}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-                <label>Role</label>
-            </div>
-            <div class="col-md-6">
-                <p>{role}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-                <label>Created at</label>
-            </div>
-            <div class="col-md-6">
-                <p>{createdate}</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-                <label>Last modified</label>
-            </div>
-            <div class="col-md-6">
-                <p>{modifydate}</p>
-            </div>
-          </div>
-          <button className="btn btn-dark btn-block" onClick={() => {handleEditUserShow()}}>Edit Profile</button>
-          <button className="btn btn-dark btn-block" onClick={() => {handleChangePasswordShow()}}>Change Password</button>
-          <button className="btn btn-danger btn-block" onClick={() => {handleDeleteUserShow()}}>Delete User</button>
         </div>
+
+        <Modal show={showLoading}>
+          <Modal.Body>
+            <h5 className="prompt">Loading</h5><br/>
+            <Form><Loading></Loading></Form></Modal.Body>
+        </Modal>
+
+        <Modal show={showEditUser} onHide={handleEditUserClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Edit Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><EditUser user={trackedUser} onCloseModal={handleEditUserClose} getSelf={getSelf}></EditUser></Modal.Body>
+        </Modal>
+
+        <Modal show={showChangePassword} onHide={handleChangePasswordClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Change Password</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><ChangePassword user={trackedUser} onCloseModal={handleChangePasswordClose} getSelf={getSelf}></ChangePassword></Modal.Body>
+        </Modal>
+
+        <Modal show={showDeleteUser} onHide={handleDeleteUserClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Delete User</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><DeleteUser id={trackedUser.id} name={trackedUser.name} email={trackedUser.email} onCloseModal={handleDeleteUserClose}></DeleteUser></Modal.Body>
+        </Modal>
       </div>
-
-      <Modal show={showLoading}>
-        <Modal.Body>
-          <h5 className="prompt">Loading</h5><br/>
-          <Form><Loading></Loading></Form></Modal.Body>
-      </Modal>
-
-      <Modal show={showEditUser} onHide={handleEditUserClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Edit Profile</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><EditUser user={trackedUser} onCloseModal={handleEditUserClose} getSelf={getSelf}></EditUser></Modal.Body>
-      </Modal>
-
-      <Modal show={showChangePassword} onHide={handleChangePasswordClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Change Password</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><ChangePassword user={trackedUser} onCloseModal={handleChangePasswordClose} getSelf={getSelf}></ChangePassword></Modal.Body>
-      </Modal>
-
-      <Modal show={showDeleteUser} onHide={handleDeleteUserClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Delete User</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><DeleteUser id={trackedUser.id} name={trackedUser.name} email={trackedUser.email} onCloseModal={handleDeleteUserClose}></DeleteUser></Modal.Body>
-      </Modal>
     </div>
   );
 }

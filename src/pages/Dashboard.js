@@ -55,7 +55,7 @@ function Dashboard(props) {
 
     const table = tasks.map((task, index) => {
       const expirydate = compareDate(task.deadline);
-      if (expirydate >= 0 && expirydate <= 3) {
+      if ((expirydate >= 0 && expirydate <= 3) && task.priority !== "Completed" && task.priority !== "Overdue") {
         const { id, task_name, category, priority, deadline } = task
         return (
           <tr key={id}>

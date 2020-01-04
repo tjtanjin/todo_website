@@ -129,63 +129,65 @@ function Users(props) {
 
   // render users page
   return (
-    <div className="content-inner col-xl-9 col-md-9 col-sm-12">
+    <div>
       <Navbar></Navbar>
+      <div className="content-inner col-xl-9 col-md-9 col-sm-12">
 
-      <h3>Users</h3>
-        <div class="search">
-          <input type="text" value={searchWord}
-            className="searchTerm" 
-            onChange={e => {
-              setSearchWord(e.target.value);
-            }} placeholder={"Search by " + searchType}/>
-          <Dropdown>
-            <Dropdown.Toggle variant="dark">
-              <i class="fa fa-search"></i>
-            </Dropdown.Toggle>
+        <h3>Users</h3>
+          <div class="search">
+            <input type="text" value={searchWord}
+              className="searchTerm" 
+              onChange={e => {
+                setSearchWord(e.target.value);
+              }} placeholder={"Search by " + searchType}/>
+            <Dropdown>
+              <Dropdown.Toggle variant="dark">
+                <i class="fa fa-search"></i>
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => setSearchType("name")}>Username</Dropdown.Item>
-              <Dropdown.Item onClick={() => setSearchType("email")}>Email</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      {renderTableData()}
-      <br/>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => setSearchType("name")}>Username</Dropdown.Item>
+                <Dropdown.Item onClick={() => setSearchType("email")}>Email</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        {renderTableData()}
+        <br/>
 
-      <Modal show={showLoading}>
-        <Modal.Body>
-          <h5 className="prompt">Loading</h5><br/>
-          <Form><Loading></Loading></Form></Modal.Body>
-      </Modal>
+        <Modal show={showLoading}>
+          <Modal.Body>
+            <h5 className="prompt">Loading</h5><br/>
+            <Form><Loading></Loading></Form></Modal.Body>
+        </Modal>
 
-      <Modal dialogClassName="large-modal" show={showUserTasks} onHide={handleUserTasksClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>{trackedUser.name}'s Tasks</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><UserTasks user={trackedUser} onCloseModal={handleUserTasksClose}></UserTasks></Modal.Body>
-      </Modal>
+        <Modal dialogClassName="large-modal" show={showUserTasks} onHide={handleUserTasksClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>{trackedUser.name}'s Tasks</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><UserTasks user={trackedUser} onCloseModal={handleUserTasksClose}></UserTasks></Modal.Body>
+        </Modal>
 
-      <Modal show={showDetailsUser} onHide={handleDetailsUserClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>{trackedUser.name}'s Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><DetailsUser user={trackedUser} onCloseModal={handleDetailsUserClose} getUsers={getUsers}></DetailsUser></Modal.Body>
-      </Modal>
+        <Modal show={showDetailsUser} onHide={handleDetailsUserClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>{trackedUser.name}'s Details</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><DetailsUser user={trackedUser} onCloseModal={handleDetailsUserClose} getUsers={getUsers}></DetailsUser></Modal.Body>
+        </Modal>
 
-      <Modal show={showAdminEditUser} onHide={handleAdminEditUserClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Edit User</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><AdminEditUser user={trackedUser} onCloseModal={handleAdminEditUserClose} getUsers={getUsers}></AdminEditUser></Modal.Body>
-      </Modal>
+        <Modal show={showAdminEditUser} onHide={handleAdminEditUserClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Edit User</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><AdminEditUser user={trackedUser} onCloseModal={handleAdminEditUserClose} getUsers={getUsers}></AdminEditUser></Modal.Body>
+        </Modal>
 
-      <Modal show={showAdminDeleteUser} onHide={handleAdminDeleteUserClose}>
-        <Modal.Header className="modal_header_bg">
-          <Modal.Title>Delete User</Modal.Title>
-        </Modal.Header>
-        <Modal.Body><AdminDeleteUser id={trackedUser.id} name={trackedUser.name} onCloseModal={handleAdminDeleteUserClose} getUsers={getUsers}></AdminDeleteUser></Modal.Body>
-      </Modal>
+        <Modal show={showAdminDeleteUser} onHide={handleAdminDeleteUserClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Delete User</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><AdminDeleteUser id={trackedUser.id} name={trackedUser.name} onCloseModal={handleAdminDeleteUserClose} getUsers={getUsers}></AdminDeleteUser></Modal.Body>
+        </Modal>
+      </div>
     </div>
   )
 }
