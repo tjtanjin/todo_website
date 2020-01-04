@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import { Form } from "../components/AuthForms";
-import { Modal } from 'react-bootstrap'
+import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
-import { compareDate, Loading, retrieveTaskCategories, scoreMessage } from "../components/Utils";
+import { renderTooltip, compareDate, Loading, retrieveTaskCategories, scoreMessage } from "../components/Utils";
 import { useAuth } from "../context/auth"
 import ReactStoreIndicator from 'react-score-indicator'
 
@@ -15,6 +15,8 @@ function Dashboard(props) {
   const { setAuthTokens } = useAuth();
   const [showLoading, setLoadingShow] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [countExpiry, setCountExpiry] = useState(3);
+  const [countExpiryText, setCountExpiryText] = useState("3 Days");
   const [countTasks, setCountTasks] = useState(0);
   const [countOverdue, setCountOverdue] = useState(0);
   const [countCompleted, setCountCompleted] = useState(0);
@@ -55,7 +57,7 @@ function Dashboard(props) {
 
     const table = tasks.map((task, index) => {
       const expirydate = compareDate(task.deadline);
-      if ((expirydate >= 0 && expirydate <= 3) && task.priority !== "Completed" && task.priority !== "Overdue") {
+      if ((expirydate >= 0 && expirydate <= countExpiry) && task.priority !== "Completed" && task.priority !== "Overdue") {
         const { id, task_name, category, priority, deadline } = task
         return (
           <tr key={id}>
@@ -259,7 +261,21 @@ function Dashboard(props) {
         <div class="col-xl-8 col-lg-7">
           <div class="card shadow mb-4 dashboard-card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-danger">Expiring Tasks</h6>
+              <OverlayTrigger overlay={renderTooltip("Expiring tasks shows tasks that are expiring within a period chosen from the dropdown on the right")}>
+                <h6 class="m-0 font-weight-bold text-danger">Expiring Tasks ({countExpiryText})</h6>
+              </OverlayTrigger>
+                <Dropdown>
+                  <Dropdown.Toggle variant="dark" id="dropdown-basic">
+                    Select Period
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => {setCountExpiry(1); setCountExpiryText("1 Day")}}>1 Day</Dropdown.Item>
+                    <Dropdown.Item onClick={() => {setCountExpiry(3); setCountExpiryText("3 Days")}}>3 Days</Dropdown.Item>
+                    <Dropdown.Item onClick={() => {setCountExpiry(7); setCountExpiryText("1 Week")}}>1 Week</Dropdown.Item>
+                    <Dropdown.Item onClick={() => {setCountExpiry(30); setCountExpiryText("1 Month")}}>1 Month</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
             </div>
             <div class="card-body dashboard-body">
               <div class="list-group">
@@ -272,7 +288,9 @@ function Dashboard(props) {
         <div class="col-xl-4 col-lg-5">
           <div class="card shadow mb-4 dashboard-card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-success">Task Completion Score</h6>
+              <OverlayTrigger overlay={renderTooltip("Task completion score is calculated based on your percentage of tasks overdue")}>
+                <h6 class="m-0 font-weight-bold text-success">Task Completion Score</h6>
+              </OverlayTrigger>
             </div>
             <div class="card-body">
               <ReactStoreIndicator
@@ -288,8 +306,10 @@ function Dashboard(props) {
       <div class="row">
         <div class="col-lg-6 mb-4">
           <div class="card shadow mb-4 dashboard-card">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-dark">Task Categories Breakdown</h6>
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <OverlayTrigger overlay={renderTooltip("Task categories breakdown shows you the percentage of your unique task categories")}>
+                <h6 class="m-0 font-weight-bold text-dark">Task Categories Breakdown</h6>
+              </OverlayTrigger>
             </div>
             <div class="card-body dashboard-body">
               {renderTaskCategories()}
@@ -299,8 +319,10 @@ function Dashboard(props) {
 
         <div class="col-lg-6 mb-4">
           <div class="card shadow mb-4 dashboard-card">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Statistics</h6>
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <OverlayTrigger overlay={renderTooltip("Statistics shows you facts about your usage of our app")}>
+                <h6 class="m-0 font-weight-bold text-primary">Statistics</h6>
+              </OverlayTrigger>
             </div>
             <div class="card-body dashboard-body">
               <h4 className="prompt">Coming soon</h4>
