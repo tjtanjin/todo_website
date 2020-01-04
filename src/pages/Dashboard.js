@@ -5,7 +5,7 @@ import { Form } from "../components/AuthForms";
 import { Modal } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
-import { compareDate, Loading, top5, scoreMessage } from "../components/Utils";
+import { compareDate, Loading, retrieveTaskCategories, scoreMessage } from "../components/Utils";
 import { useAuth } from "../context/auth"
 import ReactStoreIndicator from 'react-score-indicator'
 
@@ -22,7 +22,7 @@ function Dashboard(props) {
   const [countMedium, setCountMedium] = useState(0);
   const [countHigh, setCountHigh] = useState(0);
   const [countCompletionScore, setCountCompletionScore] = useState(0);
-  const [arrTop, setArrTop] = useState([[1, 0], [2, 0], [3, 0], [4, 0], [5, 0]]);
+  const [arrCat, setArrCat] = useState([]);
 
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
@@ -83,17 +83,17 @@ function Dashboard(props) {
   }
 
   /*
-  The function rendertop5 generates the top 5 task categories of the user and expresses them as a percentage of the total tasks.
+  The function renderTaskCategories generates unique task categories of the user and expresses them as a percentage of the total tasks.
   Args:
       None     
   */
-  function rendertop5() {
-    const table = arrTop.map((task, index) => {
+  function renderTaskCategories() {
+    const table = arrCat.map((task, index) => {
       return (
         <div>
-          <h4 class="small font-weight-bold">{arrTop[index][0]}<span class="float-right">{Math.ceil(arrTop[index][1]*100/countTasks) + "%"}</span></h4>
+          <h4 class="small font-weight-bold">{arrCat[index][0]}<span class="float-right">{Math.ceil(arrCat[index][1]*100/countTasks) + "%"}</span></h4>
           <div class="progress mb-4">
-            <div class="progress-bar bg-success" role="progressbar" style={{ width: arrTop[index][1]*100/countTasks + "%" }} aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-success" role="progressbar" style={{ width: arrCat[index][1]*100/countTasks + "%" }} aria-valuemin="0" aria-valuemax="100"></div>
           </div>
         </div>
       )
@@ -135,7 +135,7 @@ function Dashboard(props) {
       }
       category_arr.push(task.category.toUpperCase());
     })
-    setArrTop(top5(category_arr));
+    setArrCat(retrieveTaskCategories(category_arr));
     setCountOverdue(overdue);
     setCountCompleted(completed);
     setCountLow(low);
@@ -287,22 +287,22 @@ function Dashboard(props) {
 
       <div class="row">
         <div class="col-lg-6 mb-4">
-          <div class="card shadow mb-4">
+          <div class="card shadow mb-4 dashboard-card">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-dark">Top 5 Task Categories</h6>
+              <h6 class="m-0 font-weight-bold text-dark">Task Categories Breakdown</h6>
             </div>
-            <div class="card-body">
-              {rendertop5()}
+            <div class="card-body dashboard-body">
+              {renderTaskCategories()}
             </div>
           </div>
         </div>
 
         <div class="col-lg-6 mb-4">
-          <div class="card shadow mb-4">
+          <div class="card shadow mb-4 dashboard-card">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Statistics</h6>
             </div>
-            <div class="card-body">
+            <div class="card-body dashboard-body">
               <h4 className="prompt">Coming soon</h4>
             </div>
           </div>

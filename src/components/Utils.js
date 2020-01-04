@@ -92,7 +92,7 @@ function validateTask(task_name, task_description, category, priority, date) {
   return true;
 }
 
-function top5(tasks) {
+function retrieveTaskCategories(tasks) {
   let cnts = tasks.reduce( function (obj, val) {
       obj[val] = (obj[val] || 0) + 1;
       return obj;
@@ -126,4 +126,4 @@ function scoreMessage(score) {
   }
 }
 
-export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate, validateUser, validateTask, top5, scoreMessage };
+export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate, validateUser, validateTask, retrieveTaskCategories, scoreMessage };
