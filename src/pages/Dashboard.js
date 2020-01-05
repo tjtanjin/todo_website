@@ -127,6 +127,10 @@ function Dashboard(props) {
     let medium = 0;
     let high = 0;
     let category_arr = [];
+    if (shortestTime === "NA" && longestTime === "NA") {
+      setShortestTime(999999999999);
+      setLongestTime(-1);
+    }
     data.forEach(task => {
       if (task.priority === "Overdue") {
         overdue += 1;
@@ -134,10 +138,10 @@ function Dashboard(props) {
       if (task.priority === "Completed") { 
         completed += 1;
         const completiontime = compareDate(task.created_at.slice(0, 10), task.updated_at.slice(0, 10));
-        if (completiontime < shortestTime || shortestTime === "NA") {
+        if (completiontime < shortestTime) {
           setShortestTime(completiontime);
         }
-        if (completiontime > longestTime || shortestTime === "NA") {
+        if (completiontime > longestTime) {
           setLongestTime(completiontime);
         }
       }
@@ -152,6 +156,10 @@ function Dashboard(props) {
       }
       category_arr.push(task.category.toUpperCase());
     })
+    if (shortestTime === 999999999999 && longestTime === -1) {
+      setShortestTime("NA");
+      setLongestTime("NA");
+    }
     setArrCat(retrieveTaskCategories(category_arr));
     setCountOverdue(overdue);
     setCountCompleted(completed);
