@@ -52,15 +52,19 @@ function Loading() {
   )
 }
 
-function compareDate(date) {
-  if (date === null) {
-    return -1;
-  } else {
-    let currentDate = new Date();
-    let dateparts = date.split('-');
-    let deadline = new Date(dateparts[0], dateparts[1] - 1, dateparts[2]);
-    return Math.ceil((deadline - currentDate) / (1000 * 3600 * 24))
-  }
+function calculateExpiry(date) {
+  let currentDate = new Date();
+  let dateparts = date.split('-');
+  let deadline = new Date(dateparts[0], dateparts[1] - 1, dateparts[2]);
+  return Math.ceil((deadline - currentDate) / (1000 * 3600 * 24))
+}
+
+function compareDate(date1, date2) {
+  let dateparts1 = date1.split('-');
+  let dateparts2 = date2.split('-');
+  let newdate1 = new Date(dateparts1[0], dateparts1[1] - 1, dateparts1[2]);
+  let newdate2 = new Date(dateparts2[0], dateparts2[1] - 1, dateparts2[2]);
+  return Math.ceil((newdate2 - newdate1) / (1000 * 3600 * 24)) + 1;
 }
 
 function validateUser(name, email) {
@@ -116,7 +120,7 @@ function scoreMessage(score) {
   } else if (score < 40) {
     return <h5 className="prompt text-warning">You can do much better, don't give up!</h5>
   } else if (score < 50) {
-    return <h5 className="prompt text-success">Almost there!</h5>
+    return <h5 className="prompt text-success">You are near completing half your tasks!</h5>
   } else if (score < 70) {
     return <h5 className="prompt text-success">Push yourself harder!</h5>
   } else if (score < 90) {
@@ -126,4 +130,13 @@ function scoreMessage(score) {
   }
 }
 
-export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, compareDate, validateUser, validateTask, retrieveTaskCategories, scoreMessage };
+function noticeMessage(arrCat) {
+  if (arrCat.length === 0) {
+    const link = <a href="./guide">here!</a>
+    return <div>It's a good day to start on a task! If you are unsure how, look over to our guide {link}</div>
+  } else if (arrCat.length === 1) {
+    return <div>"You only have " + arrCat[0][0] + " related tasks :( Do try out other stuffs in your free time!"</div>
+  }
+}
+
+export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, calculateExpiry, compareDate, validateUser, validateTask, retrieveTaskCategories, scoreMessage, noticeMessage };

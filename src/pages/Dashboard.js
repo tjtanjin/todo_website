@@ -5,7 +5,7 @@ import { Form } from "../components/AuthForms";
 import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
-import { renderTooltip, compareDate, Loading, retrieveTaskCategories, scoreMessage } from "../components/Utils";
+import { renderTooltip, calculateExpiry, compareDate, Loading, retrieveTaskCategories, scoreMessage, noticeMessage } from "../components/Utils";
 import { useAuth } from "../context/auth"
 import ReactStoreIndicator from 'react-score-indicator'
 
@@ -23,7 +23,9 @@ function Dashboard(props) {
   const [countLow, setCountLow] = useState(0);
   const [countMedium, setCountMedium] = useState(0);
   const [countHigh, setCountHigh] = useState(0);
-  const [countCompletionScore, setCountCompletionScore] = useState(0);
+  const [countCompletionScore, setCountCompletionScore] = useState(100);
+  const [shortestTime, setShortestTime] = useState("NA");
+  const [longestTime, setLongestTime] = useState("NA");
   const [arrCat, setArrCat] = useState([]);
 
   // declare controllers for showing and hiding modals
@@ -56,15 +58,18 @@ function Dashboard(props) {
   function renderTableData() {
 
     const table = tasks.map((task, index) => {
-      const expirydate = compareDate(task.deadline);
+      let expirydate = calculateExpiry(task.deadline);
       if ((expirydate >= 0 && expirydate <= countExpiry) && task.priority !== "Completed" && task.priority !== "Overdue") {
-        const { id, task_name, category, priority, deadline } = task
+        if (expirydate === 0) {
+          expirydate = "Today";
+        }
+        const { id, task_name, category, priority } = task
         return (
           <tr key={id}>
             <td>{task_name}</td>
             <td>{category}</td>
             <td className={priority}>{priority}</td>
-            <td className="text-danger">{compareDate(deadline)}</td>
+            <td className="text-danger">{expirydate}</td>
           </tr>
         )
       } else {}
@@ -80,7 +85,7 @@ function Dashboard(props) {
         </table>
       )
     } else {
-      return <h4 className="prompt">You have no tasks due within the next 3 days!</h4>
+      return <h4 className="prompt">You have no tasks due within the next {countExpiryText}!</h4>
     }
   }
 
@@ -113,6 +118,9 @@ function Dashboard(props) {
       data: tasks data returned from the API
   */
   function display_data(data) {
+    if (data.length === 0) {
+      return;
+    }
     let overdue = 0;
     let completed = 0;
     let low = 0;
@@ -125,6 +133,13 @@ function Dashboard(props) {
       }
       if (task.priority === "Completed") { 
         completed += 1;
+        const completiontime = compareDate(task.created_at.slice(0, 10), task.updated_at.slice(0, 10));
+        if (completiontime < shortestTime || shortestTime === "NA") {
+          setShortestTime(completiontime);
+        }
+        if (completiontime > longestTime || shortestTime === "NA") {
+          setLongestTime(completiontime);
+        }
       }
       if (task.priority === "Low") {
         low += 1;
@@ -308,7 +323,7 @@ function Dashboard(props) {
           <div class="card shadow mb-4 dashboard-card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <OverlayTrigger overlay={renderTooltip("Task categories breakdown shows you the percentage of your unique task categories")}>
-                <h6 class="m-0 font-weight-bold text-dark">Task Categories Breakdown</h6>
+                <h6 class="m-0 font-weight-bold text-info">Task Categories Breakdown</h6>
               </OverlayTrigger>
             </div>
             <div class="card-body dashboard-body">
@@ -321,11 +336,15 @@ function Dashboard(props) {
           <div class="card shadow mb-4 dashboard-card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
               <OverlayTrigger overlay={renderTooltip("Statistics shows you facts about your usage of our app")}>
-                <h6 class="m-0 font-weight-bold text-primary">Statistics</h6>
+                <h6 class="m-0 font-weight-bold text-info">User Information</h6>
               </OverlayTrigger>
             </div>
             <div class="card-body dashboard-body">
-              <h4 className="prompt">Coming soon</h4>
+              <h6 class="font-weight-bold prompt">Notice:</h6>
+              <p class="font-weight-bold text-info prompt">{noticeMessage(arrCat)}</p>
+              <h6 class="font-weight-bold prompt">Statistics:</h6>
+              <p class="font-weight-bold">Shortest time to complete a task: <span class="text-info">{shortestTime}</span> Day(s)</p>
+              <p class="font-weight-bold">Longest time to complete a task: <span class="text-info">{longestTime}</span> Day(s)</p>
             </div>
           </div>
         </div>
