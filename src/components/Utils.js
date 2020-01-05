@@ -137,7 +137,7 @@ function noticeMessage(arrCat) {
   } else if (arrCat.length === 1) {
     return <div>You only have {arrCat[0][0]} related tasks :( Do try out other stuffs in your free time!</div>
   } else {
-    return <div>"Do remember to take breaks every now and then as you strive to complete your tasks!"</div>
+    return <div>Do remember to take breaks every now and then as you strive to complete your tasks!</div>
   }
 }
 
