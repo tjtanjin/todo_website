@@ -135,7 +135,7 @@ function noticeMessage(arrCat) {
     const link = <a href="./guide">here!</a>
     return <div>It's a good day to start on a task! If you are unsure how, look over to our guide {link}</div>
   } else if (arrCat.length === 1) {
-    return <div>"You only have " + arrCat[0][0] + " related tasks :( Do try out other stuffs in your free time!"</div>
+    return <div>You only have {arrCat[0][0]} related tasks :( Do try out other stuffs in your free time!</div>
   } else {
     return <div>"Do remember to take breaks every now and then as you strive to complete your tasks!"</div>
   }

@@ -156,7 +156,7 @@ function Dashboard(props) {
       }
       category_arr.push(task.category.toUpperCase());
     })
-    if (shortestTime === 999999999999 && longestTime === -1) {
+    if (completed === 0) {
       setShortestTime("NA");
       setLongestTime("NA");
     }
