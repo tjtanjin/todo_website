@@ -123,7 +123,7 @@ function Login(props) {
         <button type="submit" id="submitButton" className="btn btn-dark btn-block" onClick={postLogin}>Sign In</button>
         <Link className="link" to="/signup">Do not have an account?</Link>
         <p className="forgot-password text-right">
-          Forgot <a href="#" className="link">password?</a>
+          Forgot <Link className="link" to={"/forgotpassword"}>password?</Link>
         </p>
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }

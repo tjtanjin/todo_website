@@ -6,6 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from './pages/Signup';
+import Forgotpassword from './pages/Forgotpassword';
 import Tasks from "./pages/Tasks";
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard'
@@ -29,6 +30,7 @@ function App(props) {
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
+              <Route path="/forgotpassword" component={Forgotpassword} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/tasks" component={Tasks} />
               <PrivateRoute path="/profile" component={Profile} />
