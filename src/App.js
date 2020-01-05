@@ -4,6 +4,7 @@ import '../node_modules/font-awesome/css/font-awesome.min.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from './PrivateRoute';
 import Home from "./pages/Home";
+import Aboutus from "./pages/Aboutus"
 import Login from "./pages/Login";
 import Signup from './pages/Signup';
 import Forgotpassword from './pages/Forgotpassword';
@@ -31,6 +32,7 @@ function App(props) {
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route path="/forgotpassword" component={Forgotpassword} />
+              <Route path="/about-us" component={Aboutus} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/tasks" component={Tasks} />
               <PrivateRoute path="/profile" component={Profile} />
