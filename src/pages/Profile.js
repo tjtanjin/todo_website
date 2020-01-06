@@ -24,6 +24,7 @@ function Profile(props) {
   const [role, setRole] = useState("");
   const [createdate, setCreateDate] = useState("");
   const [modifydate, setModifyDate] = useState("");
+  const [notifications, setNotifications] = useState("");
   const [trackedUser, setTrackedUser] = useState("");
 
   // declare controllers for showing and hiding modals
@@ -63,6 +64,11 @@ function Profile(props) {
         setRole(result.data.role);
         setCreateDate(formatDate(result.data.created_at));
         setModifyDate(formatDate(result.data.updated_at));
+        if (result.data.notifications === "1") {
+          setNotifications(true);
+        } else {
+          setNotifications(false);
+        }
       } else {
         alert("An error has occurred, please contact an administrator.")
       }
@@ -74,6 +80,27 @@ function Profile(props) {
       } else {
         alert(e);
       }
+    });
+  }
+
+  function putNotifications() {
+    const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
+    let notificationsSettings = "";
+    if (notifications === true) {
+      notificationsSettings = "0"
+    } else {
+      notificationsSettings = "1"
+    }
+    axios.put(process.env.REACT_APP_API_LINK + "/users/" + userid + "/setnotifications", {
+      "id": userid,
+      "notifications": notificationsSettings
+    }, {
+      headers: { Authorization: token }
+    }).then(result => {
+      if (result.status === 200) {
+      } else {
+      }
+    }).catch(e => {
     });
   }
 
@@ -133,6 +160,18 @@ function Profile(props) {
               </div>
               <div class="col-md-6">
                   <p>{modifydate}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <label>Email Task Notifications/Reminders:</label>
+              </div>
+              <div class="col-md-6">
+                  <input
+                  name="Notifications/Reminders"
+                  type="checkbox"
+                  checked={notifications}
+                  onChange={() => {setNotifications(!notifications); putNotifications()}} />
               </div>
             </div>
             <button className="btn btn-dark btn-block" onClick={() => {handleEditUserShow()}}>Edit Profile</button>
