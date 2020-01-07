@@ -1,23 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
+import SuccessSignup from "../components/SuccessSignup"
 import { Form, Error, Success } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
+import { Modal } from 'react-bootstrap'
 import { checkDyno, logOut, Loading, validateUser } from "../components/Utils"
 
 function Signup() {
 
   // declare stateful values to be used
   const [submitResult, setSubmitResult] = useState("");
-  const [isLoggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isWakingDyno, setDynoMessage] = useState(false)
+  const [showSuccess, setSuccessShow] = useState(false);
   const [name, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const { setAuthTokens } = useAuth();
+
+  // declare controllers for showing and hiding modals
+  const handleSuccessClose = () => setSuccessShow(false);
+  const handleSuccessShow = () => setSuccessShow(true);
 
   /*
   The function postSignup makes a POST request to the API endpoint to create a new user.
@@ -45,8 +52,7 @@ function Signup() {
       setDynoMessage(false);
       setIsLoading(false);
       if (result.status === 200) {
-        setAuthTokens(result.data);
-        setLoggedIn(true);
+        handleSuccessShow();
       } else {
         setSubmitResult("An error has occurred, please contact an administrator.")
         setIsError(true);
@@ -77,8 +83,8 @@ function Signup() {
   }, []);
 
   // redirect to homepage upon successful signup + login
-  if (isLoggedIn) {
-    return <Redirect to="/" />;
+  if (isSuccess) {
+    return <Redirect to="/login" />;
   }
 
   // render signup page
@@ -147,6 +153,13 @@ function Signup() {
         { isLoading&&<Loading></Loading> }
         { isError &&<Error>{submitResult}</Error> }
       </Form>
+
+      <Modal show={showSuccess} onHide={() => {handleSuccessClose(); setIsSuccess(true)}}>
+        <Modal.Header className="modal_header_bg">
+          <Modal.Title>Registration Successful</Modal.Title>
+        </Modal.Header>
+        <Modal.Body><SuccessSignup onCloseModal={() => {handleSuccessClose(); setIsSuccess(true)}} email={email}></SuccessSignup></Modal.Body>
+      </Modal>
     </div>
   );
 }

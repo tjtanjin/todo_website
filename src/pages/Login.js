@@ -15,6 +15,7 @@ function Login(props) {
   const [isWakingDyno, setDynoMessage] = useState(false)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [resetLink, setResetLink] = useState("");
   const { setAuthTokens } = useAuth();
   let referer = '';
 
@@ -55,6 +56,29 @@ function Login(props) {
       setIsLoading(false);
       setSubmitResult(e.response.data.error)
       setIsError(true);
+      if (e.message.includes("400")) {
+        setResetLink(<button type="button" className="btn btn-danger btn-sm" onClick={postSendVerification}>Resend verification link</button>)
+      } else {}
+    });
+  }
+
+  /*
+  The function postSendVerification makes a POST request to the API endpoint to send a verification email to the user.
+  Args:
+      None     
+  */
+  function postSendVerification() {
+    setResetLink("");
+    axios.post(process.env.REACT_APP_API_LINK + "/sendverification", {
+      email,
+    }).then(result => {
+      if (result.status === 200) {
+        setResetLink(<p class="text-success">A verification link has been sent to your email.</p>)
+      } else {
+        setResetLink(<p class="text-danger">An error has occurred, please contact an administrator.</p>)
+      }
+    }).catch(e => {
+      alert(e);
     });
   }
 
@@ -128,6 +152,10 @@ function Login(props) {
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }
         { isError &&<Error>{submitResult}</Error> }
+        <br/>
+        <div class="prompt">
+          {resetLink}
+        </div>
       </Form>
     </div>
   );
