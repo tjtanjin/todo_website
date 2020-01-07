@@ -167,13 +167,21 @@ function Profile(props) {
                   <label>Email Task Notifications/Reminders:</label>
               </div>
               <div class="col-md-6">
-                  <input
-                  name="Notifications/Reminders"
-                  type="checkbox"
-                  checked={notifications}
-                  onChange={() => {setNotifications(!notifications); putNotifications()}} />
+                <div class="custom-control custom-switch">
+                  <input 
+                    data-on-text="on"
+                    type="checkbox"
+                    checked={notifications}
+                    class="custom-control-input" 
+                    id="customSwitch2" 
+                    onChange={() => {setNotifications(!notifications); putNotifications()
+                  }}
+                  />
+                  <label class="custom-control-label" for="customSwitch2"></label>
+                </div>
               </div>
             </div>
+            <br/>
             <button className="btn btn-dark btn-block" onClick={() => {handleEditUserShow()}}>Edit Profile</button>
             <button className="btn btn-dark btn-block" onClick={() => {handleChangePasswordShow()}}>Change Password</button>
             <button className="btn btn-danger btn-block" onClick={() => {handleDeleteUserShow()}}>Delete User</button>
