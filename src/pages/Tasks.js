@@ -195,7 +195,9 @@ function Tasks(props) {
             </Dropdown>
           </div>
         <br/>
-        {renderTableData()}
+        <div class="tabledisplay">
+          {renderTableData()}
+        </div>
         <br/>
         <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={handleNewTaskShow}>
           Create New Task

@@ -158,7 +158,9 @@ function Users(props) {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-        {renderTableData()}
+        <div class="tabledisplay">
+          {renderTableData()}
+        </div>
         <br/>
 
         <ReactHTMLTableToExcel

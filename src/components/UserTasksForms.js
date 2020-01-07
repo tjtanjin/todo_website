@@ -151,7 +151,9 @@ function UserTasks(data) {
           </Dropdown>
         </div>
       <br/>
-      {renderTableData()}
+      <div class="tabledisplay">
+        {renderTableData()}
+      </div>
       <br/>
       
       <ReactHTMLTableToExcel

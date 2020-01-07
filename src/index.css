@@ -168,7 +168,6 @@ body, html, .App, #root, .wrapper {
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
   transition: all .3s;
-  overflow: scroll;
 }
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
@@ -370,6 +369,14 @@ body {
   text-align: center;
   background-color: #000;
   color: white;
+}
+
+.tabledisplay {
+  padding-top: 10px;
+  height: 100%;
+  width: 100%;
+  height: 350px;
+  overflow: scroll;
 }
 
 .Yes {
