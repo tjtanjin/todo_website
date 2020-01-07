@@ -371,3 +371,13 @@ body {
   background-color: #000;
   color: white;
 }
+
+.Yes {
+  background-color: #28A745;
+  font-weight: bold;
+}
+
+.No {
+  background-color: #DC3545;
+  font-weight: bold;
+}

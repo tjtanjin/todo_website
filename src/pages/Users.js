@@ -49,7 +49,7 @@ function Users(props) {
       None     
   */
   function renderTableHeader() {
-    let header = ["INDEX", "USERNAME", "EMAIL", "ACTIONS/TOOLS"]
+    let header = ["INDEX", "USERNAME", "EMAIL", "VERIFIED", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
@@ -70,7 +70,12 @@ function Users(props) {
 
     const table = users.map((user, index) => {
       if (searchWord === "" || user[searchType].toUpperCase().includes(searchWord.toUpperCase())) {
-        const { id, name, email } = user
+        let { id, name, email, verification_token } = user
+        if (verification_token === "1") {
+          verification_token = "Yes";
+        } else {
+          verification_token = "No";
+        }
         const details_button = action_button(handleDetailsUserShow, user, "fa fa-info-circle", "View user's details")
         const info_button = action_button(handleUserTasksShow, user, "fa fa-tasks", "View user's task")
         const edit_button = action_button(handleAdminEditUserShow, user, "fa fa-wrench", "Edit user")
@@ -80,6 +85,7 @@ function Users(props) {
             <td>{index + 1}</td>
             <td>{name}</td>
             <td>{email}</td>
+            <td className={verification_token}>{verification_token}</td>
             <td>{details_button}{info_button}{edit_button}{delete_button}</td>
           </tr>
         )
