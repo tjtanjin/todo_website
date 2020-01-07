@@ -100,6 +100,8 @@ function Profile(props) {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {
+        showToast(true);
+        setToastText("Notification settings successfully updated.")
       } else {
       }
     }).catch(e => {
