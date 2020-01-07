@@ -5,6 +5,7 @@ import DetailsTask from '../components/DetailsTaskForms'
 import EditTask from '../components/EditTaskForms'
 import DeleteTask from '../components/DeleteTaskForms'
 import CompleteTask from '../components/CompleteTaskForms'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Form } from "../components/AuthForms";
 import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { renderTooltip, Loading } from '../components/Utils'
@@ -112,7 +113,7 @@ function Tasks(props) {
     })
     if (!table.every(e => e === null)) {
       return (
-        <table id="content-table">
+        <table id="task-table">
           <tbody>
             <tr>{renderTableHeader()}</tr>
             {table}
@@ -178,6 +179,7 @@ function Tasks(props) {
               </Dropdown.Menu>
             </Dropdown>
           </div>
+
           <div className="sort-task"> 
             <Dropdown>
               <Dropdown.Toggle variant="dark" id="dropdown-basic">
@@ -198,6 +200,13 @@ function Tasks(props) {
         <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={handleNewTaskShow}>
           Create New Task
         </button>
+        <ReactHTMLTableToExcel
+          id="test-table-xls-button"
+          className="btn btn-dark btn-block"
+          table="task-table"
+          filename="tasks"
+          sheet="tasks-sheet"
+          buttonText="Download Tasks"/>
 
         <Modal show={showLoading}>
           <Modal.Body>

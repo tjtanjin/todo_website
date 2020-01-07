@@ -3,6 +3,7 @@ import axios from 'axios';
 import DetailsTask from './DetailsTaskForms'
 import EditTask from './EditTaskForms'
 import DeleteTask from './DeleteTaskForms'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
 import { renderTooltip } from './Utils'
 
@@ -82,7 +83,7 @@ function UserTasks(data) {
     })
     if (!table.every(e => e === null)) {
       return (
-        <table id="content-table">
+        <table id="task-table">
           <tbody>
             <tr>{renderTableHeader()}</tr>
             {table}
@@ -152,6 +153,15 @@ function UserTasks(data) {
       <br/>
       {renderTableData()}
       <br/>
+      
+      <ReactHTMLTableToExcel
+        id="test-table-xls-button"
+        className="btn btn-dark btn-block"
+        table="task-table"
+        filename="tasks"
+        sheet="tasks-sheet"
+        buttonText="Download Tasks"/>
+
       <button type="button" className="btn btn-dark btn-block" variant="primary" onClick={onCloseModal}>
         Close
       </button>

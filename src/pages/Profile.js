@@ -4,10 +4,10 @@ import EditUser from "../components/EditUserForms";
 import DeleteUser from "../components/DeleteUserForms"
 import ChangePassword from "../components/ChangePasswordForms";
 import { Form } from "../components/AuthForms";
-import { Modal } from 'react-bootstrap'
+import { Modal, OverlayTrigger } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
-import { formatDate, Loading } from "../components/Utils";
+import { formatDate, Loading, renderTooltip } from "../components/Utils";
 import { useAuth } from "../context/auth"
 
 function Profile(props) {
@@ -177,7 +177,9 @@ function Profile(props) {
                     onChange={() => {setNotifications(!notifications); putNotifications()
                   }}
                   />
-                  <label class="custom-control-label" for="customSwitch2"></label>
+                  <OverlayTrigger overlay={renderTooltip("Task reminder emails will be sent out daily for tasks with a remaining deadline of 3 days and less.")}>
+                    <label class="custom-control-label" for="customSwitch2"></label>
+                  </OverlayTrigger>
                 </div>
               </div>
             </div>

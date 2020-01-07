@@ -77,7 +77,7 @@ function Dashboard(props) {
     })
     if (!table.every(e => e === null)) {
       return (
-        <table id="content-table">
+        <table id="task-table">
           <tbody>
             <tr>{renderTableHeader()}</tr>
             {table}

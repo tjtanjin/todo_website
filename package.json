@@ -13,6 +13,7 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
+    "react-html-table-to-excel": "^2.0.0",
     "react-https-redirect": "^1.1.0",
     "react-router-dom": "^5.1.2",
     "react-score-indicator": "^2.1.1",

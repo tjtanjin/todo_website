@@ -4,6 +4,7 @@ import UserTasks from '../components/UserTasksForms'
 import DetailsUser from '../components/DetailsUserForms'
 import AdminEditUser from '../components/AdminEditUserForms'
 import AdminDeleteUser from '../components/AdminDeleteUserForms'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Form } from "../components/AuthForms";
 import { renderTooltip, Loading } from '../components/Utils'
 import { useAuth } from "../context/auth"
@@ -87,7 +88,7 @@ function Users(props) {
     })
     if (!table.every(e => e === null)) {
       return (
-        <table id="content-table">
+        <table id="user-table">
           <tbody>
             <tr>{renderTableHeader()}</tr>
             {table}
@@ -153,6 +154,14 @@ function Users(props) {
           </div>
         {renderTableData()}
         <br/>
+
+        <ReactHTMLTableToExcel
+          id="test-table-xls-button"
+          className="btn btn-dark btn-block"
+          table="user-table"
+          filename="users"
+          sheet="users-sheet"
+          buttonText="Download Users"/>
 
         <Modal show={showLoading}>
           <Modal.Body>
