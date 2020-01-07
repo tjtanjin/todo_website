@@ -7,8 +7,9 @@ import { Loading, validateUser } from "./Utils";
 function EditUser(data) {
 
   // prepared passed in data
-  const onCloseModal = data.onCloseModal
+  const onCloseModal = data.onCloseModal;
   const getSelf = data.getSelf;
+  const showToast = data.showToast;
   data = data.user
 
   // declare stateful values to be used
@@ -19,6 +20,7 @@ function EditUser(data) {
   const [name, setUsername] = useState(data.name);
   const [email, setEmail] = useState(data.email);
   const [password, setPassword] = useState("");
+
   /*
   The function putEditUser makes a PUT request to the API endpoint to edit the specified user.
   Args:
@@ -52,6 +54,7 @@ function EditUser(data) {
             if (result.status === 200) {
               setIsSuccess(true);
               getSelf();
+              showToast("Profile successfully updated.")
               onCloseModal();
             } else {
               setSubmitResult("An error has occurred, please contact an administrator.")
@@ -93,6 +96,7 @@ function EditUser(data) {
   // render edit user modal
   return (
     <div className="auth-inner">
+
       <Form>
         <div className="form-group">
           <label>Username</label>

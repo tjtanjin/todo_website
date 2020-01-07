@@ -17,6 +17,7 @@ function DeleteTask(data) {
     }).then(result => {
       if (result.status === 200) {
         data.getTasks();
+        data.showToast("Task successfully deleted.")
         data.onCloseModal();
       } else {
         alert("An error has occurred, please contact an administrator.")

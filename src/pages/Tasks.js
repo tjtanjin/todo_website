@@ -7,7 +7,7 @@ import DeleteTask from '../components/DeleteTaskForms'
 import CompleteTask from '../components/CompleteTaskForms'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Form } from "../components/AuthForms";
-import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
+import { Modal, Dropdown, OverlayTrigger, Toast } from 'react-bootstrap'
 import { renderTooltip, Loading } from '../components/Utils'
 import { useAuth } from "../context/auth"
 import { decode } from 'jsonwebtoken';
@@ -41,6 +41,8 @@ function Tasks(props) {
   const [showDeleteTask, setDeleteTaskShow] = useState(false);
   const [showCompleteTask, setCompleteTaskShow] = useState(false);
   const [trackedTask, setTrackedTask] = useState({});
+  const [toast, showToast] = useState(false);
+  const [toastText, setToastText] = useState("");
 
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
@@ -158,6 +160,31 @@ function Tasks(props) {
   return (
     <div>
       <Navbar></Navbar>
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        style={{
+          position: 'relative',
+          minHeight: '25px',
+          zIndex: 100,
+        }}
+      >
+        <Toast onClose={() => showToast(false)} show={toast} delay={3000} autohide
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 20,
+            width: '300px',
+            background: '#D4EDDA',
+          }}
+        >
+          <Toast.Header style={{ background: '#D4EDDA' }}>
+            <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
+            <strong className="mr-auto">Notification</strong>
+          </Toast.Header>
+          <Toast.Body style={{ textAlign: 'center', fontWeight: 'bold' }}>{toastText}</Toast.Body>
+        </Toast>
+      </div>
       <div className="content-inner col-xl-9 col-md-9 col-sm-12">
 
         <h3>Tasks</h3>
@@ -220,7 +247,7 @@ function Tasks(props) {
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Create New Task</Modal.Title>
           </Modal.Header>
-          <Modal.Body><NewTask onCloseModal={handleNewTaskClose} getTasks={getTasks}></NewTask></Modal.Body>
+          <Modal.Body><NewTask onCloseModal={handleNewTaskClose} showToast={(e) => {showToast(true); setToastText(e)}} getTasks={getTasks}></NewTask></Modal.Body>
         </Modal>
 
         <Modal show={showDetailsTask} onHide={handleDetailsTaskClose}>
@@ -234,21 +261,21 @@ function Tasks(props) {
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Edit Task</Modal.Title>
           </Modal.Header>
-          <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose} getTasks={getTasks}></EditTask></Modal.Body>
+          <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose} showToast={(e) => {showToast(true); setToastText(e)}} getTasks={getTasks}></EditTask></Modal.Body>
         </Modal>
 
         <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Delete Task</Modal.Title>
           </Modal.Header>
-          <Modal.Body><DeleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
+          <Modal.Body><DeleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleDeleteTaskClose} showToast={(e) => {showToast(true); setToastText(e)}} getTasks={getTasks}></DeleteTask></Modal.Body>
         </Modal>
 
         <Modal show={showCompleteTask} onHide={handleCompleteTaskClose}>
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Complete Task</Modal.Title>
           </Modal.Header>
-          <Modal.Body><CompleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleCompleteTaskClose} getTasks={getTasks}></CompleteTask></Modal.Body>
+          <Modal.Body><CompleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleCompleteTaskClose} showToast={(e) => {showToast(true); setToastText(e)}} getTasks={getTasks}></CompleteTask></Modal.Body>
         </Modal>
       </div>
     </div>

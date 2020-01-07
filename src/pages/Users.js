@@ -8,7 +8,7 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Form } from "../components/AuthForms";
 import { renderTooltip, Loading } from '../components/Utils'
 import { useAuth } from "../context/auth"
-import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
+import { Modal, Dropdown, OverlayTrigger, Toast } from 'react-bootstrap'
 import { Navbar } from "../components/Navbar";
 
 function Users(props) {
@@ -24,6 +24,8 @@ function Users(props) {
   const [showAdminEditUser, setAdminEditUserShow] = useState(false);
   const [showAdminDeleteUser, setAdminDeleteUserShow] = useState(false);
   const [trackedUser, setTrackedUser] = useState({});
+  const [toast, showToast] = useState(false);
+  const [toastText, setToastText] = useState("");
 
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
@@ -138,6 +140,31 @@ function Users(props) {
   return (
     <div>
       <Navbar></Navbar>
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        style={{
+          position: 'relative',
+          minHeight: '25px',
+          zIndex: 100,
+        }}
+      >
+        <Toast onClose={() => showToast(false)} show={toast} delay={3000} autohide
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 20,
+            width: '300px',
+            background: '#D4EDDA',
+          }}
+        >
+          <Toast.Header style={{ background: '#D4EDDA' }}>
+            <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
+            <strong className="mr-auto">Notification</strong>
+          </Toast.Header>
+          <Toast.Body style={{ textAlign: 'center', fontWeight: 'bold' }}>{toastText}</Toast.Body>
+        </Toast>
+      </div>
       <div className="content-inner col-xl-9 col-md-9 col-sm-12">
 
         <h3>Users</h3>
@@ -195,14 +222,14 @@ function Users(props) {
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Edit User</Modal.Title>
           </Modal.Header>
-          <Modal.Body><AdminEditUser user={trackedUser} onCloseModal={handleAdminEditUserClose} getUsers={getUsers}></AdminEditUser></Modal.Body>
+          <Modal.Body><AdminEditUser user={trackedUser} onCloseModal={handleAdminEditUserClose} showToast={(e) => {showToast(true); setToastText(e)}} getUsers={getUsers}></AdminEditUser></Modal.Body>
         </Modal>
 
         <Modal show={showAdminDeleteUser} onHide={handleAdminDeleteUserClose}>
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Delete User</Modal.Title>
           </Modal.Header>
-          <Modal.Body><AdminDeleteUser id={trackedUser.id} name={trackedUser.name} onCloseModal={handleAdminDeleteUserClose} getUsers={getUsers}></AdminDeleteUser></Modal.Body>
+          <Modal.Body><AdminDeleteUser id={trackedUser.id} name={trackedUser.name} onCloseModal={handleAdminDeleteUserClose} showToast={(e) => {showToast(true); setToastText(e)}} getUsers={getUsers}></AdminDeleteUser></Modal.Body>
         </Modal>
       </div>
     </div>

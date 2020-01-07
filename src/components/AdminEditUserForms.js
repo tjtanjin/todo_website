@@ -8,6 +8,7 @@ function AdminEditUser(data) {
   // prepare passed in data
   const onCloseModal = data.onCloseModal
   const getUsers = data.getUsers;
+  const showToast = data.showToast;
   data = data.user
 
   // declare stateful values to be used 
@@ -43,6 +44,7 @@ function AdminEditUser(data) {
       if (result.status === 200) {
         setIsSuccess(true)
         getUsers();
+        showToast("User successfully updated.")
         onCloseModal()
       } else {
         setSubmitResult("An error has occurred, please contact an administrator.")

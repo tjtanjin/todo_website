@@ -4,7 +4,7 @@ import EditUser from "../components/EditUserForms";
 import DeleteUser from "../components/DeleteUserForms"
 import ChangePassword from "../components/ChangePasswordForms";
 import { Form } from "../components/AuthForms";
-import { Modal, OverlayTrigger } from 'react-bootstrap'
+import { Modal, OverlayTrigger, Toast } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
 import { formatDate, Loading, renderTooltip } from "../components/Utils";
@@ -26,6 +26,8 @@ function Profile(props) {
   const [modifydate, setModifyDate] = useState("");
   const [notifications, setNotifications] = useState("");
   const [trackedUser, setTrackedUser] = useState("");
+  const [toast, showToast] = useState(false);
+  const [toastText, setToastText] = useState("");
 
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
@@ -108,6 +110,31 @@ function Profile(props) {
   return (
     <div>
       <Navbar></Navbar>
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        style={{
+          position: 'relative',
+          minHeight: '25px',
+          zIndex: 100,
+        }}
+      >
+        <Toast onClose={() => showToast(false)} show={toast} delay={3000} autohide
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 20,
+            width: '300px',
+            background: '#D4EDDA',
+          }}
+        >
+          <Toast.Header style={{ background: '#D4EDDA' }}>
+            <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
+            <strong className="mr-auto">Notification</strong>
+          </Toast.Header>
+          <Toast.Body style={{ textAlign: 'center', fontWeight: 'bold' }}>{toastText}</Toast.Body>
+        </Toast>
+      </div>
       <div className="profile-inner col-xl-5 col-md-5 col-sm-8">
         
         <h3>{name}'s Profile</h3>
@@ -200,14 +227,14 @@ function Profile(props) {
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Edit Profile</Modal.Title>
           </Modal.Header>
-          <Modal.Body><EditUser user={trackedUser} onCloseModal={handleEditUserClose} getSelf={getSelf}></EditUser></Modal.Body>
+          <Modal.Body><EditUser user={trackedUser} onCloseModal={handleEditUserClose} showToast={(e) => {showToast(true); setToastText(e)}} getSelf={getSelf}></EditUser></Modal.Body>
         </Modal>
 
         <Modal show={showChangePassword} onHide={handleChangePasswordClose}>
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Change Password</Modal.Title>
           </Modal.Header>
-          <Modal.Body><ChangePassword user={trackedUser} onCloseModal={handleChangePasswordClose} getSelf={getSelf}></ChangePassword></Modal.Body>
+          <Modal.Body><ChangePassword user={trackedUser} onCloseModal={handleChangePasswordClose} showToast={(e) => {showToast(true); setToastText(e)}} getSelf={getSelf}></ChangePassword></Modal.Body>
         </Modal>
 
         <Modal show={showDeleteUser} onHide={handleDeleteUserClose}>

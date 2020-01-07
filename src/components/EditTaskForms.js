@@ -9,6 +9,7 @@ function EditTask(data) {
   // prepared pass in data
   const onCloseModal = data.onCloseModal
   const getTasks = data.getTasks
+  const showToast = data.showToast
   data = data.task
 
   // declare stateful values to be used 
@@ -50,6 +51,7 @@ function EditTask(data) {
       if (result.status === 200) {
         setIsSuccess(true);
         getTasks();
+        showToast("Task successfully updated.")
         onCloseModal();
       } else {
         setSubmitResult("An error has occurred, please contact an administrator.")

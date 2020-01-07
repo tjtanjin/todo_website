@@ -9,6 +9,7 @@ function ChangePassword(data) {
   // prepare passed in data
   const onCloseModal = data.onCloseModal
   const getSelf = data.getSelf;
+  const showToast = data.showToast;
   data = data.user
 
   // declare stateful values to be used 
@@ -44,6 +45,7 @@ function ChangePassword(data) {
             if (result.status === 200) {
               setIsSuccess(true);
               getSelf();
+              showToast("Password successfully updated.")
               onCloseModal();
             } else {
               setSubmitResult("An error has occurred, please contact an administrator.")

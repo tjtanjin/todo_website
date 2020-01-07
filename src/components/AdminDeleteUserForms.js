@@ -16,6 +16,7 @@ function AdminDeleteUser(data) {
     }).then(result => {
       if (result.status === 200) {
         data.getUsers();
+        data.showToast("User successfully deleted.")
         data.onCloseModal();
       } else {
         alert("An error has occurred, please contact an administrator.")

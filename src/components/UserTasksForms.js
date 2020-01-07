@@ -4,7 +4,7 @@ import DetailsTask from './DetailsTaskForms'
 import EditTask from './EditTaskForms'
 import DeleteTask from './DeleteTaskForms'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import { Modal, Dropdown, OverlayTrigger } from 'react-bootstrap'
+import { Modal, Dropdown, OverlayTrigger, Toast } from 'react-bootstrap'
 import { renderTooltip } from './Utils'
 
 function UserTasks(data) {
@@ -22,6 +22,8 @@ function UserTasks(data) {
   const [showEditTask, setEditTaskShow] = useState(false);
   const [showDeleteTask, setDeleteTaskShow] = useState(false);
   const [trackedTask, setTrackedTask] = useState({});
+  const [toast, showToast] = useState(false);
+  const [toastText, setToastText] = useState("");
 
   // declare controllers for showing and hiding modals
   const handleDetailsTaskClose = () => setDetailsTaskShow(false);
@@ -118,6 +120,31 @@ function UserTasks(data) {
   // render user tasks modal for admin
   return (
     <div className="content-inner">
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        style={{
+          position: 'relative',
+          minHeight: '25px',
+          zIndex: 100,
+        }}
+      >
+        <Toast onClose={() => showToast(false)} show={toast} delay={3000} autohide
+          style={{
+            position: 'absolute',
+            top: 0,
+            right: 20,
+            width: '300px',
+            background: '#D4EDDA',
+          }}
+        >
+          <Toast.Header style={{ background: '#D4EDDA' }}>
+            <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
+            <strong className="mr-auto">Notification</strong>
+          </Toast.Header>
+          <Toast.Body style={{ textAlign: 'center', fontWeight: 'bold' }}>{toastText}</Toast.Body>
+        </Toast>
+      </div>
       <div className="search">
           <input type="text" value={searchWord}
             className="searchTerm" 
@@ -179,14 +206,14 @@ function UserTasks(data) {
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Edit Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose} getTasks={getTasks}></EditTask></Modal.Body>
+        <Modal.Body><EditTask task={trackedTask} onCloseModal={handleEditTaskClose} showToast={(e) => {showToast(true); setToastText(e)}} getTasks={getTasks}></EditTask></Modal.Body>
       </Modal>
 
       <Modal show={showDeleteTask} onHide={handleDeleteTaskClose}>
         <Modal.Header className="modal_header_bg">
           <Modal.Title>Delete Task</Modal.Title>
         </Modal.Header>
-        <Modal.Body><DeleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleDeleteTaskClose} getTasks={getTasks}></DeleteTask></Modal.Body>
+        <Modal.Body><DeleteTask id={trackedTask.id} task_name={trackedTask.task_name} onCloseModal={handleDeleteTaskClose} showToast={(e) => {showToast(true); setToastText(e)}} getTasks={getTasks}></DeleteTask></Modal.Body>
       </Modal>
     </div>
   );

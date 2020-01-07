@@ -47,6 +47,7 @@ function NewTask(data) {
       if (result.status === 200) {
         setIsSuccess(true);
         data.getTasks();
+        data.showToast("Task successfully created.")
         data.onCloseModal();
       } else {
         setSubmitResult("An error has occurred, please contact an administrator.")
