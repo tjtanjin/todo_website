@@ -28,6 +28,8 @@ function Dashboard(props) {
   const [longestTime, setLongestTime] = useState("NA");
   const [arrCat, setArrCat] = useState([]);
 
+  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
+
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
   const handleLoadingShow = () => setLoadingShow(true);
@@ -44,7 +46,7 @@ function Dashboard(props) {
       None     
   */
   function renderTableHeader() {
-    let header = ["TASK NAME", "CATEGORY", "PRIORITY", "DAYS LEFT"]
+    let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DAYS LEFT"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
@@ -57,6 +59,10 @@ function Dashboard(props) {
   */
   function renderTableData() {
 
+    let count = 0
+    tasks.sort(function (a,b){
+      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+    });;
     const table = tasks.map((task, index) => {
       let expirydate = calculateExpiry(task.deadline);
       if ((expirydate >= 0 && expirydate <= countExpiry) && task.priority !== "Completed" && task.priority !== "Overdue") {
@@ -64,8 +70,10 @@ function Dashboard(props) {
           expirydate = "Today";
         }
         const { id, task_name, category, priority } = task
+        count += 1;
         return (
           <tr key={id}>
+            <td>{count}</td>
             <td>{task_name}</td>
             <td>{category}</td>
             <td className={priority}>{priority}</td>

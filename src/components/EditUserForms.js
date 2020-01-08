@@ -95,7 +95,7 @@ function EditUser(data) {
 
   // render edit user modal
   return (
-    <div className="auth-inner">
+    <div className="auth-inner col-xl-10 col-md-10 col-sm-12">
 
       <Form>
         <div className="form-group">

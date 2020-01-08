@@ -204,7 +204,7 @@ function Users(props) {
             <Form><Loading></Loading></Form></Modal.Body>
         </Modal>
 
-        <Modal dialogClassName="large-modal" show={showUserTasks} onHide={handleUserTasksClose}>
+        <Modal size="lg" show={showUserTasks} onHide={handleUserTasksClose}>
           <Modal.Header className="modal_header_bg">
             <Modal.Title>{trackedUser.name}'s Tasks</Modal.Title>
           </Modal.Header>

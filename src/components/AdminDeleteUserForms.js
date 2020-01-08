@@ -42,7 +42,7 @@ function AdminDeleteUser(data) {
 
   // render admin delete user modal
   return (
-    <div className="auth-inner">
+    <div className="auth-inner col-xl-10 col-md-10 col-sm-12">
       <Form>
         <p className="prompt"> Are you sure you want to delete the user <span className="trackedcontent">{data.name}</span>?</p>
         <br/>

@@ -54,7 +54,7 @@ function CompleteTask(data) {
 
   // render complete task confirmation modal
   return (
-    <div className="auth-inner">
+    <div className="auth-inner col-xl-10 col-md-10 col-sm-12">
       <p className="prompt"> Are you sure you want to mark the task <span className="trackedcontent">{data.task_name}</span> as complete?</p>
       <br/>
       <button className="btn btn-dark btn-block" type="button" onClick={putCompleteTask}>Complete Task</button>

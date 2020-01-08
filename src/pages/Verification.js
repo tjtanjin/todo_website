@@ -60,7 +60,7 @@ function Verification(props) {
 
   // render verification page
   return (
-    <div className="auth-inner">
+    <div className="auth-inner col-xl-3 col-md-5 col-sm-9 col-xs-12">
       
       <Form>
         <h3>Verification {status}</h3>

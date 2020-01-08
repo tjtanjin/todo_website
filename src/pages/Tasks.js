@@ -20,6 +20,8 @@ function Tasks(props) {
   let defaultSearchType = "category";
   let defaultTaskChoice = "In-progress";
 
+  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
+
   function setDefaultValue(key, value) {
     if (props.location.state === null || props.location.state === undefined || props.location.state[key] === undefined ) {
       return value;
@@ -89,6 +91,10 @@ function Tasks(props) {
       </OverlayTrigger>
     );
 
+    let count = 0
+    tasks.sort(function (a,b){
+      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+    });;
     const table = tasks.map((task, index) => {
       if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed" && task.priority !== "Overdue") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
@@ -100,9 +106,10 @@ function Tasks(props) {
           edit_button = "";
           complete_button = "";
         }
+        count += 1;
         return (
           <tr key={id}>
-            <td>{index + 1}</td>
+            <td>{count}</td>
             <td>{task_name}</td>
             <td>{category}</td>
             <td className={priority}>{priority}</td>

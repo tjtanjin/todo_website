@@ -89,7 +89,7 @@ function Signup() {
 
   // render signup page
   return (
-    <div className="auth-inner">
+    <div className="auth-inner col-xl-3 col-md-5 col-sm-9 col-xs-12">
       
       <Form>
         <h3>Sign Up</h3>

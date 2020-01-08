@@ -62,9 +62,9 @@ function ResetPassword(data) {
 
   // render edit user modal
   return (
-    <div className="auth-inner">
+    <div className="auth-inner col-xl-10 col-md-10 col-sm-12">
       <Form>
-        <p className="text-success">A password reset token has been sent to your email. Please enter the token below to reset your password. The token will expire in <span className="text-danger font-weight-bold">4 hours</span>.</p>
+        <p className="text-success">A password reset token has been sent to your email (may take up to 5 minutes). Please enter the token below to reset your password. The token will expire in <span className="text-danger font-weight-bold">4 hours</span>.</p>
         <div className="form-group">
           <label>Password Reset Token</label>
           <input

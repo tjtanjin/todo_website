@@ -25,6 +25,8 @@ function UserTasks(data) {
   const [toast, showToast] = useState(false);
   const [toastText, setToastText] = useState("");
 
+  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
+
   // declare controllers for showing and hiding modals
   const handleDetailsTaskClose = () => setDetailsTaskShow(false);
   const handleDetailsTaskShow = () => setDetailsTaskShow(true);
@@ -64,15 +66,20 @@ function UserTasks(data) {
       </OverlayTrigger>
     );
 
+    let count = 0
+    tasks.sort(function (a,b){
+      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+    });;
     const table = tasks.map((task, index) => {
       if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed" && task.priority !== "Overdue") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
         let details_button = action_button(handleDetailsTaskShow, task, "fa fa-info-circle", "View task details")
         let edit_button = action_button(handleEditTaskShow, task, "fa fa-wrench", "Edit task")
         let delete_button = action_button(handleDeleteTaskShow, task, "fa fa-remove", "Delete task")
+        count += 1;
         return (
           <tr key={id}>
-            <td>{index + 1}</td>
+            <td>{count}</td>
             <td>{task_name}</td>
             <td>{category}</td>
             <td className={priority}>{priority}</td>
