@@ -388,3 +388,7 @@ body {
   background-color: #DC3545;
   font-weight: bold;
 }
+
+.chatbotstyle {
+  position: absolute;
+}

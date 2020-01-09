@@ -13,6 +13,7 @@ import Tasks from "./pages/Tasks";
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard'
 import Users from "./pages/Users";
+import TodoChatbot from "./components/TodoChatbot";
 import { AuthContext } from "./context/auth";
 
 function App(props) {
@@ -40,6 +41,11 @@ function App(props) {
               <PrivateRoute path="/profile" component={Profile} />
               <PrivateRoute path="/users" component={Users} />
             </Switch>
+          </div>
+          <div>
+            <div className="chatbotstyle container mt-5">
+              <TodoChatbot/>
+            </div>
           </div>
       </Router>
     </AuthContext.Provider>
