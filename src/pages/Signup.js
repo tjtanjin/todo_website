@@ -146,7 +146,7 @@ function Signup() {
             placeholder="Confirm password"
           />
         </div>
-
+        <br/>
         <button id="submitButton" className="btn btn-dark btn-block" onClick={postSignup}>Sign Up</button>
         <Link className="link" to="/login">Already have an account?</Link>
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}

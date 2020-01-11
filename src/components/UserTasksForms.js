@@ -142,10 +142,10 @@ function UserTasks(data) {
             top: 0,
             right: 20,
             width: '300px',
-            background: '#D4EDDA',
+            background: '#ccf8fc',
           }}
         >
-          <Toast.Header style={{ background: '#D4EDDA' }}>
+          <Toast.Header style={{ background: '#ccf8fc' }}>
             <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
             <strong className="mr-auto">Notification</strong>
           </Toast.Header>

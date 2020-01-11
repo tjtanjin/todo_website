@@ -59,6 +59,11 @@ function TodoChatbot(props) {
           trigger: "Ask what type of feedback"
           },
           { 
+          value: "Other enquiries",
+          label: "Other enquiries",
+          trigger: "Ask what other enquiries"
+          },
+          { 
           value: "Entertain me",
           label: "Entertain me",
           trigger: "Show quickmath"
@@ -78,7 +83,12 @@ function TodoChatbot(props) {
     {
       id: "Ask what type of feedback",
       message: "What kind of feedback do you have for us?",
-      trigger: "Show feedback options"  
+      trigger: "Show feedback options"
+    },
+    {
+      id: "Ask what other enquiries",
+      message: "What enquiries do you have?",
+      trigger: "Show enquiry options"   
     },
     {
       id: "Show feedback options",
@@ -103,7 +113,7 @@ function TodoChatbot(props) {
     {
       id: "Teach report bug",
       message: "Thank you for helping us to identify bugs in our application. Please click on the button below to raise an issue at our github repository.",
-      trigger: "Provide github link"
+      trigger: "Provide github issues link"
     },
     {
       id: "Teach give suggestion",
@@ -116,9 +126,16 @@ function TodoChatbot(props) {
       trigger: "Ask if have any other questions"
     },
     {
-      id: "Provide github link",
+      id: "Provide github issues link",
       component: (
         <div><a className="btn btn-dark btn-block" target="_blank" rel="noopener noreferrer" href="https://github.com/tjtanjin/todo_website/issues">Github</a></div>
+      ),
+      trigger: "Ask if have any other questions"
+    },
+    {
+      id: "Provide github link",
+      component: (
+        <div><a className="btn btn-dark btn-block" target="_blank" rel="noopener noreferrer" href="https://github.com/tjtanjin/todo_website">Github</a></div>
       ),
       trigger: "Ask if have any other questions"
     },
@@ -274,6 +291,31 @@ function TodoChatbot(props) {
           trigger: "Ask what help user need again"
         } 
       ]
+    },
+    {
+      id: "Show enquiry options",
+      options: [
+        {
+          value: "Where is the code for this project?",
+          label:  "Where is the code for this project?",
+          trigger: "Teach where is code"
+          },
+          { 
+          value: "Is there an admin I can contact?",
+          label: "Is there an admin I can contact?",
+          trigger: "Teach contact admin"
+        } 
+      ]
+    },
+    {
+      id: "Teach where is code",
+      message: "To view the code for our project, visit our github repository by clicking on the button below.",
+      trigger: "Provide github link"
+    },
+    {
+      id: "Teach contact admin",
+      message: "Currently, you may contact admin at the email: cjtanjin@gmail.com",
+      trigger: "Ask if have any other questions"
     },
     {
       id: "Show quickmath",
