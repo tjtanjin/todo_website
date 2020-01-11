@@ -46,7 +46,7 @@ function Dashboard(props) {
       None     
   */
   function renderTableHeader() {
-    let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DAYS LEFT"]
+    let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DAYS LEFT", "ACTION"]
     return header.map((key, index) => {
        return <th key={index}>{key}</th>
     })
@@ -66,6 +66,14 @@ function Dashboard(props) {
     const table = tasks.map((task, index) => {
       let expirydate = calculateExpiry(task.deadline);
       if ((expirydate >= 0 && expirydate <= countExpiry) && task.priority !== "Completed" && task.priority !== "Overdue") {
+        const goto_button = (
+          <OverlayTrigger overlay={renderTooltip("Go to task")}>
+            <Link class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" to={{
+              pathname: '/tasks',
+              state: { defaultSearchWord: task.task_name, defaultSearchType: "task_name" }
+            }}><i className="fa fa-arrow-circle-right"></i></Link>
+          </OverlayTrigger>
+        )
         if (expirydate === 0) {
           expirydate = "Today";
         }
@@ -78,6 +86,7 @@ function Dashboard(props) {
             <td>{category}</td>
             <td className={priority}>{priority}</td>
             <td className="text-danger">{expirydate}</td>
+            <td>{goto_button}</td>
           </tr>
         )
       } else {}
