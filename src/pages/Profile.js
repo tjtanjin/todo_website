@@ -188,7 +188,7 @@ function Profile(props) {
             </div>
             <div class="row">
               <div class="col-md-6">
-                  <label>Name</label>
+                  <label>Name:</label>
               </div>
               <div class="col-md-6">
                   <p>{name}</p>
@@ -196,7 +196,7 @@ function Profile(props) {
             </div>
             <div class="row">
               <div class="col-md-6">
-                  <label>Email</label>
+                  <label>Email:</label>
               </div>
               <div class="col-md-6">
                   <p>{email}</p>
@@ -204,7 +204,7 @@ function Profile(props) {
             </div>
             <div class="row">
               <div class="col-md-6">
-                  <label>Role</label>
+                  <label>Role:</label>
               </div>
               <div class="col-md-6">
                   <p>{role}</p>
@@ -212,7 +212,7 @@ function Profile(props) {
             </div>
             <div class="row">
               <div class="col-md-6">
-                  <label>Created at</label>
+                  <label>Created at:</label>
               </div>
               <div class="col-md-6">
                   <p>{createdate}</p>
@@ -220,7 +220,7 @@ function Profile(props) {
             </div>
             <div class="row">
               <div class="col-md-6">
-                  <label>Last modified</label>
+                  <label>Last modified:</label>
               </div>
               <div class="col-md-6">
                   <p>{modifydate}</p>
@@ -228,7 +228,7 @@ function Profile(props) {
             </div>
             <div class="row">
               <div class="col-md-6">
-                  <label>Email Task Notifications/Reminders:</label>
+                  <label>Email Notifications/Reminders:</label>
               </div>
               <div class="col-md-6">
                 <div class="custom-control custom-switch">
@@ -248,7 +248,7 @@ function Profile(props) {
             </div>
             <div class="row">
               <div class="col-md-6">
-                  <label>Telegram Task Notifications/Reminders:</label>
+                  <label>Telegram Notifications/Reminders:</label>
               </div>
               <div class="col-md-6">
                 <div class="custom-control custom-switch">
@@ -260,7 +260,7 @@ function Profile(props) {
                     onChange={() => {setTelegramNotifications(!telegramNotifications); putTelegramNotifications()
                   }}
                   />
-                  <OverlayTrigger overlay={renderTooltip("Task reminder emails will be sent out daily for tasks with a remaining deadline of 3 days and less.")}>
+                  <OverlayTrigger overlay={renderTooltip("Task reminder telegram messages will be sent out daily for tasks with a remaining deadline of 3 days and less.")}>
                     <label class="custom-control-label" for="customSwitch2"></label>
                   </OverlayTrigger>
                   <button className="btn btn-dark btn-sm" onClick={() => {handleEditTelegramHandleShow()}}>Telegram Handle</button>
@@ -305,7 +305,7 @@ function Profile(props) {
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Edit Telegram Handle</Modal.Title>
           </Modal.Header>
-          <Modal.Body><EditTelegramHandle user={trackedUser} onCloseModal={handleEditTelegramHandleClose} showToast={(e) => {showToast(true); setToastText(e)}}></EditTelegramHandle></Modal.Body>
+          <Modal.Body><EditTelegramHandle telegram_handle={trackedUser.telegram_handle} onCloseModal={handleEditTelegramHandleClose} showToast={(e) => {showToast(true); setToastText(e)}}></EditTelegramHandle></Modal.Body>
         </Modal>
       </div>
     </div>

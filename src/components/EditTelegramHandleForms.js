@@ -11,7 +11,7 @@ function EditTelegramHandle(data) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [telegramHandle, setTelegramHandle] = useState("");
+  const [telegramHandle, setTelegramHandle] = useState(data.telegram_handle);
 
   /*
   The function putCompleteTask makes a PUT request to the API endpoint to mark the task as complete.
