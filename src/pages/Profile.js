@@ -3,6 +3,7 @@ import axios from 'axios';
 import EditUser from "../components/EditUserForms";
 import DeleteUser from "../components/DeleteUserForms"
 import ChangePassword from "../components/ChangePasswordForms";
+import EditTelegramHandle from "../components/EditTelegramHandleForms"
 import { Form } from "../components/AuthForms";
 import { Modal, OverlayTrigger, Toast } from 'react-bootstrap'
 import { decode } from 'jsonwebtoken';
@@ -18,13 +19,15 @@ function Profile(props) {
   const [showEditUser, setEditUserShow] = useState(false);
   const [showChangePassword, setChangePasswordShow] = useState(false);
   const [showDeleteUser, setDeleteUserShow] = useState(false);
+  const [showEditTelegramHandle, setEditTelegramHandleShow] = useState(false);
   const [userid, setUserID] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   const [createdate, setCreateDate] = useState("");
   const [modifydate, setModifyDate] = useState("");
-  const [notifications, setNotifications] = useState("");
+  const [emailNotifications, setEmailNotifications] = useState("");
+  const [telegramNotifications, setTelegramNotifications] = useState("");
   const [trackedUser, setTrackedUser] = useState("");
   const [toast, showToast] = useState(false);
   const [toastText, setToastText] = useState("");
@@ -38,6 +41,8 @@ function Profile(props) {
   const handleChangePasswordShow = () => setChangePasswordShow(true);
   const handleDeleteUserClose = () => setDeleteUserShow(false);
   const handleDeleteUserShow = () => setDeleteUserShow(true);
+  const handleEditTelegramHandleClose = () => setEditTelegramHandleShow(false);
+  const handleEditTelegramHandleShow = () => setEditTelegramHandleShow(true);
 
   // get user at the start
   useEffect(() => {
@@ -66,10 +71,15 @@ function Profile(props) {
         setRole(result.data.role);
         setCreateDate(formatDate(result.data.created_at));
         setModifyDate(formatDate(result.data.updated_at));
-        if (result.data.notifications === "1") {
-          setNotifications(true);
+        if (result.data.email_notifications === "1") {
+          setEmailNotifications(true);
         } else {
-          setNotifications(false);
+          setEmailNotifications(false);
+        }
+        if (result.data.telegram_notifications === "1") {
+          setTelegramNotifications(true);
+        } else {
+          setTelegramNotifications(false);
         }
       } else {
         alert("An error has occurred, please contact an administrator.")
@@ -85,26 +95,51 @@ function Profile(props) {
     });
   }
 
-  function putNotifications() {
+  function putEmailNotifications() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     let notificationsSettings = "";
-    if (notifications === true) {
+    if (emailNotifications === true) {
       notificationsSettings = "0"
     } else {
       notificationsSettings = "1"
     }
-    axios.put(process.env.REACT_APP_API_LINK + "/users/" + userid + "/setnotifications", {
+    axios.put(process.env.REACT_APP_API_LINK + "/users/" + userid + "/setemailnotifications", {
       "id": userid,
-      "notifications": notificationsSettings
+      "email_notifications": notificationsSettings
     }, {
       headers: { Authorization: token }
     }).then(result => {
       if (result.status === 200) {
         showToast(true);
-        setToastText("Notification settings successfully updated.")
+        setToastText("Email notification settings successfully updated.")
       } else {
       }
     }).catch(e => {
+      alert(e)
+    });
+  }
+
+  function putTelegramNotifications() {
+    const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
+    let notificationsSettings = "";
+    if (telegramNotifications === true) {
+      notificationsSettings = "0"
+    } else {
+      notificationsSettings = "1"
+    }
+    axios.put(process.env.REACT_APP_API_LINK + "/users/" + userid + "/settelegramnotifications", {
+      "id": userid,
+      "telegram_notifications": notificationsSettings
+    }, {
+      headers: { Authorization: token }
+    }).then(result => {
+      if (result.status === 200) {
+        showToast(true);
+        setToastText("Telegram notification settings successfully updated.")
+      } else {
+      }
+    }).catch(e => {
+      alert(e)
     });
   }
 
@@ -198,17 +233,37 @@ function Profile(props) {
               <div class="col-md-6">
                 <div class="custom-control custom-switch">
                   <input 
-                    data-on-text="on"
                     type="checkbox"
-                    checked={notifications}
+                    checked={emailNotifications}
+                    class="custom-control-input" 
+                    id="customSwitch1" 
+                    onChange={() => {setEmailNotifications(!emailNotifications); putEmailNotifications()
+                  }}
+                  />
+                  <OverlayTrigger overlay={renderTooltip("Task reminder emails will be sent out daily for tasks with a remaining deadline of 3 days and less.")}>
+                    <label class="custom-control-label" for="customSwitch1"></label>
+                  </OverlayTrigger>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                  <label>Telegram Task Notifications/Reminders:</label>
+              </div>
+              <div class="col-md-6">
+                <div class="custom-control custom-switch">
+                  <input 
+                    type="checkbox"
+                    checked={telegramNotifications}
                     class="custom-control-input" 
                     id="customSwitch2" 
-                    onChange={() => {setNotifications(!notifications); putNotifications()
+                    onChange={() => {setTelegramNotifications(!telegramNotifications); putTelegramNotifications()
                   }}
                   />
                   <OverlayTrigger overlay={renderTooltip("Task reminder emails will be sent out daily for tasks with a remaining deadline of 3 days and less.")}>
                     <label class="custom-control-label" for="customSwitch2"></label>
                   </OverlayTrigger>
+                  <button className="btn btn-dark btn-sm" onClick={() => {handleEditTelegramHandleShow()}}>Telegram Handle</button>
                 </div>
               </div>
             </div>
@@ -244,6 +299,13 @@ function Profile(props) {
             <Modal.Title>Delete User</Modal.Title>
           </Modal.Header>
           <Modal.Body><DeleteUser id={trackedUser.id} name={trackedUser.name} email={trackedUser.email} onCloseModal={handleDeleteUserClose}></DeleteUser></Modal.Body>
+        </Modal>
+
+        <Modal show={showEditTelegramHandle} onHide={handleEditTelegramHandleClose}>
+          <Modal.Header className="modal_header_bg">
+            <Modal.Title>Edit Telegram Handle</Modal.Title>
+          </Modal.Header>
+          <Modal.Body><EditTelegramHandle user={trackedUser} onCloseModal={handleEditTelegramHandleClose} showToast={(e) => {showToast(true); setToastText(e)}}></EditTelegramHandle></Modal.Body>
         </Modal>
       </div>
     </div>
