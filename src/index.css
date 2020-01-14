@@ -393,3 +393,19 @@ body {
   position: absolute;
   bottom: 0px;
 }
+
+/******************************
+             Others
+******************************/
+
+.icon-36 {
+  font-size: 36px;
+}
+
+.icon-32 {
+  font-size: 32px;
+}
+
+.telegram-color {
+  color: #0088CC;
+}

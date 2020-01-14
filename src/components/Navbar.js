@@ -16,8 +16,8 @@ function Navbar() {
   let word3 = "Tasks"
   let link4 = "/dashboard"
   let word4 = "Dashboard"
-  let link5 = "/about-us"
-  let word5 = "About Us"
+  let link5 = "/about"
+  let word5 = "About"
   let link6 = ""
   let word6 = ""
   if (VerifyAdmin()) {
