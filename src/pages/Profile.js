@@ -180,7 +180,7 @@ function Profile(props) {
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="row">
               <div class="col-md-6">
-                <label>User ID</label>
+                <label>User ID:</label>
               </div>
               <div class="col-md-6">
               <p>{userid}</p>
@@ -305,7 +305,7 @@ function Profile(props) {
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Edit Telegram Handle</Modal.Title>
           </Modal.Header>
-          <Modal.Body><EditTelegramHandle telegram_handle={trackedUser.telegram_handle} onCloseModal={handleEditTelegramHandleClose} showToast={(e) => {showToast(true); setToastText(e)}}></EditTelegramHandle></Modal.Body>
+          <Modal.Body><EditTelegramHandle email={trackedUser.email} telegram_handle={trackedUser.telegram_handle} onCloseModal={handleEditTelegramHandleClose} showToast={(e) => {showToast(true); setToastText(e)}}></EditTelegramHandle></Modal.Body>
         </Modal>
       </div>
     </div>

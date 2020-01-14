@@ -63,6 +63,7 @@ function EditTelegramHandle(data) {
   return (
     <div className="auth-inner col-xl-10 col-md-10 col-sm-12">
       <Form>
+        <p className="text-success">To link your todo manager account with your telegram account, enter your telegram handle below (without @) and send <span className="text-danger font-weight-bold">/link {data.email}</span> to our telegram bot <span className="text-danger font-weight-bold">(@todomanager_bot)</span>.</p>
         <div className="form-group">
           <label>Telegram Handle</label>
           <input
