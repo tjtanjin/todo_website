@@ -27,6 +27,7 @@ function Dashboard(props) {
   const [shortestTime, setShortestTime] = useState("NA");
   const [longestTime, setLongestTime] = useState("NA");
   const [arrCat, setArrCat] = useState([]);
+  const [sortType, setSortType] = useState("PRIORITY");
 
   const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
 
@@ -48,7 +49,11 @@ function Dashboard(props) {
   function renderTableHeader() {
     let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DAYS LEFT", "ACTION"]
     return header.map((key, index) => {
-       return <th key={index}>{key}</th>
+      if (key === "INDEX" || key === "CATEGORY" || key === "ACTION") {
+        return <th key={index}>{key}</th>
+      } else {
+        return <th key={index}>{key}<button onClick={() => setSortType(key)} className="btn btn-dark btn-sm pull-right"><i className="fa fa-sort"></i></button></th>
+      }
     })
   }
 
@@ -60,9 +65,15 @@ function Dashboard(props) {
   function renderTableData() {
 
     let count = 0
-    tasks.sort(function (a,b){
-      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
-    });;
+    if (sortType === "PRIORITY") {
+      tasks.sort(function(a,b) {
+        return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+      });
+    } else if (sortType === "TASK NAME") {
+      tasks.sort((a,b) => a.task_name.localeCompare(b.task_name))
+    } else {
+      tasks.sort((a,b) => calculateExpiry(a.deadline) - calculateExpiry(b.deadline));
+    }
     const table = tasks.map((task, index) => {
       let expirydate = calculateExpiry(task.deadline);
       if ((expirydate >= 0 && expirydate <= countExpiry) && task.priority !== "Completed" && task.priority !== "Overdue") {

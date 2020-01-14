@@ -70,6 +70,7 @@ function Users(props) {
       </OverlayTrigger>
     );
 
+    users.sort((a, b) => a.name.localeCompare(b.name))
     const table = users.map((user, index) => {
       if (searchWord === "" || user[searchType].toUpperCase().includes(searchWord.toUpperCase())) {
         let { id, name, email, verification_token } = user

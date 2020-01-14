@@ -45,6 +45,7 @@ function Tasks(props) {
   const [trackedTask, setTrackedTask] = useState({});
   const [toast, showToast] = useState(false);
   const [toastText, setToastText] = useState("");
+  const [sortType, setSortType] = useState("PRIORITY");
 
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
@@ -74,7 +75,11 @@ function Tasks(props) {
   function renderTableHeader() {
     let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS/TOOLS"]
     return header.map((key, index) => {
-       return <th key={index}>{key}</th>
+      if (key === "INDEX" || key === "CATEGORY" || key === "ACTIONS/TOOLS") {
+        return <th key={index}>{key}</th>
+      } else {
+        return <th key={index}>{key}<button onClick={() => setSortType(key)} className="btn btn-dark btn-sm pull-right"><i className="fa fa-sort"></i></button></th>
+      }
     })
   }
 
@@ -92,9 +97,19 @@ function Tasks(props) {
     );
 
     let count = 0
-    tasks.sort(function (a,b){
-      return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
-    });;
+    if (sortType === "PRIORITY") {
+      tasks.sort(function (a,b){
+        return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+      });
+    } else if (sortType === "TASK NAME") {
+      tasks.sort((a, b) => a.task_name.localeCompare(b.task_name))
+    } else {
+      tasks.sort(function(a,b) {
+        a = a.deadline.split('-').reverse().join('');
+        b = b.deadline.split('-').reverse().join('');
+        return a.localeCompare(b);
+      });
+    }
     const table = tasks.map((task, index) => {
       if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed" && task.priority !== "Overdue") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
