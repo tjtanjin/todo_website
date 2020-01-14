@@ -79,7 +79,7 @@ function Dashboard(props) {
       if ((expirydate >= 0 && expirydate <= countExpiry) && task.priority !== "Completed" && task.priority !== "Overdue") {
         const goto_button = (
           <OverlayTrigger overlay={renderTooltip("Go to task")}>
-            <Link class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm" to={{
+            <Link class="btn btn-sm shadow-sm" to={{
               pathname: '/tasks',
               state: { defaultSearchWord: task.task_name, defaultSearchType: "task_name" }
             }}><i className="fa fa-arrow-circle-right"></i></Link>

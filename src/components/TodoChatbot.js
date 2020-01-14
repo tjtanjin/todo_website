@@ -170,12 +170,27 @@ function TodoChatbot(props) {
         {
           value: "How do I enable email reminders?",
           label: "How do I enable email reminders?",
-          trigger: "Teach enable notifications"
+          trigger: "Teach enable email notifications"
+          },
+          { 
+          value: "How do I enable telegram reminders?",
+          label: "How do I enable telegram reminders?",
+          trigger: "Teach enable telegram notifications"
           },
           { 
           value: "How do I download my tasks?",
           label: "How do I download my tasks?",
           trigger: "Teach download tasks"
+          },
+          { 
+          value: "How do I sort my tasks?",
+          label: "How do I sort my tasks?",
+          trigger: "Teach sort tasks"
+          },
+          { 
+          value: "How do I search for my tasks?",
+          label: "How do I search for my tasks?",
+          trigger: "Teach search tasks"
           },
           { 
           value: "My tasks disappeared!",
@@ -226,14 +241,29 @@ function TodoChatbot(props) {
       trigger: "Provide profile link"
     },
     {
-      id: "Teach enable notifications",
+      id: "Teach enable email notifications",
       message: "To enable email reminders, click on the button below to go to your profile and toggle your email notifications on.",
+      trigger: "Provide profile link"
+    },
+    {
+      id: "Teach enable telegram notifications",
+      message: "To enable telegram reminders, click on the button below to go to your profile and toggle your telegram notifications on. Note that before doing so, you need to configure your telegram handle and link your account with our telegram bot.",
       trigger: "Provide profile link"
     },
     {
       id: "Teach download tasks",
       message: "To download your tasks into excel, click on the button below to go to your tasks page. The download tasks button at the bottom is just what you need.",
       trigger: "Provide tasks link"
+    },
+    {
+      id: "Teach sort tasks",
+      message: "To sort your tasks, click on the buttons beside the table headers.",
+      trigger: "Ask if have any other questions"
+    },
+    {
+      id: "Teach search tasks",
+      message: "To search for your tasks, click on the search box on the top left hand corner of your tasks table and pick the relevant columns you wish to search from before entering your search terms.",
+      trigger: "Ask if have any other questions"
     },
     {
       id: "Teach disappeared tasks",
@@ -314,7 +344,14 @@ function TodoChatbot(props) {
     },
     {
       id: "Teach contact admin",
-      message: "Currently, you may contact admin at the email: cjtanjin@gmail.com",
+      message: "To contact the team, you may refer to the details on our about page by clicking on the button below:",
+      trigger: "Provide about link"
+    },
+    {
+      id: "Provide about link",
+      component: (
+        <div><Link className="btn btn-dark btn-block" to="/about">About</Link></div>
+      ),
       trigger: "Ask if have any other questions"
     },
     {
