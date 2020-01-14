@@ -29,7 +29,7 @@ function DeleteTask(data) {
 
   // render delete task modal
   return (
-    <div className="auth-inner col-xl-10 col-md-10 col-sm-12">
+    <div className="auth-inner col-xl-10 col-md-10 col-sm-12 col-xs-12">
       <p className="prompt"> Are you sure you want to delete the task <span className="trackedcontent">{data.task_name}</span>?</p>
       <br/>
       <button className="btn btn-danger btn-block" type="button" onClick={e => delDeleteTask()}>Delete</button>

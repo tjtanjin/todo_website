@@ -76,7 +76,7 @@ function DeleteUser(data) {
 
   // render delete user modal
   return (
-    <div className="auth-inner col-xl-10 col-md-10 col-sm-12">
+    <div className="auth-inner col-xl-10 col-md-10 col-sm-12 col-xs-12">
       <Form>
         <p className="prompt">Enter password to confirm deletion of account <span className="trackedcontent">{data.name}</span>.</p>
         <div className="form-group">

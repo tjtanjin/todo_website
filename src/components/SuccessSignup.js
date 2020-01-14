@@ -5,7 +5,7 @@ function SuccessSignup(data) {
 
   // render success signup modal
   return (
-    <div className="auth-inner col-xl-10 col-md-10 col-sm-12">
+    <div className="auth-inner col-xl-10 col-md-10 col-sm-12 col-xs-12">
       <Form>
         <p className="prompt">Your registration is successful. Please verify your account before logging in. A verification email has been sent to your email at:  <span className="trackedcontent">{data.email}</span></p>
         <br/>
