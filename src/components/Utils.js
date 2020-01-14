@@ -132,7 +132,7 @@ function scoreMessage(score) {
 
 function noticeMessage(arrCat) {
   if (arrCat.length === 0) {
-    const link = <a href="https://github.com/tjtanjin/todo_website/wiki/User-Guide">here!</a>
+    const link = <a href="https://github.com/tjtanjin/todo_website/wiki/User-Guide" target="_blank" rel="noopener noreferrer">here!</a>
     return <div>It's a good day to start on a task! If you are unsure how, look over to our guide {link}</div>
   } else if (arrCat.length === 1) {
     return <div>You only have {arrCat[0][0]} related tasks :( Do try out other stuffs in your free time!</div>
