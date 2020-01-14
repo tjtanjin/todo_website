@@ -33,6 +33,7 @@ function EditTelegramHandle(data) {
         setIsSuccess(true);
         data.showToast("Telegram handle successfully completed.")
         data.onCloseModal();
+        data.getSelf();
       } else {
         setSubmitResult("An error has occurred, please contact an administrator.")
         setIsError(true)

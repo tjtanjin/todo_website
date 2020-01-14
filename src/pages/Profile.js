@@ -31,6 +31,8 @@ function Profile(props) {
   const [trackedUser, setTrackedUser] = useState("");
   const [toast, showToast] = useState(false);
   const [toastText, setToastText] = useState("");
+  const [telegramDone, setTelegramDone] = useState(false);
+  const [teleTooltip, setTeleTooltip] = useState("Task reminder telegram messages will be sent out daily for tasks with a remaining deadline of 3 days and less.");
 
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
@@ -71,6 +73,10 @@ function Profile(props) {
         setRole(result.data.role);
         setCreateDate(formatDate(result.data.created_at));
         setModifyDate(formatDate(result.data.updated_at));
+        if (result.data.telegram_id === null) {
+          setTelegramDone(true);
+          setTeleTooltip("You need to configure your telegram handle and link your account before you can enable telegram notifications.");
+        }
         if (result.data.email_notifications === "1") {
           setEmailNotifications(true);
         } else {
@@ -255,12 +261,13 @@ function Profile(props) {
                   <input 
                     type="checkbox"
                     checked={telegramNotifications}
-                    class="custom-control-input" 
+                    class="custom-control-input"
+                    disabled={telegramDone}
                     id="customSwitch2" 
                     onChange={() => {setTelegramNotifications(!telegramNotifications); putTelegramNotifications()
                   }}
                   />
-                  <OverlayTrigger overlay={renderTooltip("Task reminder telegram messages will be sent out daily for tasks with a remaining deadline of 3 days and less.")}>
+                  <OverlayTrigger overlay={renderTooltip(teleTooltip)}>
                     <label class="custom-control-label" for="customSwitch2"></label>
                   </OverlayTrigger>
                   <button className="btn btn-dark btn-sm" onClick={() => {handleEditTelegramHandleShow()}}>Telegram Handle</button>
@@ -305,7 +312,7 @@ function Profile(props) {
           <Modal.Header className="modal_header_bg">
             <Modal.Title>Edit Telegram Handle</Modal.Title>
           </Modal.Header>
-          <Modal.Body><EditTelegramHandle email={trackedUser.email} telegram_handle={trackedUser.telegram_handle} onCloseModal={handleEditTelegramHandleClose} showToast={(e) => {showToast(true); setToastText(e)}}></EditTelegramHandle></Modal.Body>
+          <Modal.Body><EditTelegramHandle email={trackedUser.email} telegram_handle={trackedUser.telegram_handle} onCloseModal={handleEditTelegramHandleClose} showToast={(e) => {showToast(true); setToastText(e)}} getSelf={getSelf}></EditTelegramHandle></Modal.Body>
         </Modal>
       </div>
     </div>
