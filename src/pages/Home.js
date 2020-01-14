@@ -36,9 +36,7 @@ function Home(props) {
         <img src={logoImg} alt="Todo-Manager Logo"></img>
         <br/><br/><br/>
 		    <h1 class="mb-1 text-home-primary">Welcome {primary_text}</h1>
-		    <h3 class="mb-5 text-home-secondary">
-		      <em>{secondary_text}</em>
-		    </h3>
+		    <h4 class="mb-5 text-home-secondary">{secondary_text}</h4>
 		    <Link class="btn btn-dark btn-home" to={btn_link1}>{btn_text1}</Link>
 		    <br/><br/>
 		    <Link class="btn btn-dark btn-home" to={btn_link2} onClick={() => logOut(setAuthTokens)}>{btn_text2}</Link>

@@ -136,7 +136,6 @@ function Login(props) {
             placeholder="Enter password"
           />
         </div>
-        <br/>
         <button type="submit" id="submitButton" className="btn btn-dark btn-block" onClick={postLogin}>Sign In</button>
         <Link className="link" to="/signup">Do not have an account?</Link>
         <p className="forgot-password text-right">
