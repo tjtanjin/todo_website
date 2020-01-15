@@ -66,7 +66,7 @@ function TodoChatbot(props) {
           { 
           value: "Entertain me",
           label: "Entertain me",
-          trigger: "Show quickmath"
+          trigger: "Show entertainment"
         } 
       ]
     },
@@ -355,11 +355,16 @@ function TodoChatbot(props) {
       trigger: "Ask if have any other questions"
     },
     {
-      id: "Show quickmath",
+      id: "Show entertainment",
       component: (
-        <div><button type="button" className="btn btn-dark btn-block" onClick={handleQuickMathShow}>
+        <div>
+        <a className="btn btn-dark btn-block" target="_blank" rel="noopener noreferrer" href="https://t.me/Ageofempire_bot">
+          Play Age Of Empires
+        </a>
+        <button type="button" className="btn btn-dark btn-block" onClick={handleQuickMathShow}>
           Play QuickMath
-        </button></div>
+        </button>
+        </div>
       ),
       trigger: "Ask if have any other questions"
     }

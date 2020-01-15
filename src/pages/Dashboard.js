@@ -27,7 +27,7 @@ function Dashboard(props) {
   const [shortestTime, setShortestTime] = useState("NA");
   const [longestTime, setLongestTime] = useState("NA");
   const [arrCat, setArrCat] = useState([]);
-  const [sortType, setSortType] = useState("PRIORITY");
+  const [sortType, setSortType] = useState("DEADLINE");
 
   const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
 

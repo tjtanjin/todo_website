@@ -45,7 +45,7 @@ function Tasks(props) {
   const [trackedTask, setTrackedTask] = useState({});
   const [toast, showToast] = useState(false);
   const [toastText, setToastText] = useState("");
-  const [sortType, setSortType] = useState("PRIORITY");
+  const [sortType, setSortType] = useState("DEADLINE");
 
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
