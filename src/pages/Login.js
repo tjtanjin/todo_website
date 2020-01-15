@@ -145,7 +145,10 @@ function Login(props) {
               state: { defaultEmail: email }
             }}>Do not have an account?</Link>
         <p className="forgot-password text-right">
-          Forgot <Link className="link" to={"/forgotpassword"}>password?</Link>
+          Forgot <Link class="link" to={{
+                  pathname: '/forgotpassword',
+                  state: { defaultEmail: email }
+                }}>password?</Link>
         </p>
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }

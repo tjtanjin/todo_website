@@ -4,16 +4,19 @@ import axios from 'axios';
 import ResetPassword from '../components/ResetPasswordForms'
 import { Form, Error, Success } from "../components/AuthForms";
 import { Modal } from 'react-bootstrap'
-import { checkDyno, Loading } from "../components/Utils"
+import { checkDyno, Loading, setDefaultValue } from "../components/Utils"
 
-function Forgotpassword() {
+function Forgotpassword(props) {
+
+  // prepare passed in data
+  let defaultEmail = "";
 
   // declare stateful values to be used
   const [submitResult, setSubmitResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isWakingDyno, setDynoMessage] = useState(false)
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(setDefaultValue(props, "defaultEmail", defaultEmail));
   const [showResetPassword, setResetPasswordShow] = useState(false);
 
   // declare controllers for showing and hiding modals
