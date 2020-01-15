@@ -140,8 +140,7 @@ function Login(props) {
           />
         </div>
         <button type="submit" id="submitButton" className="btn btn-dark btn-block" onClick={postLogin}>Sign In</button>
-        <Link className="link" to="/signup">Do not have an account?</Link>
-        <Link class="text-primary btn btn-sm shadow-sm" to={{
+        <Link class="link" to={{
               pathname: '/signup',
               state: { defaultEmail: email }
             }}>Do not have an account?</Link>
