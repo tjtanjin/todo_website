@@ -141,4 +141,12 @@ function noticeMessage(arrCat) {
   }
 }
 
-export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, calculateExpiry, compareDate, validateUser, validateTask, retrieveTaskCategories, scoreMessage, noticeMessage };
+function setDefaultValue(props, key, value) {
+  if (props.location.state === null || props.location.state === undefined || props.location.state[key] === undefined ) {
+    return value;
+  } else {
+    return props.location.state[key];
+  }
+}
+
+export { sleep, formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, calculateExpiry, compareDate, validateUser, validateTask, retrieveTaskCategories, scoreMessage, noticeMessage, setDefaultValue };

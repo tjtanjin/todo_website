@@ -8,7 +8,7 @@ import CompleteTask from '../components/CompleteTaskForms'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { Form } from "../components/AuthForms";
 import { Modal, Dropdown, OverlayTrigger, Toast } from 'react-bootstrap'
-import { renderTooltip, Loading } from '../components/Utils'
+import { renderTooltip, Loading, setDefaultValue } from '../components/Utils'
 import { useAuth } from "../context/auth"
 import { decode } from 'jsonwebtoken';
 import { Navbar } from "../components/Navbar";
@@ -22,19 +22,11 @@ function Tasks(props) {
 
   const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
 
-  function setDefaultValue(key, value) {
-    if (props.location.state === null || props.location.state === undefined || props.location.state[key] === undefined ) {
-      return value;
-    } else {
-      return props.location.state[key];
-    }
-  }
-
   // declare stateful values to be used
   const { setAuthTokens } = useAuth();
-  const [taskChoice, setTaskChoice] = useState(setDefaultValue("defaultTaskChoice", defaultTaskChoice));
-  const [searchType, setSearchType] = useState(setDefaultValue("defaultSearchType", defaultSearchType));
-  const [searchWord, setSearchWord] = useState(setDefaultValue("defaultSearchWord", defaultSearchWord));
+  const [taskChoice, setTaskChoice] = useState(setDefaultValue(props, "defaultTaskChoice", defaultTaskChoice));
+  const [searchType, setSearchType] = useState(setDefaultValue(props, "defaultSearchType", defaultSearchType));
+  const [searchWord, setSearchWord] = useState(setDefaultValue(props, "defaultSearchWord", defaultSearchWord));
   const [tasks, setTasks] = useState([]);
   const [showLoading, setLoadingShow] = useState(false);
   const [showNewTask, setNewTaskShow] = useState(false);

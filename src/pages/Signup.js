@@ -5,9 +5,12 @@ import SuccessSignup from "../components/SuccessSignup"
 import { Form, Error, Success } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
 import { Modal } from 'react-bootstrap'
-import { checkDyno, logOut, Loading, validateUser } from "../components/Utils"
+import { checkDyno, logOut, Loading, validateUser, setDefaultValue } from "../components/Utils"
 
-function Signup() {
+function Signup(props) {
+
+  // prepare passed in data
+  let defaultEmail = "";
 
   // declare stateful values to be used
   const [submitResult, setSubmitResult] = useState("");
@@ -17,7 +20,7 @@ function Signup() {
   const [isWakingDyno, setDynoMessage] = useState(false)
   const [showSuccess, setSuccessShow] = useState(false);
   const [name, setUserName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(setDefaultValue(props, "defaultEmail", defaultEmail));
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const { setAuthTokens } = useAuth();
@@ -148,6 +151,10 @@ function Signup() {
         </div>
         <button id="submitButton" className="btn btn-dark btn-block" onClick={postSignup}>Sign Up</button>
         <Link className="link" to="/login">Already have an account?</Link>
+        <Link class="text-primary btn btn-sm shadow-sm" to={{
+              pathname: '/login',
+              state: { defaultEmail: email }
+            }}>Already have an account?</Link>
         { isWakingDyno&&<Success>Waking Heroku Dyno... Please be patient.</Success>}
         { isLoading&&<Loading></Loading> }
         { isError &&<Error>{submitResult}</Error> }

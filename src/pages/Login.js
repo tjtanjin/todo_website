@@ -3,9 +3,12 @@ import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import { Form, Error, Success } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
-import { checkDyno, logOut, Loading } from "../components/Utils"
+import { checkDyno, logOut, Loading, setDefaultValue } from "../components/Utils"
 
 function Login(props) {
+
+  // prepare passed in data
+  let defaultEmail = "";
 
   // declare stateful values to be used
   const [submitResult, setSubmitResult] = useState("");
@@ -13,7 +16,7 @@ function Login(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isWakingDyno, setDynoMessage] = useState(false)
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(setDefaultValue(props, "defaultEmail", defaultEmail));
   const [password, setPassword] = useState("");
   const [resetLink, setResetLink] = useState("");
   const { setAuthTokens } = useAuth();
@@ -138,6 +141,10 @@ function Login(props) {
         </div>
         <button type="submit" id="submitButton" className="btn btn-dark btn-block" onClick={postLogin}>Sign In</button>
         <Link className="link" to="/signup">Do not have an account?</Link>
+        <Link class="text-primary btn btn-sm shadow-sm" to={{
+              pathname: '/signup',
+              state: { defaultEmail: email }
+            }}>Do not have an account?</Link>
         <p className="forgot-password text-right">
           Forgot <Link className="link" to={"/forgotpassword"}>password?</Link>
         </p>
