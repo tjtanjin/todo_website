@@ -78,7 +78,7 @@ function Tasks(props) {
       if (key === "INDEX" || key === "CATEGORY" || key === "ACTIONS/TOOLS") {
         return <th key={index}>{key}</th>
       } else {
-        return <th key={index}>{key}<button onClick={() => setSortType(key)} className="btn btn-dark btn-sm pull-right"><i className="fa fa-sort"></i></button></th>
+        return <th key={index}>{key}<button onClick={() => setSortType(sortType === key ? "REVERSE_".concat(key) : key)} className="btn btn-dark btn-sm pull-right"><i className="fa fa-sort"></i></button></th>
       }
     })
   }
@@ -97,17 +97,21 @@ function Tasks(props) {
     );
 
     let count = 0
-    if (sortType === "PRIORITY") {
+    if (sortType.includes("PRIORITY")) {
       tasks.sort(function (a,b){
-        return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+        return (
+          sortType.includes("REVERSE")
+          ? priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority)
+          : priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
+        )
       });
-    } else if (sortType === "TASK NAME") {
-      tasks.sort((a, b) => a.task_name.localeCompare(b.task_name))
+    } else if (sortType.includes("TASK NAME")) {
+      tasks.sort((a, b) => (sortType.includes("REVERSE") ? b.task_name.localeCompare(a.task_name) : a.task_name.localeCompare(b.task_name)))
     } else {
       tasks.sort(function(a,b) {
         a = a.deadline.split('-').reverse().join('');
         b = b.deadline.split('-').reverse().join('');
-        return a.localeCompare(b);
+        return (sortType.includes("REVERSE") ? b.localeCompare(a) : a.localeCompare(b));
       });
     }
     const table = tasks.map((task, index) => {
