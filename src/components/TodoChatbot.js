@@ -331,6 +331,11 @@ function TodoChatbot(props) {
           trigger: "Teach where is code"
           },
           { 
+          value: "What are the features available?",
+          label: "What are the features available?",
+          trigger: "Teach features"
+          },
+          { 
           value: "Is there an admin I can contact?",
           label: "Is there an admin I can contact?",
           trigger: "Teach contact admin"
@@ -343,6 +348,11 @@ function TodoChatbot(props) {
       trigger: "Provide github link"
     },
     {
+      id: "Teach features",
+      message: "For a full list of our features, please refer to our user guide by clicking on the button below:",
+      trigger: "Provide guide link"
+    },
+    {
       id: "Teach contact admin",
       message: "To contact the team, you may refer to the details on our about page by clicking on the button below:",
       trigger: "Provide about link"
@@ -351,6 +361,13 @@ function TodoChatbot(props) {
       id: "Provide about link",
       component: (
         <div><Link className="btn btn-dark btn-block" to="/about">About</Link></div>
+      ),
+      trigger: "Ask if have any other questions"
+    },
+    {
+      id: "Provide guide link",
+      component: (
+        <div><a className="btn btn-dark btn-block" target="_blank" rel="noopener noreferrer" href="https://github.com/tjtanjin/todo_website/wiki/User-Guide">User Guide</a></div>
       ),
       trigger: "Ask if have any other questions"
     },

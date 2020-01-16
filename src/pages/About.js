@@ -15,7 +15,7 @@ function About(props) {
         <img src={logoImg} alt="Todo-Manager Logo"></img>
         </div>
         <br/>
-        <p>Todo Manager is a simple web application that allows users to track and organize their tasks. Designed with simplicity and efficiency in mind, Todo Manager strives to provide an excellent exeperience for its users</p>
+        <p>Todo Manager is a simple web application that allows users to track and organize their tasks. Designed with simplicity and efficiency in mind, Todo Manager strives to provide an excellent experience for its users. For a full list of features, please refer to our <a className="text-danger" href="https://github.com/tjtanjin/todo_website/wiki/User-Guide" target="_blank" rel="noopener noreferrer">user guide</a>.</p>
         <p>As the application continuously seeks out areas for improvements, suggestions and feedback are greatly welcomed at the following contact and platforms below:</p>
         <span className="icon-36"><a className="text-danger" href="mailto:cjtanjin@gmail.com" target="_blank" rel="noopener noreferrer"><i className="fa fa-envelope-square fa-lg"></i></a></span>
         &nbsp;
