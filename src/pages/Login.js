@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
+import { Navbar } from "../components/Navbar";
 import { Form, Error, Success } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
 import { checkDyno, logOut, Loading, setDefaultValue } from "../components/Utils"
@@ -109,6 +110,7 @@ function Login(props) {
   // render login page
   return (
     <div className="auth-inner col-xl-3 col-md-5 col-sm-9 col-xs-12">
+      <Navbar></Navbar>
       
       <Form>
         <h3>Sign In</h3>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import ResetPassword from '../components/ResetPasswordForms'
+import { Navbar } from "../components/Navbar";
 import { Form, Error, Success } from "../components/AuthForms";
 import { Modal } from 'react-bootstrap'
 import { checkDyno, Loading, setDefaultValue } from "../components/Utils"
@@ -58,6 +59,7 @@ function Forgotpassword(props) {
   // render signup page
   return (
     <div className="auth-inner col-xl-3 col-md-5 col-sm-9 col-xs-12">
+      <Navbar></Navbar>
       
       <Form>
         <h3>Forgot Password</h3>

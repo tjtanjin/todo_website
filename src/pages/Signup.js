@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import SuccessSignup from "../components/SuccessSignup"
+import { Navbar } from "../components/Navbar";
 import { Form, Error, Success } from "../components/AuthForms";
 import { useAuth } from "../context/auth";
 import { Modal } from 'react-bootstrap'
@@ -93,6 +94,7 @@ function Signup(props) {
   // render signup page
   return (
     <div className="auth-inner col-xl-3 col-md-5 col-sm-9 col-xs-12">
+      <Navbar></Navbar>
       
       <Form>
         <h3>Sign Up</h3>
