@@ -115,27 +115,37 @@ function retrieveTaskCategories(tasks) {
 }
 
 function scoreMessage(score) {
-  if (score < 30) {
-    return <h5 className="prompt text-danger">Please put in more effort to complete your tasks!</h5>
+  if (score < 10) {
+    return <h5 className="prompt text-danger">Take baby steps and build up the habit to complete your tasks!</h5>
+  } else if (score < 20) {
+    return <h5 className="prompt text-warning">You can do much better than this, don't give up!</h5>
+  } else if (score < 30) {
+    return <h5 className="prompt text-warning">1/3 tasks completed, you can do more than this!</h5>
   } else if (score < 40) {
-    return <h5 className="prompt text-warning">You can do much better, don't give up!</h5>
+    return <h5 className="prompt text-warning">Push yourself harder, you can do it!</h5>
   } else if (score < 50) {
-    return <h5 className="prompt text-success">You are near completing half your tasks!</h5>
+    return <h5 className="prompt text-success">Work towards completing at least half your tasks!</h5>
   } else if (score < 70) {
-    return <h5 className="prompt text-success">Push yourself harder!</h5>
-  } else if (score < 90) {
-    return <h5 className="prompt text-success">Nice work! Keep it up!</h5>
+    return <h5 className="prompt text-success">You are doing well but push your further!</h5>
+  } else if (score < 80) {
+      return <h5 className="prompt text-success">Great job in completing majority of your tasks! </h5>
+  } else if (score < 95) {
+    return <h5 className="prompt text-success">Excellent! Keep it up!</h5>
   } else {
-    return <h5 className="prompt text-success">You are fantastic!</h5>
+    return <h5 className="prompt text-success">Main your fantastic score by completing your tasks!</h5>
   }
 }
 
 function noticeMessage(arrCat) {
   if (arrCat.length === 0) {
-    const link = <a href="https://github.com/tjtanjin/todo_website/wiki/User-Guide" target="_blank" rel="noopener noreferrer">here!</a>
+    const link = <a className="text-danger" href="https://github.com/tjtanjin/todo_website/wiki/User-Guide" target="_blank" rel="noopener noreferrer">here!</a>
     return <div>It's a good day to start on a task! If you are unsure how, look over to our guide {link}</div>
   } else if (arrCat.length === 1) {
     return <div>You only have {arrCat[0][0]} related tasks :( Do try out other stuffs in your free time!</div>
+  } else if (arrCat[0][0].toUpperCase().includes("WORK")) {
+    return <div>Although you might have a lot of work, do spend some time to rest!</div>
+  } else if (arrCat[0][0].toUpperCase().includes("SPORT")) {
+    return <div>You have a healthy lifestyle, keep it up!</div>
   } else {
     return <div>Do remember to take breaks every now and then as you strive to complete your tasks!</div>
   }

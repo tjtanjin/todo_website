@@ -9,9 +9,9 @@ export const CountDown = ({ hours = 0, minutes = 0, seconds = 0, setScore, setPl
   });
 
   const tick = () => {
-    if (play == 1) {
+    if (play === "1") {
       if (over) {
-        setPlay(0);
+        setPlay("0");
       }
       if (time.hours === 0 && time.minutes === 0 && time.seconds === 0) setOver(true);
       else if (time.minutes === 0 && time.seconds === 0)
@@ -51,7 +51,7 @@ export const CountDown = ({ hours = 0, minutes = 0, seconds = 0, setScore, setPl
 
   return (
     <div>
-    <button type="button" className="btn btn-danger btn-sm" onClick={() => {reset(); setScore(0); setPlay(1);}}>Start/Restart</button>
+    <button type="button" className="btn btn-danger btn-sm" onClick={() => {reset(); setScore(0); setPlay("1");}}>Start/Restart</button>
       <p>{`${time.hours.toString().padStart(2, '0')}:${time.minutes
         .toString()
         .padStart(2, '0')}:${time.seconds.toString().padStart(2, '0')}`}</p>

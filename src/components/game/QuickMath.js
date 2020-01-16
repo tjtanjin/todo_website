@@ -4,13 +4,13 @@ import { CountDown } from "./CountDown";
 function QuickMath(data) {
   const [ ans, setAns ] = useState("");
   const [ score, setScore ] = useState(0);
-  const [ play, setPlay ] = useState(0);
+  const [ play, setPlay ] = useState("0");
   const [ num1, setNum1 ] = useState(Math.floor(Math.random() * 100));
   const [ num2, setNum2 ] = useState(Math.floor(Math.random() * 100));
 
   function verify() {
     let correctAns = num1 + num2;
-    if (ans == correctAns) {
+    if (ans === correctAns.toString()) {
       setScore(prev => prev + 1);
     } else {
       setScore(prev => prev - 1);
@@ -50,7 +50,7 @@ function QuickMath(data) {
               setAns(e.target.value);
             }}
             placeholder="Enter answer"
-            disabled={play == 0}
+            disabled={play === "0"}
           />
       </div>
       <button id="submitButton" type="submit" className="btn btn-dark btn-block" onClick={verify}>Submit</button>

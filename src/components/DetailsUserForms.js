@@ -39,7 +39,7 @@ function DetailsUser(data) {
             <label>Verified</label>
         </div>
         <div class="col-md-6">
-            <p>{data.verification_token == 1 ? "Yes" : "No"}</p>
+            <p>{data.verification_token === "1" ? "Yes" : "No"}</p>
         </div>
       </div>
       <div class="row">
