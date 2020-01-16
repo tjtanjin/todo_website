@@ -20,6 +20,8 @@ function Navbar() {
   let word5 = ""
   let link6 = ""
   let word6 = ""
+  let dropdown5 = ""
+  let dropdown6 = ""
   if (VerifyAuth()) {
     link1 = "/"
     word1 = "Logout"
@@ -29,12 +31,15 @@ function Navbar() {
     word4 = "Tasks"
     link5 = "/dashboard"
     word5 = "Dashboard"
+    dropdown5 = (<Dropdown.Item className="nav-link nav-text" href={link5}>{word5}</Dropdown.Item>)
   }
   if (VerifyAdmin()) {
     link5 = "/users"
     word5 = "Users"
     link6 = "/dashboard"
     word6 = "Dashboard"
+    dropdown5 = (<Dropdown.Item className="nav-link nav-text" href={link5}>{word5}</Dropdown.Item>)
+    dropdown6 = (<Dropdown.Item className="nav-link nav-text" href={link6}>{word6}</Dropdown.Item>)
   }
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
@@ -44,8 +49,8 @@ function Navbar() {
         <Dropdown alignRight className="navbar-toggler">
           <Dropdown.Toggle variant="dark" id="dropdown-custom-1"><i className="fa fa-bars"></i></Dropdown.Toggle>
           <Dropdown.Menu className="nav-dropdown" >
-            <Dropdown.Item className="nav-link nav-text" href={link6}>{word6}</Dropdown.Item>
-            <Dropdown.Item className="nav-link nav-text" href={link5}>{word5}</Dropdown.Item>
+            {dropdown6}
+            {dropdown5}
             <Dropdown.Item className="nav-link nav-text" href={link4}>{word4}</Dropdown.Item>
             <Dropdown.Item className="nav-link nav-text" href={link3}>{word3}</Dropdown.Item>
             <Dropdown.Item className="nav-link nav-text" href={link2}>{word2}</Dropdown.Item>
