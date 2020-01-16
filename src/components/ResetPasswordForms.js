@@ -13,8 +13,9 @@ function ResetPassword(data) {
   const [isError, setIsError] = useState(false);
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
+
   /*
-  The function putEditUser makes a PUT request to the API endpoint to edit the specified user.
+  The function postResetPassword makes a POST request to the API endpoint to edit the password of the specified user.
   Args:
       None     
   */
@@ -56,11 +57,12 @@ function ResetPassword(data) {
     };
   }, []);
 
+  // redirect to homepage on success
   if (isSuccess) {
     return <Redirect to="/" />;
   }
 
-  // render edit user modal
+  // render reset password modal
   return (
     <div className="auth-inner col-xl-10 col-md-10 col-sm-12 col-xs-12">
       <Form>

@@ -25,8 +25,6 @@ function UserTasks(data) {
   const [toast, showToast] = useState(false);
   const [toastText, setToastText] = useState("");
 
-  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
-
   // declare controllers for showing and hiding modals
   const handleDetailsTaskClose = () => setDetailsTaskShow(false);
   const handleDetailsTaskShow = () => setDetailsTaskShow(true);
@@ -34,6 +32,9 @@ function UserTasks(data) {
   const handleEditTaskShow = () => setEditTaskShow(true);
   const handleDeleteTaskClose = () => setDeleteTaskShow(false);
   const handleDeleteTaskShow = () => setDeleteTaskShow(true);
+
+  // declare sorting order for priority
+  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
 
   // get all tasks belonging to specified user at the start
   useEffect(() => {
@@ -60,16 +61,20 @@ function UserTasks(data) {
   */
   function renderTableData() {
 
+    // template to create button with tooltip
     const action_button = (click_action, task, icon, text) => (
       <OverlayTrigger overlay={renderTooltip(text)}>
         <button type="button" onClick={() => {click_action(); setTrackedTask(task)}}><i className={icon}></i></button>
       </OverlayTrigger>
     );
 
+    // sort by priority by default
     let count = 0
     tasks.sort(function (a,b){
       return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority)
     });;
+
+    // generate the rows of the table
     const table = tasks.map((task, index) => {
       if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed" && task.priority !== "Overdue") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
@@ -90,6 +95,8 @@ function UserTasks(data) {
       } else {}
       return null;
     })
+
+    // checks if table is empty
     if (!table.every(e => e === null)) {
       return (
         <table id="task-table">

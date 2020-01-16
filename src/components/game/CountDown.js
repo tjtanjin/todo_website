@@ -8,6 +8,7 @@ export const CountDown = ({ hours = 0, minutes = 0, seconds = 0, setScore, setPl
     seconds: parseInt(seconds)
   });
 
+  // handles timer ticks
   const tick = () => {
     if (play === "1") {
       if (over) {
@@ -35,6 +36,7 @@ export const CountDown = ({ hours = 0, minutes = 0, seconds = 0, setScore, setPl
     }
   };
 
+  // handles timer reset
   const reset = () => {
     setTime({
       hours: parseInt(hours),
@@ -44,11 +46,13 @@ export const CountDown = ({ hours = 0, minutes = 0, seconds = 0, setScore, setPl
     setOver(false);
   };
 
+  // 1 second per tick
   useEffect(() => {
     let timerID = setInterval(() => tick(), 1000);
     return () => clearInterval(timerID);
   });
 
+  // render timer
   return (
     <div>
     <button type="button" className="btn btn-danger btn-sm" onClick={() => {reset(); setScore(0); setPlay("1");}}>Start/Restart</button>

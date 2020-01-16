@@ -10,7 +10,7 @@ import { checkDyno, logOut, Loading, validateUser, setDefaultValue } from "../co
 
 function Signup(props) {
 
-  // prepare passed in data
+  // declare empty string variable in preparation for passed in data
   let defaultEmail = "";
 
   // declare stateful values to be used

@@ -8,6 +8,11 @@ function QuickMath(data) {
   const [ num1, setNum1 ] = useState(Math.floor(Math.random() * 100));
   const [ num2, setNum2 ] = useState(Math.floor(Math.random() * 100));
 
+  /*
+  The function verify checks if the user entered the correct answer.
+  Args:
+      None 
+  */
   function verify() {
     let correctAns = num1 + num2;
     if (ans === correctAns.toString()) {
@@ -20,7 +25,7 @@ function QuickMath(data) {
     setAns("");
   }
 
-  // logout user on visting page and listen for enter key input to submit form
+  // listen for enter key input to submit answer
   useEffect(() => {
     const handleEnter = (event) => {
       if (event.keyCode === 13) {
@@ -35,6 +40,7 @@ function QuickMath(data) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // render quickmath modal
   return ( 
     <div className="prompt">
       <CountDown minutes={1} setScore={setScore} setPlay={setPlay} play={play}></CountDown>

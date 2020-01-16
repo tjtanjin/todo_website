@@ -101,6 +101,11 @@ function Profile(props) {
     });
   }
 
+  /*
+  The function putEmailNotifications makes a PUT request to the API endpoint to update email notification settings of the current user.
+  Args:
+      None     
+  */
   function putEmailNotifications() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     let notificationsSettings = "";
@@ -125,6 +130,11 @@ function Profile(props) {
     });
   }
 
+  /*
+  The function putTelegramNotifications makes a PUT request to the API endpoint to update telegram notification settings of the current user.
+  Args:
+      None     
+  */
   function putTelegramNotifications() {
     const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
     let notificationsSettings = "";

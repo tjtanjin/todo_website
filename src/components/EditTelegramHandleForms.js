@@ -14,7 +14,7 @@ function EditTelegramHandle(data) {
   const [telegramHandle, setTelegramHandle] = useState(data.telegram_handle);
 
   /*
-  The function putCompleteTask makes a PUT request to the API endpoint to mark the task as complete.
+  The function putEditTelegramHandle makes a PUT request to the API endpoint to update the telegram handle of the current user.
   Args:
       None     
   */
@@ -60,7 +60,7 @@ function EditTelegramHandle(data) {
     };
   }, []);
 
-  // render complete task confirmation modal
+  // render edit telegram handle modal
   return (
     <div className="auth-inner col-xl-10 col-md-10 col-sm-12 col-xs-12">
       <Form>

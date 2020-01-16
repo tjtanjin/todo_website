@@ -29,11 +29,12 @@ function Dashboard(props) {
   const [arrCat, setArrCat] = useState([]);
   const [sortType, setSortType] = useState("DEADLINE");
 
-  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
-
   // declare controllers for showing and hiding modals
   const handleLoadingClose = () => setLoadingShow(false);
   const handleLoadingShow = () => setLoadingShow(true);
+
+  // declare sorting order for priority
+  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
 
   // get tasks at the start
   useEffect(() => {
@@ -48,6 +49,7 @@ function Dashboard(props) {
   */
   function renderTableHeader() {
     let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DAYS LEFT", "ACTION"]
+    // return a header with sort button
     return header.map((key, index) => {
       if (key === "INDEX" || key === "CATEGORY" || key === "ACTION") {
         return <th key={index}>{key}</th>
@@ -64,6 +66,7 @@ function Dashboard(props) {
   */
   function renderTableData() {
 
+    // determines the type of sort to use
     let count = 0
     if (sortType.includes("PRIORITY")) {
       tasks.sort(function (a,b){
@@ -80,6 +83,8 @@ function Dashboard(props) {
         ? calculateExpiry(b.deadline) - calculateExpiry(a.deadline)
         : calculateExpiry(a.deadline) - calculateExpiry(b.deadline)));
     }
+
+    // generate the rows of the table
     const table = tasks.map((task, index) => {
       let expirydate = calculateExpiry(task.deadline);
       if ((expirydate >= 0 && expirydate <= countExpiry) && task.priority !== "Completed" && task.priority !== "Overdue") {
@@ -109,6 +114,8 @@ function Dashboard(props) {
       } else {}
       return null;
     })
+
+    // checks if table is empty
     if (!table.every(e => e === null)) {
       return (
         <table id="task-table">
@@ -139,6 +146,8 @@ function Dashboard(props) {
         </div>
       )
     })
+
+    // checks if there are no task
     if (!table.every(e => e === null)) {
       return <div>{table}</div>
     } else {

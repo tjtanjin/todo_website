@@ -7,12 +7,14 @@ import { ThemeProvider } from "styled-components";
 
 function TodoChatbot(props) {
 
+  // declare stateful values to be used
   const [showQuickMath, setQuickMathShow] = useState(false);
 
   // declare controllers for showing and hiding modals
   const handleQuickMathClose = () => setQuickMathShow(false);
   const handleQuickMathShow = () => setQuickMathShow(true);
 
+  // configuration for chatbot screen
   const config = {
     width: "300px",
     height: "400px",
@@ -29,6 +31,8 @@ function TodoChatbot(props) {
     userBubbleColor: "#fff",
     userFontColor: "#4c4c4c",
   };
+
+  // list of steps for chatbot (used strings as ids for steps to be self-explanatory)
   const steps = [
     {
       id: "Greet",
@@ -386,7 +390,8 @@ function TodoChatbot(props) {
       trigger: "Ask if have any other questions"
     }
 ];
-   
+
+  // render chatbot
   return (
     <div>
       <ThemeProvider theme={theme}>

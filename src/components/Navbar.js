@@ -6,8 +6,11 @@ import { useAuth } from "../context/auth"
 import { Dropdown } from 'react-bootstrap'
 
 function Navbar() {
+
+  // declare stateful values to be used
   const { setAuthTokens } = useAuth();
 
+  // declare variables for default links
   let link1 = "/signup"
   let word1 = "Sign up"
   let link2 = "/login"
@@ -22,6 +25,8 @@ function Navbar() {
   let word6 = ""
   let dropdown5 = ""
   let dropdown6 = ""
+
+  // change links if authenticated
   if (VerifyAuth()) {
     link1 = "/"
     word1 = "Logout"
@@ -33,6 +38,8 @@ function Navbar() {
     word5 = "Dashboard"
     dropdown5 = (<Dropdown.Item className="nav-link nav-text" href={link5}>{word5}</Dropdown.Item>)
   }
+
+  // change links if admin
   if (VerifyAdmin()) {
     link5 = "/users"
     word5 = "Users"
@@ -41,6 +48,8 @@ function Navbar() {
     dropdown5 = (<Dropdown.Item className="nav-link nav-text" href={link5}>{word5}</Dropdown.Item>)
     dropdown6 = (<Dropdown.Item className="nav-link nav-text" href={link6}>{word6}</Dropdown.Item>)
   }
+
+  // render navbar
   return (
     <nav className="navbar navbar-expand-lg navbar-dark fixed-top">
       <div className="container">

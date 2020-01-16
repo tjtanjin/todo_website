@@ -15,12 +15,10 @@ import { Navbar } from "../components/Navbar";
 
 function Tasks(props) {
 
-  // prepare passed in data
+  // declare empty string variable in preparation for passed in data
   let defaultSearchWord = "";
   let defaultSearchType = "category";
   let defaultTaskChoice = "In-progress";
-
-  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
 
   // declare stateful values to be used
   const { setAuthTokens } = useAuth();
@@ -53,6 +51,9 @@ function Tasks(props) {
   const handleCompleteTaskClose = () => setCompleteTaskShow(false);
   const handleCompleteTaskShow = () => setCompleteTaskShow(true);
 
+  // declare sorting order for priority
+  const priorityOrder = ["High", "Medium", "Low", "Overdue", "Completed"];
+
   // get all tasks belonging to the user at the start
   useEffect(() => {
     getTasks();
@@ -66,6 +67,7 @@ function Tasks(props) {
   */
   function renderTableHeader() {
     let header = ["INDEX", "TASK NAME", "CATEGORY", "PRIORITY", "DEADLINE", "ACTIONS/TOOLS"]
+    // return a header with sort button
     return header.map((key, index) => {
       if (key === "INDEX" || key === "CATEGORY" || key === "ACTIONS/TOOLS") {
         return <th key={index}>{key}</th>
@@ -82,12 +84,14 @@ function Tasks(props) {
   */
   function renderTableData() {
 
+    // template to create button with tooltip
     const action_button = (click_action, task, icon, text) => (
       <OverlayTrigger overlay={renderTooltip(text)}>
         <button type="button" onClick={() => {click_action(); setTrackedTask(task)}}><i className={icon}></i></button>
       </OverlayTrigger>
     );
 
+    // determines the type of sort to use
     let count = 0
     if (sortType.includes("PRIORITY")) {
       tasks.sort(function (a,b){
@@ -106,6 +110,8 @@ function Tasks(props) {
         return (sortType.includes("REVERSE") ? b.localeCompare(a) : a.localeCompare(b));
       });
     }
+
+    // generate the rows of the table
     const table = tasks.map((task, index) => {
       if ((searchWord === "" || task[searchType].toUpperCase().includes(searchWord.toUpperCase())) && (taskChoice === "All Tasks" || (taskChoice === "In-progress" && task.priority !== "Completed" && task.priority !== "Overdue") || taskChoice === task.priority)) {
         const { id, task_name, category, priority, deadline } = task
@@ -131,6 +137,8 @@ function Tasks(props) {
       } else {}
       return null;
     })
+
+    // checks if table is empty
     if (!table.every(e => e === null)) {
       return (
         <table id="task-table">

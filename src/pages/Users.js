@@ -64,13 +64,17 @@ function Users(props) {
   */
   function renderTableData() {
 
+    // template to create button with tooltip
     const action_button = (click_action, user, icon, text) => (
       <OverlayTrigger overlay={renderTooltip(text)}>
         <button type="button" onClick={() => {click_action(); setTrackedUser(user)}}><i className={icon}></i></button>
       </OverlayTrigger>
     );
 
+    // sort users by name
     users.sort((a, b) => a.name.localeCompare(b.name))
+
+    // generate the rows of the table
     const table = users.map((user, index) => {
       if (searchWord === "" || user[searchType].toUpperCase().includes(searchWord.toUpperCase())) {
         let { id, name, email, verification_token } = user
@@ -95,6 +99,8 @@ function Users(props) {
       } else {}
       return null;
     })
+
+    // checks if table is empty
     if (!table.every(e => e === null)) {
       return (
         <table id="user-table">

@@ -8,7 +8,7 @@ import { checkDyno, logOut, Loading, setDefaultValue } from "../components/Utils
 
 function Login(props) {
 
-  // prepare passed in data
+  // declare empty string variable in preparation for passed in data
   let defaultEmail = "";
 
   // declare stateful values to be used
@@ -102,7 +102,7 @@ function Login(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // redirect one logged in
+  // redirect on logged in
   if (isLoggedIn) {
     return <Redirect to={referer} />;
   }
