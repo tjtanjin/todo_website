@@ -84,7 +84,7 @@ function Navbar() {
               <NavLink exact activeClassName="nav-selected" className="nav-link nav-text" to={link2}>{word2}</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink exact className="nav-link nav-text" to={link1} onClick={() => logOut(setAuthTokens)}>{word1}</NavLink>
+              <NavLink exact activeClassName="nav-selected" className="nav-link nav-text" to={link1} onClick={() => logOut(setAuthTokens)}>{word1}</NavLink>
             </li>
           </ul>
         </div>
