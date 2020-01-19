@@ -102,7 +102,7 @@ function Signup(props) {
         <div className="form-group">
           <label>Username</label>
           <input
-            type="username"
+            type="text"
             value={name}
             className="form-control" 
             onChange={e => {

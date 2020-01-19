@@ -85,7 +85,7 @@ function EditTask(data) {
         <div className="form-group">
           <label>Task Name</label>
           <input
-            type="task_name"
+            type="text"
             defaultValue={data.task_name}
             className="form-control" 
             onChange={e => {
@@ -98,7 +98,7 @@ function EditTask(data) {
         <div className="form-group">
           <label>Task Description</label>
           <input
-            type="task_description"
+            type="text"
             defaultValue={data.task_description}
             className="form-control" 
             onChange={e => {
@@ -111,7 +111,7 @@ function EditTask(data) {
         <div className="form-group">
           <label>Category</label>
           <input
-            type="category"
+            type="text"
             defaultValue={data.category}
             className="form-control" 
             onChange={e => {
@@ -124,7 +124,7 @@ function EditTask(data) {
         <div className="form-group">
           <label>Tag</label>
           <select 
-            type="priority"
+            type="text"
             defaultValue={data.priority}
             className="form-control" 
             onChange={e => {

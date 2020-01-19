@@ -70,7 +70,7 @@ function ResetPassword(data) {
         <div className="form-group">
           <label>Password Reset Token</label>
           <input
-            type="token"
+            type="text"
             className="form-control" 
             onChange={e => {
               setToken(e.target.value);

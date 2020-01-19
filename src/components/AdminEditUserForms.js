@@ -78,7 +78,7 @@ function AdminEditUser(data) {
         <div className="form-group">
           <label>Username</label>
           <input
-            type="name"
+            type="text"
             defaultValue={data.name}
             className="form-control" 
             onChange={e => {

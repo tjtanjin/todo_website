@@ -81,7 +81,7 @@ function NewTask(data) {
         <div className="form-group">
           <label>Task Name</label>
           <input
-            type="task_name"
+            type="text"
             value={task_name}
             className="form-control" 
             onChange={e => {
@@ -94,7 +94,7 @@ function NewTask(data) {
         <div className="form-group">
           <label>Task Description</label>
           <input
-            type="task_description"
+            type="text"
             value={task_description}
             className="form-control" 
             onChange={e => {
@@ -107,7 +107,7 @@ function NewTask(data) {
         <div className="form-group">
           <label>Category</label>
           <input
-            type="category"
+            type="text"
             value={category}
             className="form-control" 
             onChange={e => {
@@ -120,7 +120,7 @@ function NewTask(data) {
         <div className="form-group">
           <label>Tag</label>
           <select 
-            type="priority"
+            type="text"
             value={priority}
             className="form-control" 
             onChange={e => {

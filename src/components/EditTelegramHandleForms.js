@@ -64,11 +64,11 @@ function EditTelegramHandle(data) {
   return (
     <div className="auth-inner col-xl-10 col-md-10 col-sm-12 col-xs-12">
       <Form>
-        <p className="text-success">To link your todo manager account with your telegram account, enter your telegram handle below (without @) and send <span className="text-danger font-weight-bold">/link {data.email}</span> to our <a className="font-weight-bold text-danger" href="https://t.me/todomanager_bot" target="_blank" rel="noopener noreferrer">Todo Manager bot</a>. To unlink your account, simply remove your telegram handle.</p>
+        <p className="text-success">To link your todo manager and telegram accounts, enter your telegram handle below (without @) and send <span className="text-danger font-weight-bold">/link {data.email}</span> to our <a className="font-weight-bold text-danger" href="https://t.me/todomanager_bot" target="_blank" rel="noopener noreferrer">Todo Manager bot</a>. To unlink your account, simply remove your telegram handle. If you need more help with telegram notifications, click <a className="font-weight-bold text-danger" href="https://github.com/tjtanjin/todo_website/wiki/User-Guide#telegram-reminder" target="_blank" rel="noopener noreferrer">here</a>.</p>
         <div className="form-group">
           <label>Telegram Handle</label>
           <input
-            type="telgram_handle"
+            type="text"
             value={telegramHandle}
             className="form-control" 
             onChange={e => {
