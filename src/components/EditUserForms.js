@@ -122,6 +122,7 @@ function EditUser(data) {
             }}
             placeholder=""
           />
+          <p className="text-danger">Note: For changes to email, there is a need for re-verification. Double-check before updating.</p>
         </div>
 
         <div className="form-group">

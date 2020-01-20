@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Form, Error, Success } from "./AuthForms";
 import { decode } from 'jsonwebtoken'
-import { Loading } from "./Utils";
+import { Loading, validatePasswordMatch } from "./Utils";
 
 function ChangePassword(data) {
 
@@ -19,6 +19,7 @@ function ChangePassword(data) {
   const [isError, setIsError] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   /*
   The function putChangePassword makes a PUT request to the API endpoint to update the password of the specified user.
@@ -34,6 +35,13 @@ function ChangePassword(data) {
         "password": currentPassword
       }).then(result => {
         if (result.status === 200) {
+          const validatePasswords = validatePasswordMatch(newPassword, confirmPassword);
+          if (validatePasswords !== true) {
+            setSubmitResult(validatePasswords);
+            setIsLoading(false);
+            setIsError(true);
+            return;
+          }
           const token = JSON.parse(localStorage.getItem('todo_data')).auth_token;
           const user_id = decode(token).user_id;
           axios.put(process.env.REACT_APP_API_LINK + "/users/" + user_id, { "user": {
@@ -97,7 +105,7 @@ function ChangePassword(data) {
             onChange={e => {
               setCurrentPassword(e.target.value);
             }}
-            placeholder=""
+            placeholder="Enter current password"
           />
         </div>
 
@@ -110,7 +118,20 @@ function ChangePassword(data) {
             onChange={e => {
               setNewPassword(e.target.value);
             }}
-            placeholder=""
+            placeholder="Enter new password"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Confirm New Password</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            className="form-control" 
+            onChange={e => {
+              setConfirmPassword(e.target.value);
+            }}
+            placeholder="Re-enter new password"
           />
         </div>
 

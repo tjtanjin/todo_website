@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
 import { Form, Error, Success } from "./AuthForms";
-import { Loading } from "./Utils";
+import { Loading, validatePasswordMatch } from "./Utils";
 
 function ResetPassword(data) {
 
@@ -13,6 +13,7 @@ function ResetPassword(data) {
   const [isError, setIsError] = useState(false);
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   /*
   The function postResetPassword makes a POST request to the API endpoint to edit the password of the specified user.
@@ -20,6 +21,12 @@ function ResetPassword(data) {
       None     
   */
   function postResetPassword() {
+    const validatePasswords = validatePasswordMatch(password, confirmPassword);
+    if (validatePasswords !== true) {
+      setSubmitResult(validatePasswords);
+      setIsError(true);
+      return;
+    }
     setIsLoading(true);
     setIsError(false);
     axios.post(process.env.REACT_APP_API_LINK + "/password/reset", {
@@ -75,7 +82,7 @@ function ResetPassword(data) {
             onChange={e => {
               setToken(e.target.value);
             }}
-            placeholder=""
+            placeholder="Enter password reset token"
           />
         </div>
 
@@ -89,6 +96,19 @@ function ResetPassword(data) {
               setPassword(e.target.value);
             }}
             placeholder="Enter new password"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Confirm New Password</label>
+          <input
+            type="password"
+            value={confirmPassword}
+            className="form-control" 
+            onChange={e => {
+              setConfirmPassword(e.target.value);
+            }}
+            placeholder="Re-enter new password"
           />
         </div>
 

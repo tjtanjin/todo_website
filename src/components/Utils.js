@@ -155,6 +155,20 @@ function validateTask(task_name, task_description, category, priority, date) {
 }
 
 /*
+The function validatePasswordMatch checks if 2 passwords match.
+Args:
+  password: to check against confirmpassword
+  confirmpassword: to check against password
+*/
+function validatePasswordMatch(password, confirmPassword) {
+  if (password === confirmPassword) {
+    return true;
+  } else {
+    return "Password do not match!"
+  }
+}
+
+/*
 The function retrieveTaskCategories returns an array of array containing task categories sorted by highest frequency.
 Args:
   tasks: tasks to retrieve from
@@ -239,4 +253,4 @@ function setDefaultValue(props, key, value) {
   }
 }
 
-export { formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, calculateExpiry, compareDate, validateUser, validateTask, retrieveTaskCategories, scoreMessage, noticeMessage, setDefaultValue };
+export { formatDate, checkDyno, VerifyAuth, VerifyAdmin, logOut, renderTooltip, Loading, calculateExpiry, compareDate, validateUser, validateTask, validatePasswordMatch, retrieveTaskCategories, scoreMessage, noticeMessage, setDefaultValue };

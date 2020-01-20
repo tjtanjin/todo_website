@@ -73,7 +73,7 @@ function Forgotpassword(props) {
             onChange={e => {
               setEmail(e.target.value);
             }}
-            placeholder="Enter email to receive reset token"
+            placeholder="Enter email to receive password reset token"
             autoFocus
           />
         </div>
