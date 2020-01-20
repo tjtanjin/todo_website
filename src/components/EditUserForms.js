@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { Form, Error, Success } from "./AuthForms";
 import { decode } from 'jsonwebtoken'
-import { Loading, validateUser } from "./Utils";
+import { Loading, validateUser, logOut } from "./Utils";
+import { useAuth } from "../context/auth"
 
 function EditUser(data) {
 
@@ -13,6 +14,7 @@ function EditUser(data) {
   data = data.user
 
   // declare stateful values to be used
+  const { setAuthTokens } = useAuth();
   const [submitResult, setSubmitResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -56,6 +58,10 @@ function EditUser(data) {
               getSelf();
               showToast("Profile successfully updated.")
               onCloseModal();
+              if (data.email !== email) {
+                logOut(setAuthTokens);
+                alert("Email updated successfully. Please verify your new email before logging in.")
+              }
             } else {
               setSubmitResult("An error has occurred, please contact an administrator.")
               setIsError(true);
